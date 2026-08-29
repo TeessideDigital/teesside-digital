@@ -4,7 +4,7 @@ import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
     // Site URL (required for canonical URLs and social sharing)
-  site: 'http://localhost:3000', // Change to https://teessidedigital.uk in production
+  site: 'https://teessidedigital.uk ', // Change to https://teessidedigital.uk in production
 
   // Server configuration
   server: {

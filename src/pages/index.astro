@@ -18,15 +18,15 @@
  */
 
 import BaseLayout from '@layouts/BaseLayout.astro';
-import Hero from '@components/Astro/Hero.astro';
-import Section from '@components/Astro/Section.astro';
-import Card from '@components/Astro/Card.astro';
-import Button from '@components/Astro/Button.astro';
+import Hero from '../components/Astro/Hero.astro';
+import Section from '../components/Astro/Section.astro';
+import Card from '../components/Astro/Card.astro';
+import Button from '../components/Astro/Button.astro';
 import { services } from '@data/services';
 import { getFeaturedProjects } from '@data/work';
 
 // React islands
-import HealthCheck from '@components/React/HealthCheck';
+import HealthCheck from '../components/React/HealthCheck';
 
 const featuredProjects = getFeaturedProjects();
 ---

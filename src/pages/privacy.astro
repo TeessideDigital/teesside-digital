@@ -1,0 +1,104 @@
+---
+/**
+ * src/pages/privacy.astro
+ *
+ * Privacy policy page.
+ *
+ * Route: /privacy
+ * Data source: src/data/legal.ts
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Section from '@components/Astro/Section.astro';
+import { privacyPolicy } from '@data/legal';
+
+const title = 'Privacy Policy - Teesside Digital';
+const description = 'How we collect, use, and protect your personal data.';
+const canonicalURL = new URL('/privacy', Astro.site);
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalURL={canonicalURL}
+>
+  <!-- Header -->
+  <Section>
+    <div class="max-w-4xl mx-auto px-4 md:px-6">
+      <h1 class="text-3xl md:text-4xl font-bold text-text-primary mb-2">
+        {privacyPolicy.title}
+      </h1>
+      <p class="text-text-secondary mb-4">
+        {privacyPolicy.description}
+      </p>
+      <p class="text-xs text-text-secondary">
+        Last updated: {new Date(privacyPolicy.lastUpdated).toLocaleDateString('en-GB', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        })}
+      </p>
+    </div>
+  </Section>
+
+  <!-- Table of Contents -->
+  <Section variant="dark">
+    <div class="max-w-4xl mx-auto px-4 md:px-6">
+      <h2 class="text-lg font-semibold text-text-primary mb-4">Quick Links</h2>
+      <div class="grid md:grid-cols-2 gap-4">
+        {
+          privacyPolicy.sections.map((section) => (
+            <a
+              href={`#${section.id}`}
+              class="p-3 bg-surface rounded hover:bg-surface-raised transition-colors text-accent hover:text-accent-hover"
+            >
+              {section.title}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </Section>
+
+  <!-- Policy Content -->
+  <Section>
+    <div class="max-w-4xl mx-auto px-4 md:px-6 space-y-12">
+      {
+        privacyPolicy.sections.map((section) => (
+          <div id={section.id} class="scroll-mt-24">
+            <h2 class="text-2xl font-semibold text-text-primary mb-4">
+              {section.title}
+            </h2>
+            <div class="text-text-secondary whitespace-pre-wrap space-y-4">
+              {section.content.split('\n\n').map((paragraph) => (
+                <p>{paragraph}</p>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </Section>
+
+  <!-- Footer Info -->
+  <Section variant="dark">
+    <div class="max-w-4xl mx-auto px-4 md:px-6 text-center">
+      <h2 class="text-lg font-semibold text-text-primary mb-4">Questions?</h2>
+      <p class="text-text-secondary">
+        If you have questions about this privacy policy, please contact
+        <a
+          href="mailto:dave@teessidedigital.uk"
+          class="text-accent hover:text-accent-hover"
+        >
+          dave@teessidedigital.uk
+        </a>
+      </p>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  a {
+    text-decoration: none;
+  }
+</style>

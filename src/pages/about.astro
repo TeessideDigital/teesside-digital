@@ -1,0 +1,329 @@
+---
+/**
+ * src/pages/about.astro
+ *
+ * About page - Dave's story and background.
+ *
+ * Route: /about
+ * Features:
+ * - Story narrative
+ * - Expertise highlights
+ * - Why choose Teesside Digital
+ * - Contact CTA
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Section from '@components/astro/Section.astro';
+import Hero from '@components/astro/Hero.astro';
+import Button from '@components/astro/Button.astro';
+
+const title = 'About Dave - Teesside Digital';
+const description =
+  'Learn about Dave\'s background, expertise, and why he started Teesside Digital.';
+const canonicalURL = new URL('/about', Astro.site);
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalURL={canonicalURL}
+>
+  <!-- Hero -->
+  <Hero
+    headline="Hi, I'm Dave"
+    subheadline="I build precise technology solutions for businesses that are serious about results."
+    badge="About Me"
+  />
+
+  <!-- Story Section -->
+  <Section>
+    <div class="max-w-4xl mx-auto px-4 md:px-6">
+      <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <!-- Image (placeholder for real photo) -->
+        <div class="flex justify-center md:justify-start">
+          <div
+            class="w-64 h-64 md:w-80 md:h-80 bg-surface-raised rounded border-2 border-border flex items-center justify-center"
+          >
+            <span class="text-text-secondary">Photo coming soon</span>
+          </div>
+        </div>
+
+        <!-- Story -->
+        <div class="space-y-6">
+          <div>
+            <h2 class="text-2xl md:text-3xl font-semibold text-text-primary mb-4">
+              From Making Things to Building Them
+            </h2>
+            <p class="text-text-secondary mb-4">
+              My career has been about precision, problem-solving, and building things that work.
+              I spent years in tattoo artistry and construction - both demand exactness, attention
+              to detail, and understanding exactly what the client needs before you start.
+            </p>
+            <p class="text-text-secondary mb-4">
+              When I made the shift to technology, those principles didn't change. Whether I'm
+              building a website, automating a business process, or securing your digital assets,
+              the philosophy is the same: understand the problem deeply, design the right solution,
+              and deliver something that actually works.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-semibold text-text-primary mb-3">Why Technology?</h3>
+            <p class="text-text-secondary">
+              Technology compounds. An improvement to a business process or website reaches dozens,
+              hundreds, or thousands of people. A properly secured system prevents disasters. A
+              well-designed application saves time every single day. That scale and impact attracted
+              me to this field.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-semibold text-text-primary mb-3">Right Now</h3>
+            <p class="text-text-secondary">
+              I'm a Computer Science student while running Teesside Digital. This means I'm
+              actively learning, staying current with technology, and understanding the academic
+              foundation behind engineering decisions. It also means I'm hungry to take on real-world
+              problems and build experience.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Expertise Section -->
+  <Section variant="dark">
+    <div class="max-w-4xl mx-auto px-4 md:px-6">
+      <h2 class="text-2xl md:text-3xl font-semibold text-text-primary mb-8 text-center">
+        What I Do
+      </h2>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Web Development -->
+        <div>
+          <h3 class="text-lg font-semibold text-text-primary mb-3">Web Development</h3>
+          <p class="text-text-secondary text-sm mb-4">
+            Fast, modern websites and applications. Built with performance and user experience
+            in mind. No bloat, no unnecessary complexity - just clean code that works.
+          </p>
+          <ul class="text-sm text-text-secondary space-y-2">
+            <li class="flex items-start">
+              <span class="text-accent mr-2">+</span>
+              <span>Website design and development</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-accent mr-2">+</span>
+              <span>Web applications</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-accent mr-2">+</span>
+              <span>E-commerce solutions</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-accent mr-2">+</span>
+              <span>Website maintenance</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- AI & Automation -->
+        <div>
+          <h3 class="text-lg font-semibold text-text-primary mb-3">AI & Automation</h3>
+          <p class="text-text-secondary text-sm mb-4">
+            Automate the repetitive work so you can focus on growing your business. From simple
+            workflows to AI-powered systems, I find the opportunities where automation saves time
+            and money.
+          </p>
+          <ul class="text-sm text-text-secondary space-y-2">
+            <li class="flex items-start">
+              <span class="text-accent mr-2">+</span>
+              <span>Business automation</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-accent mr-2">+</span>
+              <span>AI integration</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-accent mr-2">+</span>
+              <span>API integrations</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-accent mr-2">+</span>
+              <span>Workflow optimisation</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Cybersecurity -->
+        <div>
+          <h3 class="text-lg font-semibold text-text-primary mb-3">Cybersecurity</h3>
+          <p class="text-text-secondary text-sm mb-4">
+            Your data and your customers' data are precious. I take security seriously and help
+            businesses understand risks and implement protections that actually work.
+          </p>
+          <ul class="text-sm text-text-secondary space-y-2">
+            <li class="flex items-start">
+              <span class="text-accent mr-2">+</span>
+              <span>Website security</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-accent mr-2">+</span>
+              <span>Security audits</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-accent mr-2">+</span>
+              <span>Vulnerability assessment</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-accent mr-2">+</span>
+              <span>Technical consultancy</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Philosophy Section -->
+  <Section>
+    <div class="max-w-3xl mx-auto px-4 md:px-6">
+      <h2 class="text-2xl md:text-3xl font-semibold text-text-primary mb-8">
+        How I Work
+      </h2>
+
+      <div class="space-y-8">
+        <div class="flex gap-6">
+          <div
+            class="text-2xl font-semibold text-accent flex-shrink-0 w-8 h-8 flex items-center justify-center bg-surface-raised rounded"
+          >
+            1
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-text-primary mb-2">
+              Understand the Problem
+            </h3>
+            <p class="text-text-secondary">
+              Before I propose a solution, I need to understand your business, your customers,
+              and what you're trying to achieve. Rush this and you build the wrong thing.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex gap-6">
+          <div
+            class="text-2xl font-semibold text-accent flex-shrink-0 w-8 h-8 flex items-center justify-center bg-surface-raised rounded"
+          >
+            2
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-text-primary mb-2">
+              Propose the Right Solution
+            </h3>
+            <p class="text-text-secondary">
+              Not the fanciest solution, not the most complex - the one that actually solves your
+              problem. I'll explain trade-offs, pros and cons, and what you're getting for the
+              investment.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex gap-6">
+          <div
+            class="text-2xl font-semibold text-accent flex-shrink-0 w-8 h-8 flex items-center justify-center bg-surface-raised rounded"
+          >
+            3
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-text-primary mb-2">
+              Build Quality and Clarity
+            </h3>
+            <p class="text-text-secondary">
+              I deliver code that works, is secure, performs well, and is maintainable. You get
+              direct access to the person building your project - no middlemen, no miscommunication.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex gap-6">
+          <div
+            class="text-2xl font-semibold text-accent flex-shrink-0 w-8 h-8 flex items-center justify-center bg-surface-raised rounded"
+          >
+            4
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-text-primary mb-2">
+              Support and Feedback
+            </h3>
+            <p class="text-text-secondary">
+              After launch, I'm still here. You get ongoing support, refinement based on real usage,
+              and help scaling when your project grows.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Why Solo Section -->
+  <Section variant="dark">
+    <div class="max-w-3xl mx-auto px-4 md:px-6">
+      <h2 class="text-2xl md:text-3xl font-semibold text-text-primary mb-8">
+        Why I Work Alone (It's an Advantage)
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <div>
+          <h3 class="text-lg font-semibold text-text-primary mb-3">You Get the Expert</h3>
+          <p class="text-text-secondary">
+            No junior developer. No account manager between us. You're working directly with the
+            person who understands the full scope of your project and is building it.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-text-primary mb-3">Clear Communication</h3>
+          <p class="text-text-secondary">
+            No translation layers. No delays waiting for other teams. Direct contact, quick
+            decisions, and clear explanations.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-text-primary mb-3">Cost Efficiency</h3>
+          <p class="text-text-secondary">
+            I don't have the overhead of a large agency. Those savings go to you through better
+            pricing and more efficient delivery.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-text-primary mb-3">Genuine Care</h3>
+          <p class="text-text-secondary">
+            Your success is my success. I take pride in building solutions that work, staying
+            available for support, and growing your digital capabilities.
+          </p>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- CTA Section -->
+  <Section class="py-12 md:py-16">
+    <div class="max-w-3xl mx-auto px-4 md:px-6 text-center">
+      <h2 class="text-2xl md:text-3xl font-semibold text-text-primary mb-4">
+        Let's Build Something Together
+      </h2>
+      <p class="text-text-secondary mb-8">
+        If this approach resonates with you, I'd love to discuss your project.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <Button variant="primary" href="/contact">
+          Get in Touch
+        </Button>
+        <Button variant="secondary" href="/work">
+          View My Work
+        </Button>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

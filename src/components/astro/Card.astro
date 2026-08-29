@@ -1,0 +1,187 @@
+---
+/**
+ * Card.astro
+ *
+ * Reusable card component.
+ * Used for:
+ * - Portfolio items
+ * - Service cards
+ * - Testimonials
+ * - Feature highlights
+ *
+ * Props:
+ * - href?: string (renders <a> wrapper if provided)
+ * - image?: string (optional featured image)
+ * - imageAlt?: string (image alt text)
+ * - title?: string (card heading)
+ * - description?: string (short description)
+ * - tags?: string[] (optional tag badges)
+ * - hover?: 'scale' | 'shadow' (hover effect)
+ * - class?: string (additional classes)
+ */
+
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'div' | 'a'> {
+  href?: string;
+  image?: string;
+  imageAlt?: string;
+  title?: string;
+  description?: string;
+  tags?: string[];
+  hover?: 'scale' | 'shadow';
+}
+
+const {
+  href,
+  image,
+  imageAlt = 'Card image',
+  title,
+  description,
+  tags = [],
+  hover = 'shadow',
+  class: customClass = '',
+  ...attrs
+} = Astro.props as Props;
+
+/**
+ * Hover effect mappings
+ */
+const hoverClasses = {
+  scale: 'hover:scale-105 transition-transform duration-300 ease-out',
+  shadow: 'hover:shadow-lg transition-shadow duration-300 ease-out',
+};
+
+/**
+ * Base card classes
+ */
+const baseClasses = `
+  bg-surface border border-border rounded-lg overflow-hidden
+  transition-all duration-200 ease-out
+  ${hoverClasses[hover]}
+  ${customClass}
+`;
+
+/**
+ * Element type
+ */
+const Element = href ? 'a' : 'div';
+---
+
+{
+  href ? (
+    <a href={href} class={baseClasses} {...attrs}>
+      {
+        image && (
+          <div class="relative w-full h-48 md:h-56 overflow-hidden bg-surface-raised">
+            <img
+              src={image}
+              alt={imageAlt}
+              class="w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
+              loading="lazy"
+            />
+          </div>
+        )
+      }
+
+      <div class="p-6 md:p-8 flex flex-col h-full">
+        {/* Tags */}
+        {
+          tags && tags.length > 0 && (
+            <div class="flex flex-wrap gap-2 mb-4">
+              {tags.map((tag) => (
+                <span class="inline-block text-xs font-medium px-2 py-1 bg-surface-raised text-text-secondary rounded">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )
+        }
+
+        {/* Title */}
+        {title && <h3 class="text-lg md:text-xl font-semibold text-text-primary mb-2">{title}</h3>}
+
+        {/* Description */}
+        {description && <p class="text-sm md:text-base text-text-secondary flex-grow">{description}</p>}
+
+        {/* Slot for additional content (CTA, metadata, etc) */}
+        <div class="mt-4">
+          <slot />
+        </div>
+      </div>
+    </a>
+  ) : (
+    <div class={baseClasses} {...attrs}>
+      {
+        image && (
+          <div class="relative w-full h-48 md:h-56 overflow-hidden bg-surface-raised">
+            <img
+              src={image}
+              alt={imageAlt}
+              class="w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
+              loading="lazy"
+            />
+          </div>
+        )
+      }
+
+      <div class="p-6 md:p-8 flex flex-col h-full">
+        {/* Tags */}
+        {
+          tags && tags.length > 0 && (
+            <div class="flex flex-wrap gap-2 mb-4">
+              {tags.map((tag) => (
+                <span class="inline-block text-xs font-medium px-2 py-1 bg-surface-raised text-text-secondary rounded">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )
+        }
+
+        {/* Title */}
+        {title && <h3 class="text-lg md:text-xl font-semibold text-text-primary mb-2">{title}</h3>}
+
+        {/* Description */}
+        {description && <p class="text-sm md:text-base text-text-secondary flex-grow">{description}</p>}
+
+        {/* Slot for additional content (CTA, metadata, etc) */}
+        <div class="mt-4">
+          <slot />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+<style>
+  a {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  /* Image hover zoom effect */
+  img {
+    transition: transform 0.3s ease-out;
+  }
+
+  /* Shadow hover effect */
+  a,
+  div {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    transition: box-shadow 0.3s ease-out;
+  }
+
+  a:hover,
+  div:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  }
+</style>

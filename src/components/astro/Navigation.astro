@@ -1,0 +1,108 @@
+---
+/**
+ * Navigation.astro
+ *
+ * Desktop navigation menu.
+ * Renders horizontal list of links from NAVIGATION.header.
+ *
+ * Used in:
+ * - Header (desktop only, hidden on mobile)
+ * - Footer (as secondary nav)
+ *
+ * Props:
+ * - variant?: 'header' | 'footer' (styling differences)
+ * - currentPath?: string (for active link highlighting, optional)
+ */
+
+import { NAVIGATION } from '@config/constants';
+
+interface Props {
+  variant?: 'header' | 'footer';
+  currentPath?: string;
+}
+
+const { variant = 'header', currentPath = Astro.url.pathname } = Astro.props as Props;
+
+// Get nav items based on variant
+const navItems = variant === 'footer' ? NAVIGATION.footer : NAVIGATION.header;
+---
+
+<nav class={`navigation navigation--${variant}`}>
+  <ul class="flex flex-col md:flex-row gap-2 md:gap-6 lg:gap-8">
+    {
+      navItems.map((item) => {
+        const isActive = currentPath === item.href || (currentPath !== '/' && item.href !== '/' && currentPath.startsWith(item.href));
+
+        return (
+          <li>
+            <a
+              href={item.href}
+              class={`
+                text-sm md:text-base font-medium
+                px-3 py-2 rounded-md
+                transition-colors duration-200 ease-out
+                ${
+                  isActive
+                    ? 'text-accent bg-surface-raised'
+                    : 'text-text-secondary hover:text-accent hover:bg-surface-raised'
+                }
+                focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background
+              `}
+              aria-current={isActive ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+</nav>
+
+<style>
+  .navigation ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .navigation a {
+    display: inline-block;
+    position: relative;
+  }
+
+  /**
+   * Underline animation on hover (optional enhancement)
+   * Uncomment if you want a subtle underline animation
+   */
+  /*
+  .navigation a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: currentColor;
+    transition: width 0.2s ease-out;
+  }
+
+  .navigation a:hover::after,
+  .navigation a[aria-current="page"]::after {
+    width: 100%;
+  }
+  */
+
+  /**
+   * Footer variant: stack vertically, smaller text
+   */
+  .navigation--footer ul {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .navigation--footer a {
+    font-size: 0.875rem;
+    padding: 0.25rem 0;
+  }
+</style>

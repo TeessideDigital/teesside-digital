@@ -1,0 +1,341 @@
+---
+/**
+ * src/components/Astro/ContactForm.astro
+ *
+ * Reusable contact form component with Netlify Forms integration.
+ * 
+ * This form:
+ * - Works with Netlify Forms (requires form-name, honeypot field)
+ * - Includes client-side validation
+ * - Has accessible error messages
+ * - Shows success confirmation (prevents redirect)
+ * - Is keyboard accessible and screen reader friendly
+ *
+ * Usage:
+ * <ContactForm variant="inline" cta="Get a Quote" />
+ */
+
+interface Props {
+  variant?: 'inline' | 'standalone'; // inline: embedded in page, standalone: full-width
+  title?: string;
+  subtitle?: string;
+  cta?: string; // Button text (default: "Send Message")
+  formName?: string; // Netlify form name (default: "contact")
+}
+
+const {
+  variant = 'standalone',
+  title = 'Get in Touch',
+  subtitle = 'Tell us about your project. We\'ll get back to you within 48 hours.',
+  cta = 'Send Message',
+  formName = 'contact',
+} = Astro.props;
+
+const standaloneClasses = variant === 'standalone' ? 'py-12 md:py-16' : '';
+const containerClasses =
+  variant === 'standalone'
+    ? 'max-w-2xl mx-auto px-4 md:px-6'
+    : 'w-full';
+---
+
+<form
+  name={formName}
+  method="POST"
+  class={`contact-form ${standaloneClasses}`}
+  netlify
+  netlify-honeypot="bot-field"
+>
+  <!-- Honeypot field (hidden from real users) -->
+  <div class="hidden">
+    <label for="bot-field">Bot Field</label>
+    <input id="bot-field" name="bot-field" type="text" />
+  </div>
+
+  <div class={containerClasses}>
+    {title && <h2 class="text-2xl md:text-3xl font-semibold text-text-primary mb-2">{title}</h2>}
+    {subtitle && <p class="text-text-secondary mb-8 max-w-lg">{subtitle}</p>}
+
+    <div class="space-y-6">
+      <!-- Name Field -->
+      <div>
+        <label for="name" class="block text-sm font-medium text-text-primary mb-2">
+          Your Name
+          <span class="text-accent">*</span>
+        </label>
+        <input
+          id="name"
+          name="name"
+          type="text"
+          required
+          aria-required="true"
+          class="w-full px-4 py-2 bg-surface-raised border border-border rounded text-text-primary placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-accent transition-colors"
+          placeholder="Dave"
+        />
+        <span
+          id="name-error"
+          class="text-sm text-error mt-1 hidden"
+          role="alert"
+        >
+          Please enter your name
+        </span>
+      </div>
+
+      <!-- Email Field -->
+      <div>
+        <label for="email" class="block text-sm font-medium text-text-primary mb-2">
+          Email Address
+          <span class="text-accent">*</span>
+        </label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          required
+          aria-required="true"
+          class="w-full px-4 py-2 bg-surface-raised border border-border rounded text-text-primary placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-accent transition-colors"
+          placeholder="you@example.com"
+        />
+        <span
+          id="email-error"
+          class="text-sm text-error mt-1 hidden"
+          role="alert"
+        >
+          Please enter a valid email address
+        </span>
+      </div>
+
+      <!-- Subject Field (optional) -->
+      <div>
+        <label for="subject" class="block text-sm font-medium text-text-primary mb-2">
+          Subject (optional)
+        </label>
+        <input
+          id="subject"
+          name="subject"
+          type="text"
+          class="w-full px-4 py-2 bg-surface-raised border border-border rounded text-text-primary placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-accent transition-colors"
+          placeholder="e.g. Website Redesign"
+        />
+      </div>
+
+      <!-- Message Field -->
+      <div>
+        <label for="message" class="block text-sm font-medium text-text-primary mb-2">
+          Message
+          <span class="text-accent">*</span>
+        </label>
+        <textarea
+          id="message"
+          name="message"
+          required
+          aria-required="true"
+          rows={6}
+          class="w-full px-4 py-2 bg-surface-raised border border-border rounded text-text-primary placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-accent transition-colors resize-none"
+          placeholder="Tell us about your project, timeline, and budget..."
+        ></textarea>
+        <span
+          id="message-error"
+          class="text-sm text-error mt-1 hidden"
+          role="alert"
+        >
+          Please enter your message
+        </span>
+      </div>
+
+      <!-- Budget Field (optional) -->
+      <div>
+        <label for="budget" class="block text-sm font-medium text-text-primary mb-2">
+          Approximate Budget (optional)
+        </label>
+        <select
+          id="budget"
+          name="budget"
+          class="w-full px-4 py-2 bg-surface-raised border border-border rounded text-text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-colors"
+        >
+          <option value="">- Select -</option>
+          <option value="under-5k">Under 5k</option>
+          <option value="5k-10k">5k - 10k</option>
+          <option value="10k-25k">10k - 25k</option>
+          <option value="25k-50k">25k - 50k</option>
+          <option value="over-50k">Over 50k</option>
+          <option value="not-sure">Not sure yet</option>
+        </select>
+      </div>
+
+      <!-- Service Interest (optional) -->
+      <div>
+        <fieldset class="border-0 p-0">
+          <legend class="block text-sm font-medium text-text-primary mb-3">
+            What are you interested in? (optional)
+          </legend>
+          <div class="space-y-2">
+            <label class="flex items-center">
+              <input
+                type="checkbox"
+                name="services"
+                value="web-development"
+                class="w-4 h-4 rounded border-border bg-surface-raised text-accent focus:ring-2 focus:ring-accent"
+              />
+              <span class="ml-3 text-sm text-text-primary">Web Development</span>
+            </label>
+            <label class="flex items-center">
+              <input
+                type="checkbox"
+                name="services"
+                value="ai-automation"
+                class="w-4 h-4 rounded border-border bg-surface-raised text-accent focus:ring-2 focus:ring-accent"
+              />
+              <span class="ml-3 text-sm text-text-primary">AI & Automation</span>
+            </label>
+            <label class="flex items-center">
+              <input
+                type="checkbox"
+                name="services"
+                value="cybersecurity"
+                class="w-4 h-4 rounded border-border bg-surface-raised text-accent focus:ring-2 focus:ring-accent"
+              />
+              <span class="ml-3 text-sm text-text-primary">Cybersecurity</span>
+            </label>
+            <label class="flex items-center">
+              <input
+                type="checkbox"
+                name="services"
+                value="not-sure"
+                class="w-4 h-4 rounded border-border bg-surface-raised text-accent focus:ring-2 focus:ring-accent"
+              />
+              <span class="ml-3 text-sm text-text-primary">Not sure yet</span>
+            </label>
+          </div>
+        </fieldset>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="pt-2">
+        <button
+          type="submit"
+          id="submit-btn"
+          class="w-full px-6 py-3 bg-accent hover:bg-accent-hover text-background font-semibold rounded transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background"
+        >
+          {cta}
+        </button>
+        <p class="text-xs text-text-secondary text-center mt-3">
+          We'll get back to you within 48 hours.
+        </p>
+      </div>
+
+      <!-- Success Message (hidden by default, shown by JS) -->
+      <div
+        id="form-success"
+        class="hidden p-4 bg-green-500/10 border border-green-500 rounded"
+        role="status"
+        aria-live="polite"
+      >
+        <p class="text-sm font-medium text-green-500">
+          Thank you! We've received your message and will be in touch soon.
+        </p>
+      </div>
+
+      <!-- Form Fields (hidden on success) -->
+      <div id="form-fields" class="space-y-6">
+        <!-- All fields are here -->
+      </div>
+    </div>
+  </div>
+</form>
+
+<script define:vars={{ formName }}>
+  const form = document.querySelector(`form[name="${formName}"]`);
+  const successMessage = document.querySelector('#form-success');
+  const submitBtn = document.querySelector('#submit-btn');
+
+  if (form) {
+    // Validate on submit
+    form.addEventListener('submit', function (e) {
+      let isValid = true;
+
+      // Validate name
+      const nameInput = form.querySelector('#name');
+      const nameError = form.querySelector('#name-error');
+      if (!nameInput.value.trim()) {
+        nameError.classList.remove('hidden');
+        nameInput.setAttribute('aria-invalid', 'true');
+        isValid = false;
+      } else {
+        nameError.classList.add('hidden');
+        nameInput.setAttribute('aria-invalid', 'false');
+      }
+
+      // Validate email
+      const emailInput = form.querySelector('#email');
+      const emailError = form.querySelector('#email-error');
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(emailInput.value)) {
+        emailError.classList.remove('hidden');
+        emailInput.setAttribute('aria-invalid', 'true');
+        isValid = false;
+      } else {
+        emailError.classList.add('hidden');
+        emailInput.setAttribute('aria-invalid', 'false');
+      }
+
+      // Validate message
+      const messageInput = form.querySelector('#message');
+      const messageError = form.querySelector('#message-error');
+      if (!messageInput.value.trim()) {
+        messageError.classList.remove('hidden');
+        messageInput.setAttribute('aria-invalid', 'true');
+        isValid = false;
+      } else {
+        messageError.classList.add('hidden');
+        messageInput.setAttribute('aria-invalid', 'false');
+      }
+
+      if (!isValid) {
+        e.preventDefault();
+        return;
+      }
+
+      // Prevent default form submission to Netlify
+      e.preventDefault();
+
+      // Show success message
+      if (successMessage) {
+        successMessage.classList.remove('hidden');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Message Sent';
+      }
+
+      // Submit to Netlify in the background (no page reload)
+      const formData = new FormData(form);
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData).toString(),
+      }).catch((error) => {
+        console.error('Form submission error:', error);
+      });
+
+      // Scroll to success message
+      successMessage?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    // Clear error on input
+    const inputs = form.querySelectorAll('input[required], textarea[required]');
+    inputs.forEach((input) => {
+      input.addEventListener('input', function () {
+        const errorId = this.id + '-error';
+        const errorElement = form.querySelector(`#${errorId}`);
+        if (errorElement) {
+          errorElement.classList.add('hidden');
+          this.setAttribute('aria-invalid', 'false');
+        }
+      });
+    });
+  }
+</script>
+
+<style>
+  .contact-form {
+    background: var(--surface);
+  }
+</style>

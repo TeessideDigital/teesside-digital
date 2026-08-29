@@ -1,0 +1,387 @@
+---
+/**
+ * index.astro
+ *
+ * Homepage for Teesside Digital.
+ * 11 sections:
+ * 1. Hero - headline + CTA
+ * 2. Positioning Strip - tagline reinforcement
+ * 3. Problem - what problems we solve
+ * 4. What We Do - services overview
+ * 5. Health Check - tool section
+ * 6. Why Solo - positioning advantage
+ * 7. Process - how we work
+ * 8. Recent Work - portfolio highlights
+ * 9. About Dave - founder story (short)
+ * 10. Final CTA - call to action
+ * 11. Footer - (in BaseLayout)
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Hero from '@components/Astro/Hero.astro';
+import Section from '@components/Astro/Section.astro';
+import Card from '@components/Astro/Card.astro';
+import Button from '@components/Astro/Button.astro';
+import { services } from '@data/services';
+import { getFeaturedProjects } from '@data/work';
+
+// React islands
+import HealthCheck from '@components/React/HealthCheck';
+
+const featuredProjects = getFeaturedProjects();
+---
+
+<BaseLayout
+  title="Teesside Digital — Web Development & Cybersecurity"
+  description="Precision engineering for small businesses. Web development, AI automation, and cybersecurity services. Direct access to the developer."
+  image="/images/og-hero.jpg"
+>
+  {/* ============================================================
+      1. HERO SECTION
+      ============================================================ */}
+  <Hero
+    title="Precision Engineering for Small Businesses"
+    subtitle="Teesside Digital"
+    description="Direct access to the developer. We build fast, secure, accessible websites and web applications. No middlemen. No excuses."
+    ctaText="Get a Free Website Review"
+    ctaHref="#health-check"
+    ctaSecondary={{ text: 'View Our Work', href: '/work' }}
+    backgroundGradient={true}
+  />
+
+  {/* ============================================================
+      2. POSITIONING STRIP
+      ============================================================ */}
+  <Section background="surface" id="positioning">
+    <div class="text-center max-w-2xl mx-auto">
+      <p class="text-lg md:text-xl text-text-primary font-medium">
+        We don't build websites the way big agencies do.
+      </p>
+      <p class="text-text-secondary mt-2">
+        No templates. No bloat. No team of people you'll never meet. Just solid, bespoke engineering tailored to your business.
+      </p>
+    </div>
+  </Section>
+
+  {/* ============================================================
+      3. THE PROBLEM
+      ============================================================ */}
+  <Section
+    heading="The Problem"
+    subheading="Why most web projects fail for small businesses"
+    background="background"
+    id="problem"
+  >
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+      {/* Problem 1 */}
+      <div>
+        <h3 class="text-h4 text-text-primary mb-3">Expensive agencies</h3>
+        <p class="text-text-secondary">
+          Large digital agencies charge £5,000+ just to start. You pay for overhead, not quality.
+        </p>
+      </div>
+
+      {/* Problem 2 */}
+      <div>
+        <h3 class="text-h4 text-text-primary mb-3">Slow delivery</h3>
+        <p class="text-text-secondary">
+          Projects drag on for months. By the time you launch, market conditions have changed.
+        </p>
+      </div>
+
+      {/* Problem 3 */}
+      <div>
+        <h3 class="text-h4 text-text-primary mb-3">You can't talk to the developer</h3>
+        <p class="text-text-secondary">
+          A project manager relays your message to someone you never meet. Clarity dies in translation.
+        </p>
+      </div>
+    </div>
+  </Section>
+
+  {/* ============================================================
+      4. WHAT WE DO
+      ============================================================ */}
+  <Section
+    heading="What We Do"
+    subheading="Three core services to scale your business"
+    background="surface"
+    id="services-intro"
+  >
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+      {services.map((service) => (
+        <Card
+          href={`/services/${service.slug}`}
+          title={service.title}
+          description={service.shortDescription}
+          image={service.image}
+          imageAlt={service.imageAlt}
+          hover="shadow"
+        >
+          <Button href={`/services/${service.slug}`} variant="outline" size="sm">
+            Learn More →
+          </Button>
+        </Card>
+      ))}
+    </div>
+
+    <div class="mt-12 text-center">
+      <Button href="/services" variant="secondary" size="md">
+        View All Services
+      </Button>
+    </div>
+  </Section>
+
+  {/* ============================================================
+      5. HEALTH CHECK TOOL
+      ============================================================ */}
+  <Section
+    heading="Free Website Health Check"
+    subheading="Analyse your site instantly. No sign-up required."
+    background="background"
+    id="health-check"
+  >
+    <div class="max-w-2xl mx-auto">
+      <HealthCheck client:idle />
+    </div>
+  </Section>
+
+  {/* ============================================================
+      6. WHY SOLO?
+      ============================================================ */}
+  <Section
+    heading="Why Work With a Solo Developer?"
+    subheading="Direct access is your competitive advantage"
+    background="surface"
+    id="why-solo"
+  >
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 max-w-3xl mx-auto">
+      {/* Advantage 1 */}
+      <div class="flex gap-4">
+        <div class="flex-shrink-0">
+          <div class="flex items-center justify-center h-12 w-12 rounded bg-accent text-background font-bold">
+            ✓
+          </div>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-text-primary mb-2">You talk to the developer</h3>
+          <p class="text-text-secondary">
+            No middlemen. No miscommunication. When you have a question, you get an answer from the person building your site.
+          </p>
+        </div>
+      </div>
+
+      {/* Advantage 2 */}
+      <div class="flex gap-4">
+        <div class="flex-shrink-0">
+          <div class="flex items-center justify-center h-12 w-12 rounded bg-accent text-background font-bold">
+            ✓
+          </div>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-text-primary mb-2">Faster turnaround</h3>
+          <p class="text-text-secondary">
+            No committee meetings. No bureaucracy. Decisions happen at the speed of conversation, not email chains.
+          </p>
+        </div>
+      </div>
+
+      {/* Advantage 3 */}
+      <div class="flex gap-4">
+        <div class="flex-shrink-0">
+          <div class="flex items-center justify-center h-12 w-12 rounded bg-accent text-background font-bold">
+            ✓
+          </div>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-text-primary mb-2">Better value</h3>
+          <p class="text-text-secondary">
+            Lower overhead means better pricing. You pay for engineering, not corporate infrastructure.
+          </p>
+        </div>
+      </div>
+
+      {/* Advantage 4 */}
+      <div class="flex gap-4">
+        <div class="flex-shrink-0">
+          <div class="flex items-center justify-center h-12 w-12 rounded bg-accent text-background font-bold">
+            ✓
+          </div>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-text-primary mb-2">Security by default</h3>
+          <p class="text-text-secondary">
+            Every project gets security best practices built in. No "we'll add it later." Not an option.
+          </p>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  {/* ============================================================
+      7. PROCESS
+      ============================================================ */}
+  <Section
+    heading="How We Work"
+    subheading="Simple, straightforward, predictable"
+    background="background"
+    id="process"
+  >
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-4 max-w-4xl mx-auto">
+      {/* Step 1 */}
+      <div class="text-center">
+        <div class="mb-4 inline-flex items-center justify-center w-16 h-16 rounded-full bg-surface border-2 border-accent">
+          <span class="text-xl font-bold text-accent">1</span>
+        </div>
+        <h3 class="text-base font-semibold text-text-primary mb-2">Understand</h3>
+        <p class="text-sm text-text-secondary">
+          We learn about your business, your goals, and your audience.
+        </p>
+      </div>
+
+      {/* Step 2 */}
+      <div class="text-center">
+        <div class="mb-4 inline-flex items-center justify-center w-16 h-16 rounded-full bg-surface border-2 border-accent">
+          <span class="text-xl font-bold text-accent">2</span>
+        </div>
+        <h3 class="text-base font-semibold text-text-primary mb-2">Plan</h3>
+        <p class="text-sm text-text-secondary">
+          We outline the approach, timeline, and investment required.
+        </p>
+      </div>
+
+      {/* Step 3 */}
+      <div class="text-center">
+        <div class="mb-4 inline-flex items-center justify-center w-16 h-16 rounded-full bg-surface border-2 border-accent">
+          <span class="text-xl font-bold text-accent">3</span>
+        </div>
+        <h3 class="text-base font-semibold text-text-primary mb-2">Build</h3>
+        <p class="text-sm text-text-secondary">
+          We develop your solution with regular feedback and updates.
+        </p>
+      </div>
+
+      {/* Step 4 */}
+      <div class="text-center">
+        <div class="mb-4 inline-flex items-center justify-center w-16 h-16 rounded-full bg-surface border-2 border-accent">
+          <span class="text-xl font-bold text-accent">4</span>
+        </div>
+        <h3 class="text-base font-semibold text-text-primary mb-2">Support</h3>
+        <p class="text-sm text-text-secondary">
+          Launch, monitor, and improve. We're here for the long term.
+        </p>
+      </div>
+    </div>
+  </Section>
+
+  {/* ============================================================
+      8. RECENT WORK
+      ============================================================ */}
+  <Section
+    heading="Recent Work"
+    subheading="Demonstration projects showcasing our capabilities"
+    background="surface"
+    id="work"
+  >
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-8">
+      {featuredProjects.map((project) => (
+        <Card
+          href={`/work/${project.slug}`}
+          image={project.image}
+          imageAlt={project.imageAlt}
+          title={project.title}
+          description={project.description}
+          tags={project.tags}
+          hover="scale"
+        >
+          <Button href={`/work/${project.slug}`} variant="outline" size="sm">
+            View Case Study →
+          </Button>
+        </Card>
+      ))}
+    </div>
+
+    <div class="text-center">
+      <Button href="/work" variant="secondary" size="md">
+        View All Portfolio
+      </Button>
+    </div>
+  </Section>
+
+  {/* ============================================================
+      9. ABOUT DAVE
+      ============================================================ */}
+  <Section
+    heading="About Dave"
+    subheading="The person behind the work"
+    background="background"
+    id="about"
+  >
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center max-w-4xl mx-auto">
+      {/* Image placeholder */}
+      <div class="bg-surface-raised rounded-lg aspect-square flex items-center justify-center text-text-secondary">
+        <span class="text-sm">[Photo coming soon]</span>
+      </div>
+
+      {/* Bio */}
+      <div>
+        <p class="text-lg text-text-primary mb-4">
+          Hi, I'm Dave. I've been building websites and applications for small businesses across the UK for the past few years.
+        </p>
+
+        <p class="text-text-secondary mb-4">
+          Before development, I worked in construction and as a tattoo artist. Both taught me the same thing: people value craftsmanship, honesty, and reliability over flashy marketing.
+        </p>
+
+        <p class="text-text-secondary mb-6">
+          I studied Computer Science and I'm passionate about security, performance, and accessibility. Your website should be fast, secure, and usable by everyone — no exceptions.
+        </p>
+
+        <div class="flex gap-4">
+          <Button href="/about" variant="outline">
+            Read Full Story
+          </Button>
+          <Button href="/contact" variant="primary">
+            Let's Talk
+          </Button>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  {/* ============================================================
+      10. FINAL CTA
+      ============================================================ */}
+  <Section
+    heading="Ready to Get Started?"
+    subheading="Let's build something great together"
+    background="surface"
+    id="final-cta"
+  >
+    <div class="text-center max-w-2xl mx-auto">
+      <p class="text-text-secondary mb-8 text-lg">
+        Whether you need a new website, want to improve your online presence, or need security guidance, let's have a conversation.
+      </p>
+
+      <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6">
+        <Button href="/contact" variant="primary" size="lg">
+          Start a Project
+        </Button>
+        <Button href="#health-check" variant="outline" size="lg">
+          Free Website Review
+        </Button>
+      </div>
+
+      <p class="text-xs text-text-secondary mt-8">
+        Serving businesses across Teesside, North East England, and the UK.
+      </p>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  /* Smooth scroll behavior (from BaseLayout global style) */
+  :global(html) {
+    scroll-behavior: smooth;
+  }
+</style>

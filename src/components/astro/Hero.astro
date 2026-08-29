@@ -1,0 +1,168 @@
+---
+/**
+ * Hero.astro
+ *
+ * Large hero section for homepage.
+ * Displays:
+ * - Large headline
+ * - Subheading/description
+ * - CTA button(s)
+ * - Optional background image or gradient
+ *
+ * Props:
+ * - title: string (main headline)
+ * - subtitle?: string (subheading)
+ * - description?: string (longer description)
+ * - ctaText?: string (button text)
+ * - ctaHref?: string (button link)
+ * - ctaSecondary?: { text: string, href: string } (secondary button)
+ * - backgroundImage?: string (optional background image)
+ * - backgroundGradient?: boolean (use gradient background)
+ */
+
+import Button from './Button.astro';
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  description?: string;
+  ctaText?: string;
+  ctaHref?: string;
+  ctaSecondary?: {
+    text: string;
+    href: string;
+  };
+  backgroundImage?: string;
+  backgroundGradient?: boolean;
+}
+
+const {
+  title,
+  subtitle,
+  description,
+  ctaText = 'Get Started',
+  ctaHref = '/contact',
+  ctaSecondary,
+  backgroundImage,
+  backgroundGradient = false,
+} = Astro.props as Props;
+---
+
+<section
+  class={`
+    relative min-h-screen md:min-h-[80vh] flex items-center justify-center
+    py-16 md:py-20
+    ${backgroundGradient ? 'bg-gradient-to-br from-background via-surface to-background' : 'bg-background'}
+    overflow-hidden
+  `}
+>
+  {/* Background Image (optional) */}
+  {
+    backgroundImage && (
+      <div
+        class="absolute inset-0 opacity-10"
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+        aria-hidden="true"
+      />
+    )
+  }
+
+  {/* Decorative elements (optional, for premium feel) */}
+  <div
+    class="absolute top-20 right-10 w-64 h-64 bg-accent opacity-5 rounded-full blur-3xl"
+    aria-hidden="true"
+  />
+  <div
+    class="absolute bottom-10 left-10 w-96 h-96 bg-accent opacity-3 rounded-full blur-3xl"
+    aria-hidden="true"
+  />
+
+  {/* Content */}
+  <div class="container-content relative z-10 text-center max-w-4xl">
+    {/* Subtitle/Badge (optional) */}
+    {
+      subtitle && (
+        <div class="mb-6 md:mb-8 inline-block">
+          <span class="text-sm md:text-base font-medium text-accent bg-surface rounded-full px-4 py-2 border border-border">
+            {subtitle}
+          </span>
+        </div>
+      )
+    }
+
+    {/* Main Headline */}
+    <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-text-primary mb-6 md:mb-8 leading-tight">
+      {title}
+    </h1>
+
+    {/* Description */}
+    {
+      description && (
+        <p class="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-8 md:mb-12 leading-relaxed">
+          {description}
+        </p>
+      )
+    }
+
+    {/* CTA Buttons */}
+    <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6">
+      <Button href={ctaHref} variant="primary" size="lg">
+        {ctaText}
+      </Button>
+
+      {
+        ctaSecondary && (
+          <Button href={ctaSecondary.href} variant="outline" size="lg">
+            {ctaSecondary.text}
+          </Button>
+        )
+      }
+    </div>
+  </div>
+
+  {/* Scroll Indicator (optional) */}
+  <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce md:block hidden" aria-hidden="true">
+    <svg class="w-6 h-6 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+    </svg>
+  </div>
+</section>
+
+<style>
+  /* Prevent text selection on decorative elements */
+  [aria-hidden='true'] {
+    user-select: none;
+    pointer-events: none;
+  }
+
+  /* Smooth gradient text (optional, uncomment if needed) */
+  /*
+  h1 {
+    background: linear-gradient(135deg, #f0f0f0, #9a9a9a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  */
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    section {
+      min-height: auto;
+      padding: 4rem 0;
+    }
+
+    h1 {
+      font-size: 2rem;
+      line-height: 1.2;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
+</style>

@@ -1,0 +1,362 @@
+---
+/**
+ * src/pages/services/[slug].astro
+ *
+ * Dynamic service detail pages. One page per service, generated from services.ts data.
+ *
+ * Route: /services/[slug]
+ * Examples: /services/web-development, /services/ai-automation, /services/cybersecurity
+ *
+ * Features:
+ * - Service overview
+ * - What's included
+ * - Use cases
+ * - FAQ
+ * - CTA to contact
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Section from '@components/Astro/Section.astro';
+import Hero from '@components/Astro/Hero.astro';
+import Button from '@components/Astro/Button.astro';
+import { getServices, getServiceBySlug } from '@data/services';
+
+export function getStaticPaths() {
+  const services = getServices();
+  return services.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+
+interface Props {
+  service: ReturnType<typeof getServiceBySlug>;
+}
+
+const { service } = Astro.props;
+
+if (!service) {
+  return Astro.redirect('/404');
+}
+
+const title = `${service.title} - Teesside Digital`;
+const description = service.description;
+const canonicalURL = new URL(`/services/${service.slug}`, Astro.site);
+
+// Service details
+const details: Record<string, { icon: string; items: string[] }> = {
+  'web-development': {
+    icon: '🌐',
+    items: [
+      'Modern, responsive websites',
+      'Web applications & tools',
+      'E-commerce solutions',
+      'Website maintenance & updates',
+      'Performance optimisation',
+      'SEO-ready architecture',
+    ],
+  },
+  'ai-automation': {
+    icon: '⚙️',
+    items: [
+      'Workflow automation',
+      'AI-powered features',
+      'API integrations',
+      'Business process optimisation',
+      'Data analysis & reporting',
+      'Email & notification automation',
+    ],
+  },
+  cybersecurity: {
+    icon: '🔐',
+    items: [
+      'Website security audits',
+      'Vulnerability assessment',
+      'Security hardening',
+      'Compliance guidance (GDPR, etc)',
+      'Incident response planning',
+      'Ongoing monitoring setup',
+    ],
+  },
+};
+
+// Service use cases
+const useCases: Record<string, string[]> = {
+  'web-development': [
+    'A small business that needs to reach customers online',
+    'A startup building an MVP to test a market',
+    'A growing company that needs a more professional online presence',
+    'A business modernising an outdated website',
+    'A company building custom tools for internal use',
+  ],
+  'ai-automation': [
+    'A business spending too much time on repetitive tasks',
+    'A company struggling to keep up with customer support volume',
+    'A business with data that could be turned into insights',
+    'A growing team that needs to work more efficiently',
+    'A company exploring AI opportunities for competitive advantage',
+  ],
+  cybersecurity: [
+    'A business handling sensitive customer or financial data',
+    'A company that has experienced or is worried about a security incident',
+    'A business subject to compliance requirements (GDPR, etc)',
+    'A company with high-value digital assets that need protection',
+    'Any business taking its online security seriously',
+  ],
+};
+
+// Service FAQs
+const faqs: Record<string, { question: string; answer: string }[]> = {
+  'web-development': [
+    {
+      question: 'How long does a website build take?',
+      answer:
+        'Typically 6-12 weeks depending on complexity and your availability for feedback. A simple brochure site might be 4-6 weeks; a complex application could be 3-6 months.',
+    },
+    {
+      question: 'Can you migrate my existing website?',
+      answer:
+        'Yes. We can migrate content, maintain SEO rankings, and improve performance during the transition. We\'ll plan to minimise any disruption.',
+    },
+    {
+      question: 'Will my website rank in Google?',
+      answer:
+        'We build with SEO in mind: proper structure, fast performance, accessible code, and technical optimisation. Ranking depends on many factors, but we\'ll give your site the best possible foundation.',
+    },
+    {
+      question: 'Do you provide hosting?',
+      answer:
+        'We recommend and can set up hosting on fast, reliable platforms like Netlify or Vercel. You\'ll have full control and can switch providers anytime.',
+    },
+    {
+      question: 'Can you add features after launch?',
+      answer:
+        'Absolutely. We build with future expansion in mind. Adding features, pages, or functionality is straightforward because the codebase is maintainable and well-documented.',
+    },
+  ],
+  'ai-automation': [
+    {
+      question: 'Is AI automation only for tech companies?',
+      answer:
+        'No. Any business with repetitive tasks can benefit. Restaurants automating reservations, accountants streamlining invoicing, support teams handling common questions - AI automation works everywhere.',
+    },
+    {
+      question: 'How do I know what can be automated?',
+      answer:
+        'We analyse your workflows, identify bottlenecks, and spot opportunities. Some automations are obvious; others emerge during the consultation. We\'ll be honest about what\'s worth automating.',
+    },
+    {
+      question: 'Will automation replace my staff?',
+      answer:
+        'No. Automation replaces repetitive tasks, not people. Your team can focus on complex work, customer relationships, and strategic thinking instead of copy-pasting data.',
+    },
+    {
+      question: 'What if the AI gets it wrong?',
+      answer:
+        'AI isn\'t perfect, but it doesn\'t have to be. Most automations include human review or override options. We build fail-safes so mistakes don\'t cascade.',
+    },
+    {
+      question: 'How long before we see ROI?',
+      answer:
+        'It varies. Some automations save 5+ hours per week immediately. Others are strategic and take time to deliver value. We\'ll be clear about expected timelines before you commit.',
+    },
+  ],
+  cybersecurity: [
+    {
+      question: 'Do I really need a security audit?',
+      answer:
+        'If you handle customer data, financial information, or have high-value digital assets, yes. Even if you think you\'re secure, an audit often uncovers gaps. Costs of a breach far exceed the cost of prevention.',
+    },
+    {
+      question: 'How often should I audit security?',
+      answer:
+        'At minimum annually, or whenever you make significant changes. After major updates or incidents, always audit. We can set up ongoing monitoring for continuous protection.',
+    },
+    {
+      question: 'Will security slow down my website?',
+      answer:
+        'Good security should be transparent. Proper encryption, caching, and optimisation actually improve performance while protecting you. Security and speed aren\'t opposing forces.',
+    },
+    {
+      question: 'What if we get hacked?',
+      answer:
+        'We\'ll help. We\'ll identify how the breach happened, secure your systems, restore from backups, and help communicate with affected users. Preparedness minimises damage.',
+    },
+    {
+      question: 'Is compliance (GDPR, etc) my responsibility?',
+      answer:
+        'You\'re ultimately responsible, but we help. We can guide you on requirements, implement technical controls, and audit compliance. Legal advice comes from a lawyer, not us.',
+    },
+  ],
+};
+
+const serviceDetails = details[service.slug] || {};
+const serviceUseCases = useCases[service.slug] || [];
+const serviceFaqs = faqs[service.slug] || [];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalURL={canonicalURL}
+>
+  <!-- Hero -->
+  <Hero
+    headline={service.title}
+    subheadline={service.description}
+    badge="Service"
+  />
+
+  <!-- Service Overview -->
+  <Section>
+    <div class="max-w-4xl mx-auto px-4 md:px-6">
+      <div class="grid md:grid-cols-2 gap-8 md:gap-12">
+        <div>
+          <h2 class="text-2xl md:text-3xl font-semibold text-text-primary mb-4">
+            What's Included
+          </h2>
+          <div class="space-y-3">
+            {
+              serviceDetails.items?.map((item) => (
+                <div class="flex gap-3">
+                  <span class="text-accent text-xl flex-shrink-0">+</span>
+                  <span class="text-text-secondary">{item}</span>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+        <div>
+          <h2 class="text-2xl md:text-3xl font-semibold text-text-primary mb-4">
+            The Right Fit For...
+          </h2>
+          <ul class="space-y-3">
+            {
+              serviceUseCases.map((useCase) => (
+                <li class="flex gap-3">
+                  <span class="text-text-secondary">•</span>
+                  <span class="text-text-secondary">{useCase}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Our Approach -->
+  <Section variant="dark">
+    <div class="max-w-4xl mx-auto px-4 md:px-6">
+      <h2 class="text-2xl md:text-3xl font-semibold text-text-primary mb-8">
+        How We Approach {service.title}
+      </h2>
+
+      <div class="space-y-6 text-text-secondary">
+        {
+          service.slug === 'web-development' && (
+            <>
+              <p>
+                Building a website isn't just about making it look good - it's about making it
+                work for your business. We focus on performance, security, SEO, and conversion.
+              </p>
+              <p>
+                We listen to your needs, challenge assumptions, and propose the right technology.
+                Some projects need a static site; others need a database and custom logic. We'll
+                recommend the approach that fits your specific situation.
+              </p>
+              <p>
+                Throughout the build, you'll have regular updates and opportunities for feedback.
+                No surprises at the end, no hidden complexity, just clean code that works.
+              </p>
+            </>
+          )
+        }
+
+        {
+          service.slug === 'ai-automation' && (
+            <>
+              <p>
+                Automation isn't about replacing people - it's about eliminating tedious tasks so
+                your team can focus on meaningful work.
+              </p>
+              <p>
+                We start by understanding your workflows, identifying bottlenecks, and spotting
+                automation opportunities. We'll be honest about what's worth automating and what
+                isn't.
+              </p>
+              <p>
+                Some automations are quick wins: connecting tools, building workflows, automating
+                common tasks. Others are more strategic - using AI to uncover insights, personalise
+                customer experiences, or make smarter decisions.
+              </p>
+            </>
+          )
+        }
+
+        {
+          service.slug === 'cybersecurity' && (
+            <>
+              <p>
+                Security isn't a feature you add at the end - it's something you build in from the
+                start. We take it seriously and help your business take it seriously too.
+              </p>
+              <p>
+                We'll audit your systems, identify vulnerabilities, explain risks in plain language,
+                and recommend practical protections. No fear-mongering, no unnecessary complexity - just
+                honest assessment and actionable advice.
+              </p>
+              <p>
+                After we identify issues, we'll help you fix them. We'll harden your systems, train
+                your team, and set up monitoring so you stay protected going forward.
+              </p>
+            </>
+          )
+        }
+      </div>
+    </div>
+  </Section>
+
+  <!-- FAQ Section -->
+  {
+    serviceFaqs.length > 0 && (
+      <Section>
+        <div class="max-w-3xl mx-auto px-4 md:px-6">
+          <h2 class="text-2xl md:text-3xl font-semibold text-text-primary mb-8">
+            Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-8">
+            {serviceFaqs.map((faq) => (
+              <div>
+                <h3 class="text-lg font-semibold text-text-primary mb-3">{faq.question}</h3>
+                <p class="text-text-secondary">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Section>
+    )
+  }
+
+  <!-- CTA Section -->
+  <Section variant="dark" class="py-12 md:py-16">
+    <div class="max-w-3xl mx-auto px-4 md:px-6 text-center">
+      <h2 class="text-2xl md:text-3xl font-semibold text-text-primary mb-4">
+        Ready to get started?
+      </h2>
+      <p class="text-text-secondary mb-8">
+        Let's discuss how {service.title.toLowerCase()} can help your business.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <Button variant="primary" href="/contact">
+          Schedule Consultation
+        </Button>
+        <Button variant="secondary" href="/services">
+          Explore Other Services
+        </Button>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

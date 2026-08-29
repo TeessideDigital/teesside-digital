@@ -1,0 +1,262 @@
+/**
+ * Global Styles for Teesside Digital
+ * 
+ * This file includes:
+ * - Tailwind CSS directives
+ * - Custom CSS utilities
+ * - Typography overrides
+ * - Micro-interactions
+ * - Reduced motion support (accessibility)
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   Typography & Base Styles
+   ============================================================ */
+
+body {
+  @apply bg-background text-text-primary;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headings */
+h1 {
+  @apply text-h1;
+}
+
+h2 {
+  @apply text-h2;
+}
+
+h3 {
+  @apply text-h3;
+}
+
+h4 {
+  @apply text-h4;
+}
+
+p {
+  @apply text-body text-text-primary;
+}
+
+/* Links */
+a {
+  @apply text-accent transition-colors duration-200 ease-out;
+}
+
+a:hover {
+  @apply text-accent-hover;
+}
+
+/* ============================================================
+   Buttons & Interactive Elements
+   ============================================================ */
+
+button,
+[role='button'] {
+  @apply transition-colors duration-200 ease-out focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background;
+  cursor: pointer;
+}
+
+/* Remove default focus outline and use custom ring */
+:focus-visible {
+  @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-background;
+}
+
+/* ============================================================
+   Forms
+   ============================================================ */
+
+input,
+textarea,
+select {
+  @apply bg-surface border border-border rounded text-text-primary placeholder-text-secondary transition-all duration-200;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  @apply outline-none border-accent ring-1 ring-accent ring-inset;
+}
+
+input::placeholder,
+textarea::placeholder {
+  @apply text-text-secondary;
+}
+
+/* ============================================================
+   Code Blocks
+   ============================================================ */
+
+code {
+  @apply bg-surface-raised px-1 py-0.5 rounded font-mono text-sm;
+}
+
+pre {
+  @apply bg-surface-raised p-4 rounded overflow-x-auto;
+  margin: 1rem 0;
+}
+
+pre code {
+  @apply bg-transparent px-0 py-0;
+}
+
+/* ============================================================
+   Utility Classes
+   ============================================================ */
+
+/* Container with max-width and centered padding */
+.container-content {
+  @apply mx-auto px-4 max-w-6xl;
+}
+
+/* Section padding (mobile-first) */
+.section-padding {
+  @apply py-12 md:py-16;
+}
+
+/* Gradient text utility */
+.gradient-text {
+  background: linear-gradient(135deg, #5b7f9e, #6e93b5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Subtle box shadow for cards */
+.card-shadow {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+/* Hover scale animation */
+.hover-scale {
+  @apply transition-transform duration-300 ease-out;
+}
+
+.hover-scale:hover {
+  @apply scale-105;
+}
+
+/* Skeleton/placeholder loading */
+.skeleton {
+  @apply bg-surface-raised animate-pulse rounded;
+}
+
+/* Visually hidden but accessible to screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ============================================================
+   Animations
+   ============================================================ */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.animate-slide-down {
+  animation: slideDown 0.3s ease-out;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* ============================================================
+   Accessibility: Reduced Motion
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   Scrollbar Styling (Optional - for modern browsers)
+   ============================================================ */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-surface;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-surface-raised rounded;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-accent;
+}
+
+/* ============================================================
+   Print Styles
+   ============================================================ */
+
+@media print {
+  body {
+    @apply bg-white text-black;
+  }
+
+  a {
+    @apply text-black underline;
+  }
+
+  .no-print {
+    display: none;
+  }
+}

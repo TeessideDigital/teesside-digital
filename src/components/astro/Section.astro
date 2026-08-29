@@ -1,0 +1,92 @@
+---
+/**
+ * Section.astro
+ *
+ * Generic section wrapper used throughout the site.
+ * Handles:
+ * - Max-width container
+ * - Padding (vertical + horizontal)
+ * - Optional background color (background, surface, surface-raised)
+ * - Optional section heading
+ * - Consistent spacing between sections
+ *
+ * Props:
+ * - background?: 'background' | 'surface' | 'surface-raised'
+ * - heading?: string (optional h2)
+ * - subheading?: string (optional subtitle)
+ * - id?: string (for anchor links)
+ * - class?: string (additional classes)
+ */
+
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'section'> {
+  background?: 'background' | 'surface' | 'surface-raised';
+  heading?: string;
+  subheading?: string;
+  id?: string;
+}
+
+const {
+  background = 'background',
+  heading,
+  subheading,
+  id,
+  class: customClass = '',
+  ...attrs
+} = Astro.props as Props;
+
+/**
+ * Background color mappings
+ */
+const backgroundClasses = {
+  background: 'bg-background',
+  surface: 'bg-surface',
+  'surface-raised': 'bg-surface-raised',
+};
+---
+
+<section
+  id={id}
+  class={`
+    section-padding
+    ${backgroundClasses[background]}
+    transition-colors duration-200
+    ${customClass}
+  `}
+  {...attrs}
+>
+  <div class="container-content">
+    {/* Optional section heading */}
+    {heading && (
+      <div class="mb-12 md:mb-16">
+        <h2 class="text-h2 text-text-primary mb-3">
+          {heading}
+        </h2>
+        {subheading && (
+          <p class="text-lg text-text-secondary max-w-2xl">
+            {subheading}
+          </p>
+        )}
+      </div>
+    )}
+
+    {/* Section content */}
+    <slot />
+  </div>
+</section>
+
+<style>
+  section {
+    /* Smooth transitions for background color changes (useful for dark/light mode in future) */
+    transition: background-color 0.2s ease-out;
+  }
+
+  /**
+   * Ensure consistent spacing between sections
+   * No margin needed since padding handles spacing
+   */
+  section {
+    margin: 0;
+  }
+</style>

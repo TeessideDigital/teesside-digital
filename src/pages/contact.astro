@@ -1,0 +1,187 @@
+---
+/**
+ * src/pages/contact.astro
+ *
+ * Contact page. Provides contact form and additional contact methods.
+ *
+ * Route: /contact
+ * Features:
+ * - Contact form with Netlify Forms integration
+ * - Contact information (email, response time)
+ * - FAQ or additional context
+ * - Mobile-responsive
+ * - WCAG 2.2 AA accessible
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Section from '@components/astro/Section.astro';
+import Hero from '@components/astro/Hero.astro';
+import ContactForm from '@components/astro/ContactForm.astro';
+
+const title = 'Contact Teesside Digital';
+const description =
+  'Get in touch to discuss your project. We respond to all inquiries within 48 hours.';
+const canonicalURL = new URL('/contact', Astro.site);
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalURL={canonicalURL}
+>
+  <!-- Hero Section -->
+  <Hero
+    headline="Let's work together"
+    subheadline="Tell us about your project and we'll provide a free initial consultation."
+    badge="Get Started"
+  />
+
+  <!-- Contact Form Section -->
+  <Section variant="dark">
+    <ContactForm
+      variant="standalone"
+      title="Send us a Message"
+      subtitle="Fill out the form below and we'll get back to you as soon as possible. For urgent matters, please call or email directly."
+      cta="Send Message"
+      formName="contact"
+    />
+  </Section>
+
+  <!-- Contact Info Section -->
+  <Section>
+    <div class="max-w-6xl mx-auto px-4 md:px-6">
+      <div class="grid md:grid-cols-3 gap-8 md:gap-12">
+        <!-- Email -->
+        <div class="flex flex-col">
+          <h3 class="text-lg font-semibold text-text-primary mb-2">Email</h3>
+          <a
+            href="mailto:dave@teessidedigital.uk"
+            class="text-accent hover:text-accent-hover transition-colors"
+          >
+            dave@teessidedigital.uk
+          </a>
+          <p class="text-sm text-text-secondary mt-3">
+            Response time: within 48 hours, usually sooner.
+          </p>
+        </div>
+
+        <!-- Phone (optional - uncomment if needed) -->
+        <div class="flex flex-col">
+          <h3 class="text-lg font-semibold text-text-primary mb-2">Location</h3>
+          <p class="text-text-secondary">
+            Hartlepool, North East England, United Kingdom
+          </p>
+          <p class="text-sm text-text-secondary mt-3">
+            We work with clients across the North East and nationwide.
+          </p>
+        </div>
+
+        <!-- Response Time -->
+        <div class="flex flex-col">
+          <h3 class="text-lg font-semibold text-text-primary mb-2">
+            What to Expect
+          </h3>
+          <ul class="text-sm text-text-secondary space-y-2">
+            <li>- Acknowledgement of your message</li>
+            <li>- Initial consultation proposal</li>
+            <li>- Timeline and next steps</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- FAQ Section -->
+  <Section variant="dark">
+    <div class="max-w-3xl mx-auto px-4 md:px-6">
+      <h2 class="text-2xl md:text-3xl font-semibold text-text-primary mb-8">
+        Common Questions
+      </h2>
+
+      <div class="space-y-8">
+        <!-- Question 1 -->
+        <div>
+          <h3 class="text-lg font-semibold text-text-primary mb-2">
+            What information should I include in my message?
+          </h3>
+          <p class="text-text-secondary">
+            Tell us about your project, timeline, budget, and your main goals. The more
+            context you provide, the better we can tailor our proposal. Don't worry if you
+            don't have all the details - we'll help you work through them during the initial
+            consultation.
+          </p>
+        </div>
+
+        <!-- Question 2 -->
+        <div>
+          <h3 class="text-lg font-semibold text-text-primary mb-2">
+            How quickly will you respond?
+          </h3>
+          <p class="text-text-secondary">
+            We aim to respond to all inquiries within 48 hours. If your matter is urgent,
+            mention that in your message and we'll prioritise it. During holidays or
+            weekends, response time may be slightly longer.
+          </p>
+        </div>
+
+        <!-- Question 3 -->
+        <div>
+          <h3 class="text-lg font-semibold text-text-primary mb-2">
+            Do you offer free consultations?
+          </h3>
+          <p class="text-text-secondary">
+            Yes. The initial consultation is free and helps us understand your needs and
+            whether we're a good fit for your project. We'll discuss your goals, timeline,
+            and budget, then provide a proposal if appropriate.
+          </p>
+        </div>
+
+        <!-- Question 4 -->
+        <div>
+          <h3 class="text-lg font-semibold text-text-primary mb-2">
+            What if I'm not sure what I need?
+          </h3>
+          <p class="text-text-secondary">
+            That's perfectly fine. We work with many clients who have a vague idea of what
+            they need but don't know where to start. The consultation process helps you
+            figure out the best approach. We'll walk you through options and explain
+            recommendations clearly.
+          </p>
+        </div>
+
+        <!-- Question 5 -->
+        <div>
+          <h3 class="text-lg font-semibold text-text-primary mb-2">
+            Can I get a quote before talking to you?
+          </h3>
+          <p class="text-text-secondary">
+            Not really - every project is unique and quotes depend on specific requirements,
+            complexity, and timeline. We could give you a generic estimate, but that would
+            be misleading. Instead, we prefer to have a conversation first so we can provide
+            an accurate proposal that actually makes sense for your situation.
+          </p>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- CTA Section -->
+  <Section class="py-12 md:py-16">
+    <div
+      class="max-w-3xl mx-auto px-4 md:px-6 text-center bg-surface-raised rounded p-8 md:p-12"
+    >
+      <h2 class="text-2xl md:text-3xl font-semibold text-text-primary mb-4">
+        Ready to get started?
+      </h2>
+      <p class="text-text-secondary mb-6">
+        Scroll up and fill out the form, or email us directly at
+        <a href="mailto:dave@teessidedigital.uk" class="text-accent hover:text-accent-hover"
+          >dave@teessidedigital.uk</a
+        >
+      </p>
+      <p class="text-sm text-text-secondary">
+        We look forward to hearing about your project.
+      </p>
+    </div>
+  </Section>
+</BaseLayout>

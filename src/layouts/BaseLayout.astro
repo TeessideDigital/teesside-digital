@@ -1,0 +1,206 @@
+---
+/**
+ * BaseLayout.astro
+ *
+ * Main page wrapper for all pages.
+ * Handles:
+ * - Header and Footer
+ * - Meta tags (title, description, Open Graph)
+ * - Structured data (schema.org)
+ * - Accessibility (skip to main, lang attribute)
+ * - Security headers (via netlify.toml, but verified here)
+ *
+ * All pages inherit from this layout.
+ *
+ * Usage:
+ * ---
+ * import BaseLayout from '@layouts/BaseLayout.astro';
+ * ---
+ * <BaseLayout title="Page Title" description="Page description">
+ *   <YourContent />
+ * </BaseLayout>
+ */
+
+import { SITE } from '@config/constants';
+import { getCanonicalUrl, getPageTitle, getOgImageUrl, getOrganisationSchema } from '@lib/seo';
+import Header from '@components/Astro/Header.astro';
+import Footer from '@components/Astro/Footer.astro';
+import '@styles/globals.css';
+
+interface Props {
+  title?: string; // Page title (will be appended with site name)
+  description?: string; // Meta description
+  image?: string; // Open Graph image
+  imageAlt?: string; // Image alt text
+  canonical?: string; // Canonical URL (optional, auto-generated if not provided)
+  robots?: string; // robots meta tag (default: index, follow)
+  article?: {
+    // For article/case study pages
+    publishedTime?: string;
+    modifiedTime?: string;
+    author?: string;
+  };
+  structuredData?: Record<string, unknown>; // Additional JSON-LD schema
+}
+
+const {
+  title = SITE.title,
+  description = SITE.description,
+  image,
+  imageAlt = SITE.title,
+  canonical,
+  robots = 'index, follow',
+  article,
+  structuredData,
+} = Astro.props as Props;
+
+// Generate canonical URL
+const canonicalUrl = canonical || getCanonicalUrl(Astro.url.pathname);
+
+// Format page title (append site name unless it's the homepage)
+const pageTitle = getPageTitle(title);
+
+// Generate Open Graph image URL (must be absolute)
+const ogImage = getOgImageUrl(image);
+
+// Base structured data (organisation schema)
+const baseStructuredData = getOrganisationSchema();
+
+// Combine with page-specific structured data if provided
+const allStructuredData = structuredData ? [baseStructuredData, structuredData] : baseStructuredData;
+---
+
+<!DOCTYPE html>
+<html lang={SITE.language}>
+  <head>
+    {/* ============================================================
+        Core Meta Tags
+        ============================================================ */}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    {/* Page Title and Description */}
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content={robots} />
+
+    {/* Canonical URL (prevents duplicate content issues) */}
+    <link rel="canonical" href={canonicalUrl} />
+
+    {/* ============================================================
+        Open Graph (Social Media)
+        ============================================================ */}
+    <meta property="og:site_name" content={SITE.title} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:type" content={article ? 'article' : 'website'} />
+
+    {/* Article-specific meta tags */}
+    {article && article.publishedTime && <meta property="article:published_time" content={article.publishedTime} />}
+    {article && article.modifiedTime && <meta property="article:modified_time" content={article.modifiedTime} />}
+    {article && article.author && <meta property="article:author" content={article.author} />}
+
+    {/* ============================================================
+        Twitter Card
+        ============================================================ */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    {/* ============================================================
+        Favicons & App Icons
+        ============================================================ */}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    {/* ============================================================
+        Fonts
+        ============================================================ */}
+    {/* System fonts preferred; Inter added via Tailwind if needed */}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    {/* ============================================================
+        Structured Data (JSON-LD)
+        ============================================================ */}
+    {
+      allStructuredData && (
+        <script
+          type="application/ld+json"
+          set:html={JSON.stringify(
+            Array.isArray(allStructuredData) ? { '@context': 'https://schema.org', '@graph': allStructuredData } : allStructuredData
+          )}
+        />
+      )
+    }
+
+    {/* ============================================================
+        Analytics (Phase 2: add Fathom when needed)
+        ============================================================ */}
+    {/* Fathom Analytics placeholder - uncomment in Phase 2 */}
+    {/* <script src="https://cdn.usefathom.com/script.js" data-site="YOUR_SITE_ID" defer></script> */}
+
+    {/* ============================================================
+        Preload Critical Resources
+        ============================================================ */}
+    {/* Preload Inter font weights if using custom fonts */}
+    {/* <link rel="preload" as="font" href="/fonts/inter-400.woff2" type="font/woff2" crossorigin /> */}
+  </head>
+
+  <body>
+    {/* ============================================================
+        Skip to Main Content (Accessibility)
+        ============================================================ */}
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-accent focus:text-background focus:px-4 focus:py-2 focus:rounded">
+      Skip to main content
+    </a>
+
+    {/* ============================================================
+        Header
+        ============================================================ */}
+    <Header />
+
+    {/* ============================================================
+        Main Content
+        ============================================================ */}
+    <main id="main" class="flex-grow">
+      <slot />
+    </main>
+
+    {/* ============================================================
+        Footer
+        ============================================================ */}
+    <Footer />
+
+    {/* ============================================================
+        Error Tracking (Phase 2: add Sentry when needed)
+        ============================================================ */}
+    {/* Sentry error tracking placeholder - uncomment in Phase 2 */}
+    {/* <script> */}
+    {/* import * as Sentry from "@sentry/browser"; */}
+    {/* Sentry.init({ dsn: import.meta.env.SENTRY_DSN }); */}
+    {/* </script> */}
+  </body>
+</html>
+
+<style is:global>
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
+</style>

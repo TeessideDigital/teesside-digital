@@ -1,0 +1,81 @@
+# Netlify Configuration for Teesside Digital
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+  node_bundler = "esbuild"
+
+[dev]
+  command = "npm run dev"
+  port = 3000
+
+# Redirects
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404
+
+# Security Headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Prevent browsers from MIME-sniffing
+    X-Content-Type-Options = "nosniff"
+    # Prevent framing by external sites (clickjacking protection)
+    X-Frame-Options = "SAMEORIGIN"
+    # Disable legacy XSS filter (modern browsers don't need this)
+    X-XSS-Protection = "0"
+    # Control how much referrer info is shared
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    # Disable access to browser APIs unless explicitly allowed
+    Permissions-Policy = "geolocation=(), microphone=(), camera=(), payment=()"
+
+# Cache policy for hashed assets (safe to cache forever)
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Cache policy for images (can update, so shorter TTL)
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+# Cache policy for HTML (pages update frequently)
+[[headers]]
+  for = "/"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+# Form handling
+[build.processing]
+  skip_processing = false
+
+[build.processing.html]
+  skip_processing = false
+
+# Environment
+[context.production]
+  environment = { NODE_ENV = "production" }
+
+[context.deploy-preview]
+  environment = { NODE_ENV = "development" }
+
+[context.branch-deploy]
+  environment = { NODE_ENV = "development" }

@@ -1,0 +1,238 @@
+---
+/**
+ * src/pages/work/index.astro
+ *
+ * Portfolio overview page - displays all completed projects.
+ *
+ * Route: /work
+ * Features:
+ * - Grid of all portfolio items
+ * - Project descriptions and tags
+ * - Filter by service (optional)
+ * - CTA for each project
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Section from '@components/Astro/Section.astro';
+import Hero from '@components/Astro/Hero.astro';
+import Card from '@components/Astro/Card.astro';
+import Button from '@components/Astro/Button.astro';
+import { getProjects } from '@data/work';
+
+const title = 'Our Work - Teesside Digital';
+const description = 'View our portfolio of completed projects and case studies.';
+const canonicalURL = new URL('/work', Astro.site);
+
+const projects = getProjects();
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalURL={canonicalURL}
+>
+  <!-- Hero -->
+  <Hero
+    headline="Our Work"
+    subheadline="Precision engineering applied to real business problems. Here's what we've built."
+    badge="Portfolio"
+  />
+
+  <!-- Portfolio Grid -->
+  <Section>
+    <div class="max-w-6xl mx-auto px-4 md:px-6">
+      <p class="text-text-secondary text-center mb-12 max-w-2xl mx-auto">
+        These are real projects we've completed, demonstrating our capabilities across web
+        development, AI automation, and cybersecurity. Each case study explains the problem we
+        solved, the approach we took, and the results delivered.
+      </p>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        {
+          projects.map((project) => (
+            <Card
+              href={`/work/${project.slug}`}
+              image={project.image}
+              imageAlt={project.title}
+              title={project.title}
+              description={project.description}
+              tags={project.tags}
+            >
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-medium text-accent">
+                  {Array.isArray(project.services)
+                    ? project.services.join(', ')
+                    : project.services}
+                </span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  href={`/work/${project.slug}`}
+                >
+                  Read Case Study
+                </Button>
+              </div>
+            </Card>
+          ))
+        }
+      </div>
+    </div>
+  </Section>
+
+  <!-- Why Case Studies Matter -->
+  <Section variant="dark">
+    <div class="max-w-4xl mx-auto px-4 md:px-6">
+      <h2 class="text-2xl md:text-3xl font-semibold text-text-primary mb-8 text-center">
+        Why We Share Our Work
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <div>
+          <h3 class="text-lg font-semibold text-text-primary mb-3">
+            You Deserve to See Proof
+          </h3>
+          <p class="text-text-secondary">
+            Claims mean nothing. Results mean everything. By sharing detailed case studies with
+            real outcomes, you can see exactly what we deliver and whether we're a good fit for
+            your project.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-text-primary mb-3">
+            Understanding Our Process
+          </h3>
+          <p class="text-text-secondary">
+            Case studies explain not just what we built, but why we built it that way. You'll
+            understand our approach, how we think about problems, and what excellence looks like
+            to us.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-text-primary mb-3">
+            Honest Communication
+          </h3>
+          <p class="text-text-secondary">
+            We share challenges we faced, decisions we made, and lessons learned. These projects
+            didn't all go perfectly - but the outcomes are solid and the thinking is transparent.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-text-primary mb-3">
+            Capability Proof
+          </h3>
+          <p class="text-text-secondary">
+            If you need web development, automation, security, or a combination, you can see
+            examples of each. You'll know exactly what to expect from working with us.
+          </p>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Project Types Section -->
+  <Section>
+    <div class="max-w-4xl mx-auto px-4 md:px-6">
+      <h2 class="text-2xl md:text-3xl font-semibold text-text-primary mb-8">
+        The Kinds of Projects We Take On
+      </h2>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="p-6 bg-surface-raised rounded">
+          <h3 class="text-lg font-semibold text-text-primary mb-3">Startups & MVPs</h3>
+          <p class="text-text-secondary text-sm">
+            Help you validate an idea quickly with a lean, efficient MVP. We build fast, get you
+            to market, and leave the codebase in shape to scale.
+          </p>
+        </div>
+
+        <div class="p-6 bg-surface-raised rounded">
+          <h3 class="text-lg font-semibold text-text-primary mb-3">Growing Companies</h3>
+          <p class="text-text-secondary text-sm">
+            Help established businesses modernise systems, automate processes, and improve
+            efficiency as they scale.
+          </p>
+        </div>
+
+        <div class="p-6 bg-surface-raised rounded">
+          <h3 class="text-lg font-semibold text-text-primary mb-3">
+            Security-First Organisations
+          </h3>
+          <p class="text-text-secondary text-sm">
+            Help businesses that handle sensitive data or operate in regulated industries build
+            secure, compliant systems.
+          </p>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Methodology Section -->
+  <Section variant="dark">
+    <div class="max-w-3xl mx-auto px-4 md:px-6">
+      <h2 class="text-2xl md:text-3xl font-semibold text-text-primary mb-8">
+        Our Methodology
+      </h2>
+
+      <div class="space-y-6">
+        <div>
+          <h3 class="text-lg font-semibold text-text-primary mb-2">1. Understand</h3>
+          <p class="text-text-secondary">
+            We listen, ask questions, and understand your business, customers, and goals. This
+            foundation shapes everything that follows.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-text-primary mb-2">2. Design</h3>
+          <p class="text-text-secondary">
+            We propose the right solution - not the fanciest, not the most complex, but the one
+            that actually solves your problem efficiently.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-text-primary mb-2">3. Build</h3>
+          <p class="text-text-secondary">
+            We deliver quality code: secure, performant, maintainable, and tested. You get regular
+            updates and opportunities for feedback.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-text-primary mb-2">4. Launch</h3>
+          <p class="text-text-secondary">
+            We deploy with care, monitor closely, and provide training so you can maintain and
+            evolve what we've built.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-text-primary mb-2">5. Support</h3>
+          <p class="text-text-secondary">
+            We don't disappear after launch. You get ongoing support, refinement, and help scaling
+            as your business grows.
+          </p>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Final CTA -->
+  <Section class="py-12 md:py-16">
+    <div class="max-w-3xl mx-auto px-4 md:px-6 text-center">
+      <h2 class="text-2xl md:text-3xl font-semibold text-text-primary mb-4">
+        Impressed? Let's Talk.
+      </h2>
+      <p class="text-text-secondary mb-8">
+        If you see a project similar to yours or simply want to discuss your own, get in touch
+        for a free consultation.
+      </p>
+      <Button variant="primary" href="/contact">
+        Get in Touch
+      </Button>
+    </div>
+  </Section>
+</BaseLayout>

@@ -1,0 +1,107 @@
+---
+/**
+ * Button.astro
+ *
+ * Reusable button component.
+ * Can render as:
+ * - Link (if href is provided)
+ * - Button (if onclick or form submission)
+ *
+ * Variants:
+ * - primary (accent background, text primary)
+ * - secondary (surface background, text accent)
+ * - outline (transparent, border, text accent)
+ *
+ * Sizes:
+ * - xs, sm, md (default), lg, xl
+ *
+ * Props:
+ * - href?: string (renders <a> instead of <button>)
+ * - variant?: 'primary' | 'secondary' | 'outline'
+ * - size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+ * - disabled?: boolean
+ * - class?: string (additional Tailwind classes)
+ * - ... other HTML attributes
+ */
+
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'button' | 'a'> {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'outline';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  disabled?: boolean;
+}
+
+const { href, variant = 'primary', size = 'md', disabled = false, class: customClass = '', ...attrs } = Astro.props as Props;
+
+/**
+ * Size mappings
+ */
+const sizeClasses = {
+  xs: 'px-2 py-1 text-xs',
+  sm: 'px-3 py-1.5 text-sm',
+  md: 'px-4 py-2 text-sm md:text-base',
+  lg: 'px-6 py-3 text-base',
+  xl: 'px-8 py-4 text-lg',
+};
+
+/**
+ * Variant mappings
+ */
+const variantClasses = {
+  primary: 'bg-accent text-background hover:bg-accent-hover disabled:bg-text-secondary disabled:cursor-not-allowed',
+  secondary: 'bg-surface-raised text-accent hover:bg-surface border border-border disabled:border-text-secondary disabled:text-text-secondary disabled:cursor-not-allowed',
+  outline:
+    'border border-accent text-accent hover:bg-accent hover:text-background disabled:border-text-secondary disabled:text-text-secondary disabled:cursor-not-allowed',
+};
+
+/**
+ * Base classes (always applied)
+ */
+const baseClasses =
+  'inline-flex items-center justify-center gap-2 rounded font-medium transition-all duration-200 ease-out focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background';
+
+/**
+ * Combine all classes
+ */
+const allClasses = `${baseClasses} ${sizeClasses[size]} ${variantClasses[variant]} ${customClass}`;
+
+/**
+ * Element type
+ */
+const Element = href ? 'a' : 'button';
+---
+
+{
+  href ? (
+    <a href={href} class={allClasses} {...attrs}>
+      <slot />
+    </a>
+  ) : (
+    <button disabled={disabled} class={allClasses} {...attrs}>
+      <slot />
+    </button>
+  )
+}
+
+<style>
+  a,
+  button {
+    cursor: pointer;
+    user-select: none;
+  }
+
+  button:disabled,
+  a[disabled] {
+    opacity: 0.6;
+  }
+
+  /* Prevent text selection during click */
+  a,
+  button {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
+</style>

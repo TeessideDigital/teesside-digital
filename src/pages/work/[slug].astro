@@ -1,0 +1,457 @@
+---
+/**
+ * src/pages/work/[slug].astro
+ *
+ * Dynamic case study detail pages. One page per project, generated from work.ts data.
+ *
+ * Route: /work/[slug]
+ * Examples: /work/northeast-joinery, /work/quoteflow, /work/siteguard
+ *
+ * Features:
+ * - Detailed case study
+ * - Problem statement
+ * - Approach & solution
+ * - Results
+ * - Technical details
+ * - CTA to contact
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Section from '@components/Astro/Section.astro';
+import Hero from '@components/Astro/Hero.astro';
+import Button from '@components/Astro/Button.astro';
+import { getProjects, getProjectBySlug } from '@data/work';
+
+export function getStaticPaths() {
+  const projects = getProjects();
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+interface Props {
+  project: ReturnType<typeof getProjectBySlug>;
+}
+
+const { project } = Astro.props;
+
+if (!project) {
+  return Astro.redirect('/404');
+}
+
+const title = `${project.title} - Teesside Digital`;
+const description = project.description;
+const canonicalURL = new URL(`/work/${project.slug}`, Astro.site);
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalURL={canonicalURL}
+>
+  <!-- Hero with Project Image -->
+  <div class="relative w-full h-96 bg-surface-raised overflow-hidden">
+    <img
+      src={project.image}
+      alt={project.title}
+      class="w-full h-full object-cover"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+    <div class="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
+      <h1 class="text-3xl md:text-4xl font-bold text-text-primary mb-2">
+        {project.title}
+      </h1>
+      <p class="text-text-secondary">{project.description}</p>
+    </div>
+  </div>
+
+  <!-- Case Study Content -->
+  <Section>
+    <div class="max-w-4xl mx-auto px-4 md:px-6">
+      <div class="grid md:grid-cols-3 gap-8 md:gap-12">
+        <!-- Main Content -->
+        <div class="md:col-span-2 space-y-8">
+          <!-- The Problem -->
+          <div>
+            <h2 class="text-2xl font-semibold text-text-primary mb-4">The Problem</h2>
+            <p class="text-text-secondary mb-4">
+              {
+                project.slug === 'northeast-joinery' &&
+                  'A Teesside-based joinery specialist was losing quotes to competitors who had modern websites. Their current site was outdated, difficult to navigate, and failed to showcase their portfolio. They needed a modern digital presence that matched the quality of their craftsmanship.'
+              }
+              {
+                project.slug === 'quoteflow' &&
+                  'A small service business was spending 10+ hours per week manually creating quotes, following up with clients, and tracking proposals. Email, spreadsheets, and phone calls were scattered across different systems with no visibility into pipeline status.'
+              }
+              {
+                project.slug === 'siteguard' &&
+                  'A growing e-commerce business was concerned about security vulnerabilities but had no process for identifying, prioritizing, or fixing them. They handled customer payment data and needed to ensure compliance with security standards, but lacked visibility into their actual risk profile.'
+              }
+            </p>
+
+            {
+              project.slug === 'northeast-joinery' && (
+                <ul class="text-text-secondary text-sm space-y-2 mt-4">
+                  <li class="flex gap-2">
+                    <span class="text-accent">-</span>
+                    <span>Outdated website design and user experience</span>
+                  </li>
+                  <li class="flex gap-2">
+                    <span class="text-accent">-</span>
+                    <span>Poor portfolio visibility and limited project showcase</span>
+                  </li>
+                  <li class="flex gap-2">
+                    <span class="text-accent">-</span>
+                    <span>Difficulty attracting high-value customers online</span>
+                  </li>
+                </ul>
+              )
+            }
+            {
+              project.slug === 'quoteflow' && (
+                <ul class="text-text-secondary text-sm space-y-2 mt-4">
+                  <li class="flex gap-2">
+                    <span class="text-accent">-</span>
+                    <span>10+ hours per week spent on manual quote creation</span>
+                  </li>
+                  <li class="flex gap-2">
+                    <span class="text-accent">-</span>
+                    <span>No visibility into proposal status or pipeline</span>
+                  </li>
+                  <li class="flex gap-2">
+                    <span class="text-accent">-</span>
+                    <span>Inconsistent follow-up, lost opportunities</span>
+                  </li>
+                </ul>
+              )
+            }
+            {
+              project.slug === 'siteguard' && (
+                <ul class="text-text-secondary text-sm space-y-2 mt-4">
+                  <li class="flex gap-2">
+                    <span class="text-accent">-</span>
+                    <span>No formal security assessment or vulnerability tracking</span>
+                  </li>
+                  <li class="flex gap-2">
+                    <span class="text-accent">-</span>
+                    <span>Handling payment data without confidence in protections</span>
+                  </li>
+                  <li class="flex gap-2">
+                    <span class="text-accent">-</span>
+                    <span>Regulatory compliance uncertainty</span>
+                  </li>
+                </ul>
+              )
+            }
+          </div>
+
+          <!-- Our Approach -->
+          <div>
+            <h2 class="text-2xl font-semibold text-text-primary mb-4">Our Approach</h2>
+
+            {
+              project.slug === 'northeast-joinery' && (
+                <>
+                  <p class="text-text-secondary mb-4">
+                    We conducted a discovery session to understand their business, target customers,
+                    and portfolio. We identified that high-value customers needed to see quality and
+                    craftsmanship before engaging.
+                  </p>
+                  <p class="text-text-secondary">
+                    We designed a modern, professional website that showcases their best work through
+                    high-quality imagery, detailed project descriptions, and a portfolio grid. We
+                    integrated a simple enquiry system and optimised for local search so potential
+                    customers in Teesside could find them easily.
+                  </p>
+                </>
+              )
+            }
+            {
+              project.slug === 'quoteflow' && (
+                <>
+                  <p class="text-text-secondary mb-4">
+                    We mapped their quote process, identified bottlenecks, and designed a workflow
+                    automation system that would handle the repetitive work automatically.
+                  </p>
+                  <p class="text-text-secondary">
+                    We built a tool that: generates quotes from templates in minutes, automatically
+                    sends them to clients, tracks responses and status, and sends reminders for
+                    follow-up. The system integrates with their existing email so they always know
+                    who's read the proposal.
+                  </p>
+                </>
+              )
+            }
+            {
+              project.slug === 'siteguard' && (
+                <>
+                  <p class="text-text-secondary mb-4">
+                    We conducted a comprehensive security audit: code review, infrastructure assessment,
+                    vulnerability scanning, and compliance check against payment card industry (PCI)
+                    standards.
+                  </p>
+                  <p class="text-text-secondary mb-4">
+                    We found and documented 23 issues ranging from minor (configuration) to critical
+                    (unpatched dependencies). We prioritised them by impact and provided clear
+                    recommendations for remediation.
+                  </p>
+                  <p class="text-text-secondary">
+                    We helped them fix the critical vulnerabilities, set up ongoing monitoring, and
+                    provided training so their team understands security considerations going forward.
+                  </p>
+                </>
+              )
+            }
+          </div>
+
+          <!-- The Results -->
+          <div>
+            <h2 class="text-2xl font-semibold text-text-primary mb-4">The Results</h2>
+
+            {
+              project.slug === 'northeast-joinery' && (
+                <div class="space-y-4">
+                  <div class="p-4 bg-success/10 border-l-4 border-success rounded">
+                    <p class="text-text-primary font-semibold mb-1">Increased Lead Quality</p>
+                    <p class="text-text-secondary text-sm">
+                      Website now attracts qualified leads who have seen portfolio and understand
+                      quality level.
+                    </p>
+                  </div>
+                  <div class="p-4 bg-success/10 border-l-4 border-success rounded">
+                    <p class="text-text-primary font-semibold mb-1">Better Local Visibility</p>
+                    <p class="text-text-secondary text-sm">
+                      Ranks for local search terms. Potential customers in Teesside now find them
+                      easily.
+                    </p>
+                  </div>
+                  <div class="p-4 bg-success/10 border-l-4 border-success rounded">
+                    <p class="text-text-primary font-semibold mb-1">Professional Image</p>
+                    <p class="text-text-secondary text-sm">
+                      Website now reflects quality of their work. Clients see professionalism before
+                      first conversation.
+                    </p>
+                  </div>
+                </div>
+              )
+            }
+            {
+              project.slug === 'quoteflow' && (
+                <div class="space-y-4">
+                  <div class="p-4 bg-success/10 border-l-4 border-success rounded">
+                    <p class="text-text-primary font-semibold mb-1">15+ Hours Saved Per Week</p>
+                    <p class="text-text-secondary text-sm">
+                      Automation eliminated manual quote creation and follow-up work.
+                    </p>
+                  </div>
+                  <div class="p-4 bg-success/10 border-l-4 border-success rounded">
+                    <p class="text-text-primary font-semibold mb-1">Better Close Rate</p>
+                    <p class="text-text-secondary text-sm">
+                      Consistent, timely follow-up resulted in 20% improvement in proposal conversion.
+                    </p>
+                  </div>
+                  <div class="p-4 bg-success/10 border-l-4 border-success rounded">
+                    <p class="text-text-primary font-semibold mb-1">Real-Time Pipeline Visibility</p>
+                    <p class="text-text-secondary text-sm">
+                      Team can now see proposal status at a glance. No more lost opportunities.
+                    </p>
+                  </div>
+                </div>
+              )
+            }
+            {
+              project.slug === 'siteguard' && (
+                <div class="space-y-4">
+                  <div class="p-4 bg-success/10 border-l-4 border-success rounded">
+                    <p class="text-text-primary font-semibold mb-1">Critical Vulnerabilities Resolved</p>
+                    <p class="text-text-secondary text-sm">
+                      All critical and high-risk issues fixed. System now meets security standards.
+                    </p>
+                  </div>
+                  <div class="p-4 bg-success/10 border-l-4 border-success rounded">
+                    <p class="text-text-primary font-semibold mb-1">Compliance Confidence</p>
+                    <p class="text-text-secondary text-sm">
+                      Business now understands their compliance obligations and has systems in place
+                      to meet them.
+                    </p>
+                  </div>
+                  <div class="p-4 bg-success/10 border-l-4 border-success rounded">
+                    <p class="text-text-primary font-semibold mb-1">Ongoing Monitoring</p>
+                    <p class="text-text-secondary text-sm">
+                      Continuous monitoring alerts team to new vulnerabilities before they become
+                      problems.
+                    </p>
+                  </div>
+                </div>
+              )
+            }
+          </div>
+
+          <!-- Technical Details -->
+          <div>
+            <h2 class="text-2xl font-semibold text-text-primary mb-4">Technical Details</h2>
+
+            {
+              project.slug === 'northeast-joinery' && (
+                <div class="space-y-3 text-text-secondary text-sm">
+                  <p class="font-semibold text-text-primary mb-3">Stack & Approach:</p>
+                  <ul class="space-y-2">
+                    <li>
+                      <span class="text-accent font-medium">Framework:</span> Astro 5 for fast static
+                      generation
+                    </li>
+                    <li>
+                      <span class="text-accent font-medium">Styling:</span> Tailwind CSS for responsive
+                      design
+                    </li>
+                    <li>
+                      <span class="text-accent font-medium">Hosting:</span> Netlify CDN for global
+                      delivery
+                    </li>
+                    <li>
+                      <span class="text-accent font-medium">CMS:</span> Markdown content for easy
+                      updates
+                    </li>
+                    <li>
+                      <span class="text-accent font-medium">Performance:</span> Lighthouse 95+ (fast
+                      loading, good SEO)
+                    </li>
+                  </ul>
+                </div>
+              )
+            }
+            {
+              project.slug === 'quoteflow' && (
+                <div class="space-y-3 text-text-secondary text-sm">
+                  <p class="font-semibold text-text-primary mb-3">Stack & Features:</p>
+                  <ul class="space-y-2">
+                    <li>
+                      <span class="text-accent font-medium">Quote Generation:</span> Template-based
+                      system with custom fields
+                    </li>
+                    <li>
+                      <span class="text-accent font-medium">Automation:</span> Automatic email sends
+                      with tracking
+                    </li>
+                    <li>
+                      <span class="text-accent font-medium">Reminders:</span> Automatic follow-up
+                      prompts
+                    </li>
+                    <li>
+                      <span class="text-accent font-medium">Integration:</span> Email tracking via
+                      read receipts
+                    </li>
+                    <li>
+                      <span class="text-accent font-medium">Reporting:</span> Pipeline overview and
+                      conversion metrics
+                    </li>
+                  </ul>
+                </div>
+              )
+            }
+            {
+              project.slug === 'siteguard' && (
+                <div class="space-y-3 text-text-secondary text-sm">
+                  <p class="font-semibold text-text-primary mb-3">Audit Scope:</p>
+                  <ul class="space-y-2">
+                    <li>
+                      <span class="text-accent font-medium">Code Review:</span> Full application code
+                      scan for vulnerabilities
+                    </li>
+                    <li>
+                      <span class="text-accent font-medium">Dependencies:</span> Check for known CVEs
+                      in libraries
+                    </li>
+                    <li>
+                      <span class="text-accent font-medium">Infrastructure:</span> Server configuration,
+                      firewalls, access controls
+                    </li>
+                    <li>
+                      <span class="text-accent font-medium">Compliance:</span> PCI DSS assessment for
+                      payment data
+                    </li>
+                    <li>
+                      <span class="text-accent font-medium">Monitoring:</span> Ongoing vulnerability
+                      tracking setup
+                    </li>
+                  </ul>
+                </div>
+              )
+            }
+          </div>
+        </div>
+
+        <!-- Sidebar: Project Info -->
+        <div class="md:col-span-1">
+          <div class="sticky top-24 space-y-6">
+            <!-- Project Details -->
+            <div class="p-6 bg-surface-raised rounded">
+              <h3 class="font-semibold text-text-primary mb-4">Project Details</h3>
+
+              <div class="space-y-3 text-sm text-text-secondary">
+                <div>
+                  <p class="font-medium text-text-primary mb-1">Services</p>
+                  <p>
+                    {
+                      Array.isArray(project.services)
+                        ? project.services.join(', ')
+                        : project.services
+                    }
+                  </p>
+                </div>
+
+                <div>
+                  <p class="font-medium text-text-primary mb-1">Timeline</p>
+                  <p>8-12 weeks</p>
+                </div>
+
+                <div>
+                  <p class="font-medium text-text-primary mb-1">Status</p>
+                  <span class="inline-block px-3 py-1 bg-success/10 text-success text-xs font-medium rounded">
+                    Completed
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tags -->
+            <div class="p-6 bg-surface-raised rounded">
+              <h3 class="font-semibold text-text-primary mb-4">Technologies</h3>
+              <div class="flex flex-wrap gap-2">
+                {project.tags.map((tag) => (
+                  <span class="text-xs font-medium px-3 py-1 bg-accent/10 text-accent rounded">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="p-6 bg-accent/10 rounded border border-accent/20">
+              <h3 class="font-semibold text-text-primary mb-3">Interested?</h3>
+              <p class="text-sm text-text-secondary mb-4">
+                Let's discuss how similar solutions could help your business.
+              </p>
+              <Button variant="primary" size="sm" href="/contact" class="w-full">
+                Get in Touch
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Related Projects -->
+  <Section variant="dark">
+    <div class="max-w-6xl mx-auto px-4 md:px-6">
+      <h2 class="text-2xl md:text-3xl font-semibold text-text-primary mb-8">
+        View More Projects
+      </h2>
+      <Button variant="secondary" href="/work">
+        See All Case Studies
+      </Button>
+    </div>
+  </Section>
+</BaseLayout>

@@ -1,0 +1,281 @@
+---
+/**
+ * src/pages/services/index.astro
+ *
+ * Services overview page - displays all available services.
+ *
+ * Route: /services
+ * Features:
+ * - Grid of all services
+ * - Service descriptions
+ * - CTA for each service
+ * - Overall services narrative
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Section from '@components/Astro/Section.astro';
+import Hero from '@components/Astro/Hero.astro';
+import Card from '@components/Astro/Card.astro';
+import Button from '@components/Astro/Button.astro';
+import { getServices } from '@data/services';
+
+const title = 'Our Services - Teesside Digital';
+const description =
+  'Web development, AI automation, and cybersecurity services for businesses.';
+const canonicalURL = new URL('/services', Astro.site);
+
+const services = getServices();
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalURL={canonicalURL}
+>
+  <!-- Hero -->
+  <Hero
+    headline="Our Services"
+    subheadline="Everything your business needs to build, automate, and secure your digital presence."
+    badge="Services"
+  />
+
+  <!-- Services Grid -->
+  <Section>
+    <div class="max-w-6xl mx-auto px-4 md:px-6">
+      <p class="text-text-secondary text-center mb-12 max-w-2xl mx-auto">
+        We specialise in three core areas: building fast, modern websites; automating repetitive
+        work with AI and integrations; and keeping your business secure from digital threats. Each
+        service can stand alone or combine with others for comprehensive solutions.
+      </p>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        {
+          services.map((service) => (
+            <Card
+              href={`/services/${service.slug}`}
+              image={service.image}
+              imageAlt={service.title}
+              title={service.title}
+              description={service.description}
+              tags={service.tags}
+            >
+              <Button
+                variant="outline"
+                size="sm"
+                href={`/services/${service.slug}`}
+              >
+                Learn More
+              </Button>
+            </Card>
+          ))
+        }
+      </div>
+    </div>
+  </Section>
+
+  <!-- How Services Work Together -->
+  <Section variant="dark">
+    <div class="max-w-4xl mx-auto px-4 md:px-6">
+      <h2 class="text-2xl md:text-3xl font-semibold text-text-primary mb-8">
+        Services Work Better Together
+      </h2>
+
+      <div class="space-y-8">
+        <div class="flex gap-6">
+          <div class="w-12 h-12 bg-accent rounded flex items-center justify-center text-background font-bold flex-shrink-0">
+            1
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-text-primary mb-2">
+              Web Development + AI Automation
+            </h3>
+            <p class="text-text-secondary">
+              Build a website that not only looks great but also automates customer queries,
+              processes orders, and learns from user behaviour.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex gap-6">
+          <div class="w-12 h-12 bg-accent rounded flex items-center justify-center text-background font-bold flex-shrink-0">
+            2
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-text-primary mb-2">
+              Web Development + Cybersecurity
+            </h3>
+            <p class="text-text-secondary">
+              A website is only as good as its security. We build with protection built in - no
+              vulnerabilities, proper encryption, and regular security audits.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex gap-6">
+          <div class="w-12 h-12 bg-accent rounded flex items-center justify-center text-background font-bold flex-shrink-0">
+            3
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-text-primary mb-2">
+              All Three: Complete Digital Transformation
+            </h3>
+            <p class="text-text-secondary">
+              A modern, secure website with automation built in. This is the full picture - a
+              business that's efficient, trustworthy, and ready to scale.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- What's Included Section -->
+  <Section>
+    <div class="max-w-4xl mx-auto px-4 md:px-6">
+      <h2 class="text-2xl md:text-3xl font-semibold text-text-primary mb-8">
+        What You Get With Every Service
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <div>
+          <h3 class="text-lg font-semibold text-text-primary mb-4">Initial Consultation</h3>
+          <p class="text-text-secondary mb-4">
+            Free, no-obligation conversation to understand your needs, challenge assumptions, and
+            clarify what's actually needed.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-text-primary mb-4">Clear Proposal</h3>
+          <p class="text-text-secondary mb-4">
+            Written proposal with timeline, budget, deliverables, and exactly what you're paying
+            for. No surprises.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-text-primary mb-4">Direct Access</h3>
+          <p class="text-text-secondary mb-4">
+            You work directly with the person building your project. Questions? You get answers
+            from the expert, not an account manager.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-text-primary mb-4">Quality Delivery</h3>
+          <p class="text-text-secondary mb-4">
+            Code that works. Systems that are secure. Performance that impresses. Documentation
+            that helps you understand what was built.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-text-primary mb-4">Ongoing Support</h3>
+          <p class="text-text-secondary mb-4">
+            Launch isn't the end. You get support, refinement based on real usage, and help
+            scaling as your business grows.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-text-primary mb-4">Knowledge Transfer</h3>
+          <p class="text-text-secondary mb-4">
+            You're never locked in. We'll train you and your team on how to maintain and evolve
+            what we've built.
+          </p>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Pricing Section -->
+  <Section variant="dark">
+    <div class="max-w-3xl mx-auto px-4 md:px-6 text-center">
+      <h2 class="text-2xl md:text-3xl font-semibold text-text-primary mb-4">
+        Custom Pricing
+      </h2>
+      <p class="text-text-secondary mb-8">
+        Every project is unique, so every price is different. Projects range from 5k to 50k+
+        depending on complexity, timeline, and scope. The best way to understand cost for your
+        specific needs is to have a conversation.
+      </p>
+      <Button variant="primary" href="/contact">
+        Request a Quote
+      </Button>
+    </div>
+  </Section>
+
+  <!-- Process Section -->
+  <Section>
+    <div class="max-w-4xl mx-auto px-4 md:px-6">
+      <h2 class="text-2xl md:text-3xl font-semibold text-text-primary mb-8 text-center">
+        Our Process
+      </h2>
+
+      <div class="grid md:grid-cols-4 gap-6">
+        <div class="text-center">
+          <div
+            class="w-16 h-16 bg-accent text-background font-bold text-2xl rounded-full flex items-center justify-center mx-auto mb-4"
+          >
+            1
+          </div>
+          <h3 class="font-semibold text-text-primary mb-2">Chat</h3>
+          <p class="text-sm text-text-secondary">
+            Free consultation to understand your needs.
+          </p>
+        </div>
+
+        <div class="text-center">
+          <div
+            class="w-16 h-16 bg-accent text-background font-bold text-2xl rounded-full flex items-center justify-center mx-auto mb-4"
+          >
+            2
+          </div>
+          <h3 class="font-semibold text-text-primary mb-2">Proposal</h3>
+          <p class="text-sm text-text-secondary">
+            Clear proposal with timeline and budget.
+          </p>
+        </div>
+
+        <div class="text-center">
+          <div
+            class="w-16 h-16 bg-accent text-background font-bold text-2xl rounded-full flex items-center justify-center mx-auto mb-4"
+          >
+            3
+          </div>
+          <h3 class="font-semibold text-text-primary mb-2">Build</h3>
+          <p class="text-sm text-text-secondary">
+            Development with regular updates and feedback.
+          </p>
+        </div>
+
+        <div class="text-center">
+          <div
+            class="w-16 h-16 bg-accent text-background font-bold text-2xl rounded-full flex items-center justify-center mx-auto mb-4"
+          >
+            4
+          </div>
+          <h3 class="font-semibold text-text-primary mb-2">Launch</h3>
+          <p class="text-sm text-text-secondary">
+            Deployment and ongoing support.
+          </p>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Final CTA -->
+  <Section class="py-12 md:py-16">
+    <div class="max-w-3xl mx-auto px-4 md:px-6 text-center">
+      <h2 class="text-2xl md:text-3xl font-semibold text-text-primary mb-4">
+        Ready to explore your project?
+      </h2>
+      <p class="text-text-secondary mb-8">
+        Get in touch for a free consultation. We'll discuss your needs and what's possible.
+      </p>
+      <Button variant="primary" href="/contact">
+        Contact Us
+      </Button>
+    </div>
+  </Section>
+</BaseLayout>

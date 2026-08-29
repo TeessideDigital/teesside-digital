@@ -1,0 +1,84 @@
+---
+/**
+ * Header.astro
+ *
+ * Site header with:
+ * - Logo
+ * - Desktop navigation menu
+ * - Mobile hamburger menu (React island)
+ * - CTA button ("Get a Free Website Review")
+ *
+ * Sticky positioning keeps it visible when scrolling.
+ * Desktop and mobile have different layouts.
+ */
+
+import { SITE, NAVIGATION } from '@config/constants';
+import Navigation from './Navigation.astro';
+import Button from './Button.astro';
+
+// Mobile menu is a React island (hydrated client-side)
+import MobileMenu from '@components/React/MobileMenu';
+---
+
+<header class="sticky top-0 z-40 bg-background border-b border-border">
+  <div class="container-content flex items-center justify-between h-16 md:h-20">
+    {/* ============================================================
+        Logo
+        ============================================================ */}
+    <a href="/" class="flex items-center gap-2 group">
+      {/* Logo SVG or text */}
+      <div class="flex flex-col gap-0 leading-none">
+        <span class="text-lg md:text-xl font-bold text-text-primary group-hover:text-accent transition-colors">
+          {SITE.title}
+        </span>
+        <span class="text-xs text-text-secondary group-hover:text-accent transition-colors">
+          {SITE.tagline}
+        </span>
+      </div>
+    </a>
+
+    {/* ============================================================
+        Desktop Navigation (hidden on mobile)
+        ============================================================ */}
+    <nav class="hidden md:flex items-center gap-8">
+      <Navigation />
+    </nav>
+
+    {/* ============================================================
+        Desktop CTA Button (hidden on mobile)
+        ============================================================ */}
+    <div class="hidden md:flex items-center gap-4">
+      <Button
+        href="/contact"
+        variant="primary"
+        size="sm"
+        class="whitespace-nowrap"
+      >
+        Get a Free Review
+      </Button>
+    </div>
+
+    {/* ============================================================
+        Mobile Menu Toggle (only visible on mobile)
+        ============================================================ */}
+    <div class="md:hidden">
+      <MobileMenu client:load navigation={NAVIGATION.header} />
+    </div>
+  </div>
+</header>
+
+<style>
+  /* Smooth transitions for hover states */
+  header {
+    transition: all 0.2s ease-out;
+  }
+
+  /* On scroll, add subtle shadow (optional, remove if not desired) */
+  @supports (backdrop-filter: blur(1px)) {
+    header {
+      /* Optional: uncomment for frosted glass effect */
+      /* backdrop-filter: blur(8px); */
+      /* background-color: rgba(10, 10, 10, 0.8); */
+    }
+  }
+</style>

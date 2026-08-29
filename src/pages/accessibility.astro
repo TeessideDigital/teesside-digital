@@ -1,0 +1,106 @@
+---
+/**
+ * src/pages/accessibility.astro
+ *
+ * Accessibility statement page.
+ *
+ * Route: /accessibility
+ * Data source: src/data/legal.ts
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Section from '@components/Astro/Section.astro';
+import { accessibilityStatement } from '@data/legal';
+
+const title = 'Accessibility Statement - Teesside Digital';
+const description = 'Our commitment to web accessibility and WCAG 2.2 AA compliance.';
+const canonicalURL = new URL('/accessibility', Astro.site);
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalURL={canonicalURL}
+>
+  <!-- Header -->
+  <Section>
+    <div class="max-w-4xl mx-auto px-4 md:px-6">
+      <h1 class="text-3xl md:text-4xl font-bold text-text-primary mb-2">
+        {accessibilityStatement.title}
+      </h1>
+      <p class="text-text-secondary mb-4">
+        {accessibilityStatement.description}
+      </p>
+      <p class="text-xs text-text-secondary">
+        Last updated: {new Date(accessibilityStatement.lastUpdated).toLocaleDateString('en-GB', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        })}
+      </p>
+    </div>
+  </Section>
+
+  <!-- Quick Links -->
+  <Section variant="dark">
+    <div class="max-w-4xl mx-auto px-4 md:px-6">
+      <h2 class="text-lg font-semibold text-text-primary mb-4">Sections</h2>
+      <div class="grid md:grid-cols-2 gap-4">
+        {
+          accessibilityStatement.sections.map((section) => (
+            <a
+              href={`#${section.id}`}
+              class="p-3 bg-surface rounded hover:bg-surface-raised transition-colors text-accent hover:text-accent-hover"
+            >
+              {section.title}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </Section>
+
+  <!-- Statement Content -->
+  <Section>
+    <div class="max-w-4xl mx-auto px-4 md:px-6 space-y-12">
+      {
+        accessibilityStatement.sections.map((section) => (
+          <div id={section.id} class="scroll-mt-24">
+            <h2 class="text-2xl font-semibold text-text-primary mb-4">
+              {section.title}
+            </h2>
+            <div class="text-text-secondary whitespace-pre-wrap space-y-4">
+              {section.content.split('\n\n').map((paragraph) => (
+                <p>{paragraph}</p>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </Section>
+
+  <!-- Footer -->
+  <Section variant="dark">
+    <div class="max-w-4xl mx-auto px-4 md:px-6 text-center">
+      <h2 class="text-lg font-semibold text-text-primary mb-4">
+        Having Accessibility Issues?
+      </h2>
+      <p class="text-text-secondary mb-4">
+        If you encounter any accessibility barriers on our website, please let us know:
+      </p>
+      <a
+        href="mailto:dave@teessidedigital.uk?subject=Accessibility%20Issue"
+        class="text-accent hover:text-accent-hover font-medium"
+      >
+        dave@teessidedigital.uk
+      </a>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  a {
+    text-decoration: none;
+  }
+</style>

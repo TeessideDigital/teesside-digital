@@ -8,13 +8,13 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@components/*": ["src/components/*"],
-      "@layouts/*": ["src/layouts/*"],
-      "@lib/*": ["src/lib/*"],
-      "@config/*": ["src/config/*"],
-      "@data/*": ["src/data/*"],
-      "@styles/*": ["src/styles/*"]
+      "@/*": ["./src/*"],
+      "@components/*": ["./src/components/*"],
+      "@layouts/*": ["./src/layouts/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@config/*": ["./src/config/*"],
+      "@data/*": ["./src/data/*"],
+      "@styles/*": ["./src/styles/*"]
     }
   }
 }

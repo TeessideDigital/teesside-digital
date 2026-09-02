@@ -15,12 +15,12 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Section from '../components/astro/Section.astro';
 import Hero from '../components/astro/Hero.astro';
-import Card from '../components/astro/Card.astro';
 import Button from '../components/astro/Button.astro';
+import ProjectCard from '../components/astro/ProjectCard.astro';
 import { getProjects } from '@data/work';
 
 const title = 'Our Work - Teesside Digital';
-const description = 'View our portfolio of completed projects and case studies.';
+const description = 'Demonstration projects showing our capabilities in web development, AI automation, and cybersecurity.';
 const canonicalURL = new URL('/work', Astro.site);
 
 const projects = getProjects();
@@ -29,50 +29,28 @@ const projects = getProjects();
 <BaseLayout
   title={title}
   description={description}
-  canonicalURL={canonicalURL}
+  canonical={canonicalURL.href}
 >
   <!-- Hero -->
   <Hero
-    headline="Our Work"
-    subheadline="Precision engineering applied to real business problems. Here's what we've built."
-    badge="Portfolio"
+    title="Our Work"
+    description="Precision engineering, applied to real business problems. Here's what we're building."
+    subtitle="Portfolio"
   />
 
   <!-- Portfolio Grid -->
   <Section>
     <div class="max-w-6xl mx-auto px-4 md:px-6">
       <p class="text-text-secondary text-center mb-12 max-w-2xl mx-auto">
-        These are real projects we've completed, demonstrating our capabilities across web
-        development, AI automation, and cybersecurity. Each case study explains the problem we
-        solved, the approach we took, and the results delivered.
+        These are demonstration projects showing our capabilities across web development, AI
+        automation, and cybersecurity. Each case study explains the problem, our planned approach,
+        and the outcome we're building towards.
       </p>
 
       <div class="grid md:grid-cols-3 gap-8">
         {
           projects.map((project) => (
-            <Card
-              href={`/work/${project.slug}`}
-              image={project.image}
-              imageAlt={project.title}
-              title={project.title}
-              description={project.description}
-              tags={project.tags}
-            >
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-medium text-accent">
-                  {Array.isArray(project.services)
-                    ? project.services.join(', ')
-                    : project.services}
-                </span>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  href={`/work/${project.slug}`}
-                >
-                  Read Case Study
-                </Button>
-              </div>
-            </Card>
+            <ProjectCard project={project} hover="shadow" />
           ))
         }
       </div>
@@ -80,7 +58,7 @@ const projects = getProjects();
   </Section>
 
   <!-- Why Case Studies Matter -->
-  <Section variant="dark">
+  <Section background="surface">
     <div class="max-w-4xl mx-auto px-4 md:px-6">
       <h2 class="text-2xl md:text-3xl font-semibold text-text-primary mb-8 text-center">
         Why We Share Our Work
@@ -170,7 +148,7 @@ const projects = getProjects();
   </Section>
 
   <!-- Methodology Section -->
-  <Section variant="dark">
+  <Section background="surface">
     <div class="max-w-3xl mx-auto px-4 md:px-6">
       <h2 class="text-2xl md:text-3xl font-semibold text-text-primary mb-8">
         Our Methodology

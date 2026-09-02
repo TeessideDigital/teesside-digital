@@ -143,8 +143,13 @@ const allStructuredData = structuredData ? [baseStructuredData, structuredData] 
     {/* ============================================================
         Analytics (Phase 2: add Fathom when needed)
         ============================================================ */}
-    {/* Fathom Analytics placeholder - uncomment in Phase 2 */}
-    {/* <script src="https://cdn.usefathom.com/script.js" data-site="YOUR_SITE_ID" defer></script> */}
+    {/*
+      Fathom Analytics placeholder for Phase 2. Do not write this as a
+      literal inline script tag inside this comment -- see the note on
+      the Sentry placeholder below for why. When Phase 2 needs this, add
+      the Fathom snippet via its own small component instead of inline
+      here, with a real site ID (not a placeholder) before it ships.
+    */}
 
     {/* ============================================================
         Preload Critical Resources
@@ -181,11 +186,17 @@ const allStructuredData = structuredData ? [baseStructuredData, structuredData] 
     {/* ============================================================
         Error Tracking (Phase 2: add Sentry when needed)
         ============================================================ */}
-    {/* Sentry error tracking placeholder - uncomment in Phase 2 */}
-    {/* <script> */}
-    {/* import * as Sentry from "@sentry/browser"; */}
-    {/* Sentry.init({ dsn: import.meta.env.SENTRY_DSN }); */}
-    {/* </script> */}
+    {/*
+      Sentry placeholder for Phase 2. Do not write this as a literal
+      inline script tag inside this comment: Astro's HTML tokenizer
+      treats a literal script-tag name as a real raw-text element
+      boundary regardless of surrounding comment syntax, which breaks
+      the build (this exact bug caused a "Failed to scan for
+      dependencies" error -- see the note in PLAN.md/troubleshooting
+      if it recurs). When Phase 2 needs this, add the Sentry
+      initialisation via its own small component or inside
+      Header.astro's head content instead of inline here.
+    */}
   </body>
 </html>
 

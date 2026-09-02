@@ -16,6 +16,7 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import Section from '../components/astro/Section.astro';
 import Hero from '../components/astro/Hero.astro';
 import Button from '../components/astro/Button.astro';
+import TechnicalLabel from '../components/astro/TechnicalLabel.astro';
 
 const title = 'About Dave - Teesside Digital';
 const description =
@@ -26,18 +27,25 @@ const canonicalURL = new URL('/about', Astro.site);
 <BaseLayout
   title={title}
   description={description}
-  canonicalURL={canonicalURL}
+  canonical={canonicalURL.href}
 >
   <!-- Hero -->
   <Hero
-    headline="Hi, I'm Dave"
-    subheadline="I build precise technology solutions for businesses that are serious about results."
-    badge="About Me"
+    title="Hi, I'm Dave"
+    description="I build precise technology solutions for businesses that are serious about results."
+    subtitle="About Me"
   />
+
+  <div class="container-content -mt-8 mb-8">
+    <TechnicalLabel text="Available for projects" tone="live" />
+  </div>
 
   <!-- Story Section -->
   <Section>
     <div class="max-w-4xl mx-auto px-4 md:px-6">
+      <p class="text-xs font-semibold uppercase tracking-widest text-accent border-b border-accent pb-2 mb-6 inline-block">
+        My Story
+      </p>
       <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
         <!-- Image (placeholder for real photo) -->
         <div class="flex justify-center md:justify-start">
@@ -92,12 +100,8 @@ const canonicalURL = new URL('/about', Astro.site);
   </Section>
 
   <!-- Expertise Section -->
-  <Section variant="dark">
+  <Section background="surface" eyebrow="Capabilities" heading="What I Do">
     <div class="max-w-4xl mx-auto px-4 md:px-6">
-      <h2 class="text-2xl md:text-3xl font-semibold text-text-primary mb-8 text-center">
-        What I Do
-      </h2>
-
       <div class="grid md:grid-cols-3 gap-8">
         <!-- Web Development -->
         <div>
@@ -108,19 +112,19 @@ const canonicalURL = new URL('/about', Astro.site);
           </p>
           <ul class="text-sm text-text-secondary space-y-2">
             <li class="flex items-start">
-              <span class="text-accent mr-2">+</span>
+              <span class="text-accent-text mr-2">+</span>
               <span>Website design and development</span>
             </li>
             <li class="flex items-start">
-              <span class="text-accent mr-2">+</span>
+              <span class="text-accent-text mr-2">+</span>
               <span>Web applications</span>
             </li>
             <li class="flex items-start">
-              <span class="text-accent mr-2">+</span>
+              <span class="text-accent-text mr-2">+</span>
               <span>E-commerce solutions</span>
             </li>
             <li class="flex items-start">
-              <span class="text-accent mr-2">+</span>
+              <span class="text-accent-text mr-2">+</span>
               <span>Website maintenance</span>
             </li>
           </ul>
@@ -136,19 +140,19 @@ const canonicalURL = new URL('/about', Astro.site);
           </p>
           <ul class="text-sm text-text-secondary space-y-2">
             <li class="flex items-start">
-              <span class="text-accent mr-2">+</span>
+              <span class="text-accent-text mr-2">+</span>
               <span>Business automation</span>
             </li>
             <li class="flex items-start">
-              <span class="text-accent mr-2">+</span>
+              <span class="text-accent-text mr-2">+</span>
               <span>AI integration</span>
             </li>
             <li class="flex items-start">
-              <span class="text-accent mr-2">+</span>
+              <span class="text-accent-text mr-2">+</span>
               <span>API integrations</span>
             </li>
             <li class="flex items-start">
-              <span class="text-accent mr-2">+</span>
+              <span class="text-accent-text mr-2">+</span>
               <span>Workflow optimisation</span>
             </li>
           </ul>
@@ -163,19 +167,19 @@ const canonicalURL = new URL('/about', Astro.site);
           </p>
           <ul class="text-sm text-text-secondary space-y-2">
             <li class="flex items-start">
-              <span class="text-accent mr-2">+</span>
+              <span class="text-accent-text mr-2">+</span>
               <span>Website security</span>
             </li>
             <li class="flex items-start">
-              <span class="text-accent mr-2">+</span>
+              <span class="text-accent-text mr-2">+</span>
               <span>Security audits</span>
             </li>
             <li class="flex items-start">
-              <span class="text-accent mr-2">+</span>
+              <span class="text-accent-text mr-2">+</span>
               <span>Vulnerability assessment</span>
             </li>
             <li class="flex items-start">
-              <span class="text-accent mr-2">+</span>
+              <span class="text-accent-text mr-2">+</span>
               <span>Technical consultancy</span>
             </li>
           </ul>
@@ -185,12 +189,8 @@ const canonicalURL = new URL('/about', Astro.site);
   </Section>
 
   <!-- Philosophy Section -->
-  <Section>
+  <Section eyebrow="Process" heading="How I Work">
     <div class="max-w-3xl mx-auto px-4 md:px-6">
-      <h2 class="text-2xl md:text-3xl font-semibold text-text-primary mb-8">
-        How I Work
-      </h2>
-
       <div class="space-y-8">
         <div class="flex gap-6">
           <div
@@ -265,12 +265,8 @@ const canonicalURL = new URL('/about', Astro.site);
   </Section>
 
   <!-- Why Solo Section -->
-  <Section variant="dark">
+  <Section background="surface" eyebrow="Why Solo" heading="Why I Work Alone (It's an Advantage)">
     <div class="max-w-3xl mx-auto px-4 md:px-6">
-      <h2 class="text-2xl md:text-3xl font-semibold text-text-primary mb-8">
-        Why I Work Alone (It's an Advantage)
-      </h2>
-
       <div class="grid md:grid-cols-2 gap-8">
         <div>
           <h3 class="text-lg font-semibold text-text-primary mb-3">You Get the Expert</h3>

@@ -22,6 +22,8 @@ import Hero from '../components/astro/Hero.astro';
 import Section from '../components/astro/Section.astro';
 import Card from '../components/astro/Card.astro';
 import Button from '../components/astro/Button.astro';
+import ProjectCard from '../components/astro/ProjectCard.astro';
+import ServiceCard from '../components/astro/ServiceCard.astro';
 import { services } from '@data/services';
 import { getFeaturedProjects } from '@data/work';
 
@@ -109,19 +111,8 @@ const featuredProjects = getFeaturedProjects();
     id="services-intro"
   >
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-      {services.map((service) => (
-        <Card
-          href={`/services/${service.slug}`}
-          title={service.title}
-          description={service.shortDescription}
-          image={service.image}
-          imageAlt={service.imageAlt}
-          hover="shadow"
-        >
-          <Button href={`/services/${service.slug}`} variant="outline" size="sm">
-            Learn More →
-          </Button>
-        </Card>
+      {services.map((service, index) => (
+        <ServiceCard service={service} index={index} />
       ))}
     </div>
 
@@ -285,19 +276,7 @@ const featuredProjects = getFeaturedProjects();
   >
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-8">
       {featuredProjects.map((project) => (
-        <Card
-          href={`/work/${project.slug}`}
-          image={project.image}
-          imageAlt={project.imageAlt}
-          title={project.title}
-          description={project.description}
-          tags={project.tags}
-          hover="scale"
-        >
-          <Button href={`/work/${project.slug}`} variant="outline" size="sm">
-            View Case Study →
-          </Button>
-        </Card>
+        <ProjectCard project={project} hover="shadow" />
       ))}
     </div>
 

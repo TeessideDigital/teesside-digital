@@ -16,6 +16,16 @@ export default {
         // Accent
         accent: '#5b7f9e',
         'accent-hover': '#6e93b5',
+        // Lightened variant of the brand accent, used ONLY for small text
+        // sitting on surface/surface-raised backgrounds (badges, nav active
+        // state, card captions, button text). The literal brand colour
+        // (#5b7f9e) fails WCAG AA (4.5:1) as small text on those two
+        // backgrounds -- 4.29:1 and 3.77:1 respectively -- even though it
+        // passes fine on the base background (4.69:1) and for large text
+        // everywhere. This does NOT replace the brand colour anywhere it
+        // already works (borders, backgrounds, large headline text) --
+        // see PLAN.md's Phase 3.5 non-goals, which locks #5b7f9e itself.
+        'accent-text': '#7e9bb4',
 
         // Border
         border: '#333333',

@@ -14,6 +14,9 @@ export interface Service {
   imageAlt: string;
   benefits: string[];
   useCases: string[];
+  accentColor: 'cyan' | 'purple' | 'green' | 'lime'; // matches Card.astro's accent bar colours
+  features: string[]; // short capability tags shown on the card, e.g. "Performance", "SEO"
+  categoryCode: string; // short label for the "01 / WEB" style numbered tag, e.g. "WEB"
 }
 
 export const services: Service[] = [
@@ -42,6 +45,9 @@ export const services: Service[] = [
       'SaaS landing pages',
       'Web applications',
     ],
+    accentColor: 'cyan',
+    features: ['Performance', 'SEO', 'Accessibility', 'CMS'],
+    categoryCode: 'WEB',
   },
   {
     id: 'ai-automation',
@@ -68,6 +74,9 @@ export const services: Service[] = [
       'Data analysis and reporting',
       'Predictive analytics',
     ],
+    accentColor: 'purple',
+    features: ['Chatbots', 'Automation', 'Integrations', 'Analytics'],
+    categoryCode: 'AI',
   },
   {
     id: 'cybersecurity',
@@ -94,6 +103,9 @@ export const services: Service[] = [
       'Employee security training',
       'Security infrastructure design',
     ],
+    accentColor: 'green',
+    features: ['Audits', 'Pen Testing', 'Compliance', 'Hardening'],
+    categoryCode: 'SECURITY',
   },
 ];
 

@@ -17,10 +17,15 @@
  * - description?: string (short description)
  * - tags?: string[] (optional tag badges)
  * - hover?: 'scale' | 'shadow' (hover effect)
+ * - accentColor?: 'cyan' | 'purple' | 'green' | 'lime' (optional top accent
+ *   bar, decorative only -- intended for service/capability cards. Leave
+ *   unset for portfolio, testimonial, and other card uses.)
  * - class?: string (additional classes)
  */
 
 import type { HTMLAttributes } from 'astro/types';
+
+type AccentColor = 'cyan' | 'purple' | 'green' | 'lime';
 
 interface Props extends HTMLAttributes<'div' | 'a'> {
   href?: string;
@@ -30,6 +35,7 @@ interface Props extends HTMLAttributes<'div' | 'a'> {
   description?: string;
   tags?: string[];
   hover?: 'scale' | 'shadow';
+  accentColor?: AccentColor;
 }
 
 const {
@@ -40,12 +46,20 @@ const {
   description,
   tags = [],
   hover = 'shadow',
+  accentColor,
   class: customClass = '',
   ...attrs
 } = Astro.props as Props;
 
 /**
- * Hover effect mappings
+ * Hover effect mappings.
+ *
+ * Each value is a COMPLETE, literal Tailwind class string, even though only
+ * one is ever picked at runtime. Tailwind's build step scans your source
+ * files as plain text looking for whole class names -- it does not execute
+ * this code, so a template literal like `hover:${x}-105` would never be
+ * seen as a real class and no CSS would be generated for it. Writing the
+ * full string out here is what makes it visible to that scan.
  */
 const hoverClasses = {
   scale: 'hover:scale-105 transition-transform duration-300 ease-out',
@@ -53,135 +67,120 @@ const hoverClasses = {
 };
 
 /**
- * Base card classes
+ * Accent bar colour mappings (top border only, decorative).
+ * Same static-string reasoning as hoverClasses above -- this also confirms
+ * against tailwind.config.mjs that cyan/purple/green/lime are available:
+ * colours are defined under theme.extend.colors there, which merges with
+ * (rather than replaces) Tailwind's default palette, so these families
+ * still exist alongside your custom brand tokens.
+ */
+const accentClasses: Record<AccentColor, string> = {
+  cyan: 'border-t-4 border-t-cyan-400',
+  purple: 'border-t-4 border-t-purple-400',
+  green: 'border-t-4 border-t-green-400',
+  lime: 'border-t-4 border-t-lime-400',
+};
+
+/**
+ * Base card classes.
+ *
+ * `group` is applied unconditionally so that group-hover utilities inside
+ * the card (the image zoom effect below) actually have an ancestor to key
+ * off. It doesn't force any behaviour by itself -- it's just a marker class
+ * Tailwind's group-hover variant looks for.
+ *
+ * The accent bar is layered on top of the existing 1px border-border: the
+ * `border` utility sets border-width/colour on all four sides as a
+ * shorthand, and `border-t-4 border-t-{colour}` overrides just the top
+ * side's width and colour. Because Tailwind emits directional border
+ * utilities after the non-directional ones in its generated stylesheet,
+ * the top override wins on that one edge without disturbing the other
+ * three sides.
  */
 const baseClasses = `
-  bg-surface border border-border rounded-lg overflow-hidden
+  card-shell group bg-surface border border-border rounded-lg overflow-hidden
   transition-all duration-200 ease-out
   ${hoverClasses[hover]}
+  ${accentColor ? accentClasses[accentColor] : ''}
   ${customClass}
 `;
 
 /**
- * Element type
+ * Element type.
+ *
+ * Astro renders a capitalised variable holding a tag-name string as that
+ * actual HTML element, so the markup only needs to be written once instead
+ * of duplicated per branch. `href` is still passed through even when
+ * Element is 'div': Astro omits attributes whose value is undefined, so it
+ * simply won't render on the div case.
  */
 const Element = href ? 'a' : 'div';
 ---
 
-{
-  href ? (
-    <a href={href} class={baseClasses} {...attrs}>
-      {
-        image && (
-          <div class="relative w-full h-48 md:h-56 overflow-hidden bg-surface-raised">
-            <img
-              src={image}
-              alt={imageAlt}
-              class="w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
-              loading="lazy"
-            />
-          </div>
-        )
-      }
-
-      <div class="p-6 md:p-8 flex flex-col h-full">
-        {/* Tags */}
-        {
-          tags && tags.length > 0 && (
-            <div class="flex flex-wrap gap-2 mb-4">
-              {tags.map((tag) => (
-                <span class="inline-block text-xs font-medium px-2 py-1 bg-surface-raised text-text-secondary rounded">
-                  {tag}
-                </span>
-              ))}
-            </div>
-          )
-        }
-
-        {/* Title */}
-        {title && <h3 class="text-lg md:text-xl font-semibold text-text-primary mb-2">{title}</h3>}
-
-        {/* Description */}
-        {description && <p class="text-sm md:text-base text-text-secondary flex-grow">{description}</p>}
-
-        {/* Slot for additional content (CTA, metadata, etc) */}
-        <div class="mt-4">
-          <slot />
-        </div>
+<Element href={href} class={baseClasses} {...attrs}>
+  {
+    image && (
+      <div class="relative w-full h-48 md:h-56 overflow-hidden bg-surface-raised">
+        <img
+          src={image}
+          alt={imageAlt}
+          class="w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
+          loading="lazy"
+        />
       </div>
-    </a>
-  ) : (
-    <div class={baseClasses} {...attrs}>
-      {
-        image && (
-          <div class="relative w-full h-48 md:h-56 overflow-hidden bg-surface-raised">
-            <img
-              src={image}
-              alt={imageAlt}
-              class="w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
-              loading="lazy"
-            />
-          </div>
-        )
-      }
+    )
+  }
 
-      <div class="p-6 md:p-8 flex flex-col h-full">
-        {/* Tags */}
-        {
-          tags && tags.length > 0 && (
-            <div class="flex flex-wrap gap-2 mb-4">
-              {tags.map((tag) => (
-                <span class="inline-block text-xs font-medium px-2 py-1 bg-surface-raised text-text-secondary rounded">
-                  {tag}
-                </span>
-              ))}
-            </div>
-          )
-        }
-
-        {/* Title */}
-        {title && <h3 class="text-lg md:text-xl font-semibold text-text-primary mb-2">{title}</h3>}
-
-        {/* Description */}
-        {description && <p class="text-sm md:text-base text-text-secondary flex-grow">{description}</p>}
-
-        {/* Slot for additional content (CTA, metadata, etc) */}
-        <div class="mt-4">
-          <slot />
+  <div class="p-6 md:p-8 flex flex-col h-full">
+    {/* Tags */}
+    {
+      tags && tags.length > 0 && (
+        <div class="flex flex-wrap gap-2 mb-4">
+          {tags.map((tag) => (
+            <span class="inline-block text-xs font-medium px-2 py-1 bg-surface-raised text-text-secondary rounded">
+              {tag}
+            </span>
+          ))}
         </div>
-      </div>
+      )
+    }
+
+    {/* Title */}
+    {title && <h3 class="text-lg md:text-xl font-semibold text-text-primary mb-2">{title}</h3>}
+
+    {/* Description */}
+    {description && <p class="text-sm md:text-base text-text-secondary flex-grow">{description}</p>}
+
+    {/* Slot for additional content (CTA, metadata, etc) */}
+    <div class="mt-4">
+      <slot />
     </div>
-  )
-}
+  </div>
+</Element>
 
 <style>
-  a {
+  /*
+   * Scoped to .card-shell specifically, not the bare `a`/`div` tags.
+   * Astro's per-component scoping only stops OTHER components' styles from
+   * leaking in -- it does not stop a bare tag selector from matching every
+   * element of that tag inside this component's own template. This file
+   * has three <div>s (root, image wrapper, content wrapper); a bare `div`
+   * selector here would style all three, not just the root.
+   */
+  .card-shell {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     text-decoration: none;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+    /* Resting elevation only. Hover escalation is handled entirely by the
+       `hover` prop's Tailwind classes above (hover:shadow-lg for
+       hover="shadow", hover:scale-105 for hover="scale") so the two
+       systems don't apply competing box-shadows on the same hover event. */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
   }
 
-  div {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-
-  /* Image hover zoom effect */
+  /* Only one img exists per card, so a bare tag selector is safe here. */
   img {
     transition: transform 0.3s ease-out;
-  }
-
-  /* Shadow hover effect */
-  a,
-  div {
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
-    transition: box-shadow 0.3s ease-out;
-  }
-
-  a:hover,
-  div:hover {
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
   }
 </style>

@@ -1,0 +1,83 @@
+---
+/**
+ * ProjectCard.astro
+ *
+ * Card for displaying a work/portfolio project. Wraps Card.astro rather
+ * than duplicating its layout, and adds project-specific behaviour:
+ *
+ * - Always shows a "Read Case Study" link to the internal write-up
+ *   (/work/[slug]), regardless of status.
+ * - Shows a status label (Status: Live / Status: In Development) so it's
+ *   never ambiguous whether a project is real, deployed work.
+ * - Only when status is 'live' AND a demoUrl exists, also shows a second
+ *   "View Live" link to the real external demo.
+ *
+ * This exists so that shipping a Phase 4 demo is a one-line data change in
+ * work.ts (status: 'live', demoUrl: '...') rather than a repeat of this
+ * design work -- see PLAN.md's "Case study demo links" decision.
+ *
+ * Accessibility note: unlike the Card usages this replaces, this component
+ * does NOT pass an href to Card.astro (so Card renders as a plain <div>,
+ * not a link). The Read Case Study / View Live buttons are the only
+ * interactive elements. The previous pattern -- Card wrapped in its own
+ * <a>, with another <Button href="..."> nested inside its slot -- put a
+ * link inside a link, which is invalid HTML and ambiguous for screen
+ * readers about what's actually clickable.
+ *
+ * Props:
+ * - project: Project (from @data/work)
+ * - hover?: 'scale' | 'shadow' (passed through to Card, default 'shadow'
+ *   since this card is no longer a single clickable link -- 'scale' reads
+ *   as a click affordance that no longer applies to the whole card)
+ */
+
+import Card from './Card.astro';
+import Button from './Button.astro';
+import TechnicalLabel from './TechnicalLabel.astro';
+import { getServiceBySlug } from '@data/services';
+import type { Project } from '@data/work';
+
+interface Props {
+  project: Project;
+  hover?: 'scale' | 'shadow';
+}
+
+const { project, hover = 'shadow' } = Astro.props as Props;
+
+const resolvedServices = project.servicesProvided
+  .map((slug) => getServiceBySlug(slug)?.title)
+  .filter(Boolean)
+  .join(', ');
+
+const isLive = project.status === 'live';
+---
+
+<Card
+  image={project.heroImage}
+  imageAlt={project.heroImageAlt}
+  title={project.title}
+  description={project.description}
+  tags={project.tags}
+  hover={hover}
+>
+  <div class="flex items-center justify-between mb-4">
+    <span class="text-xs font-medium text-accent-text">{resolvedServices}</span>
+    <TechnicalLabel
+      text={isLive ? 'Status: Live' : 'Status: In development'}
+      tone={isLive ? 'live' : 'in-development'}
+    />
+  </div>
+
+  <div class="flex items-center gap-3">
+    <Button href={`/work/${project.slug}`} variant="outline" size="sm">
+      Read Case Study →
+    </Button>
+    {
+      isLive && project.demoUrl && (
+        <Button href={project.demoUrl} variant="secondary" size="sm" target="_blank" rel="noopener noreferrer">
+          View Live →
+        </Button>
+      )
+    }
+  </div>
+</Card>

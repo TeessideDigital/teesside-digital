@@ -16,9 +16,11 @@ export interface Project {
   tags: string[];
   challenge: string;
   solution: string;
-  results: string[];
-  technologies: string[];
-  demoUrl?: string;
+  results?: string[]; // Only ever real, verified results. Omit entirely for in-development projects -- never fabricate.
+  servicesProvided: string[]; // Service slugs from services.ts (e.g. 'web-development'), resolved to display names via getServiceBySlug at render time -- keeps the display name in sync with services.ts as a single source of truth rather than duplicating it here.
+  technologies: string[]; // Genuinely planned/standing toolkit only -- never an aspirational stack for this specific project. See PLAN.md's case study honesty rule.
+  status: 'live' | 'in-development'; // 'live' unlocks demoUrl rendering; 'in-development' shows a status label instead
+  demoUrl?: string; // Only set once the demo is actually deployed and reachable
   caseStudyUrl: string;
 }
 
@@ -26,75 +28,61 @@ export const projects: Project[] = [
   {
     id: 'northeast-joinery',
     slug: 'northeast-joinery',
-    title: 'North East Joinery — Website Redesign',
-    shortDescription: 'Redesign and modernisation of a local joinery and carpentry business website.',
+    title: 'North East Joinery — Local Business Website (Demo)',
+    shortDescription: 'A demonstration of a modern, high-performance website for a local joinery and carpentry business.',
     description:
-      'North East Joinery needed a modern website to reflect the quality of their craftsmanship. The existing site was outdated, slow, and not mobile-friendly. We rebuilt it with fast performance, stunning portfolio galleries, and clear CTAs for quote requests.',
+      'North East Joinery is a demonstration project showing how a modern website can transform a local trades business\'s online presence. It will feature fast, mobile-first design, a portfolio gallery for past work, and a straightforward path to requesting a quote.',
     heroImage: '/images/work/northeast-joinery-hero.jpg',
-    heroImageAlt: 'North East Joinery website',
+    heroImageAlt: 'North East Joinery website concept',
     featured: true,
     tags: ['web-design', 'portfolio', 'astro'],
     challenge:
-      'The business had no online presence to show their portfolio. Potential customers could not view past projects or easily request a quote. The old site had slow load times and looked unprofessional.',
+      'Many local trades businesses have no real online presence: potential customers can\'t see past work or easily request a quote, and older sites are often slow and not mobile-friendly. This demo illustrates that common problem.',
     solution:
-      'Built a fast, modern website using Astro and Tailwind CSS. Designed a portfolio section to showcase carpentry projects with high-quality images. Integrated a contact form for quote requests with automatic email notifications.',
-    results: [
-      'Page load time reduced from 4.2s to 0.8s',
-      '23% increase in enquiries within first month',
-      'Mobile traffic increased from 12% to 35%',
-      'Google Lighthouse score: 98',
-    ],
-    technologies: ['Astro', 'Tailwind CSS', 'Netlify', 'JavaScript'],
+      'A fast, modern website built with Astro, Tailwind CSS, and a React-powered multi-step quote form, integrated with Netlify Forms for lead capture. Designed to showcase a portfolio of work with high-quality images and a clear call to action.',
+    technologies: ['Astro', 'Tailwind CSS', 'React', 'Netlify Forms'],
+    servicesProvided: ['web-development'],
+    status: 'in-development',
     caseStudyUrl: '/work/northeast-joinery',
   },
   {
     id: 'quoteflow',
     slug: 'quoteflow',
     title: 'QuoteFlow — Quote Generation Tool (Demo)',
-    shortDescription: 'A web-based tool for service businesses to generate and manage project quotes.',
+    shortDescription: 'A planned demonstration of an AI-powered quote generation tool for small service businesses.',
     description:
-      'QuoteFlow is a demo project showing how to build a quote generation tool for small service businesses. Users can create quotes, customise pricing, and send directly to clients via email.',
+      'QuoteFlow is a demo project showing how an AI-assisted quote generation tool could work for small service businesses. The plan: let users create quotes, customise pricing, and send professional quotes to clients quickly.',
     heroImage: '/images/work/quoteflow-hero.jpg',
-    heroImageAlt: 'QuoteFlow demo application',
+    heroImageAlt: 'QuoteFlow demo application concept',
     featured: false,
     tags: ['web-app', 'saas', 'react'],
     challenge:
-      'Service businesses like plumbers, electricians, and builders spend time generating quotes manually, leading to errors and delays.',
+      'Service businesses like plumbers, electricians, and builders often spend significant time generating quotes manually, which leads to errors and delays.',
     solution:
-      'Built a web app where users create templates, add services/hourly rates, and generate professional PDF quotes. Integrated Stripe for payment processing and SendGrid for email delivery.',
-    results: [
-      '80% faster quote generation',
-      'Reduced quote errors by 95%',
-      'Client satisfaction +40%',
-      'Time to quote: 5 minutes vs 30+ minutes',
-    ],
-    technologies: ['React', 'Node.js', 'Stripe API', 'SendGrid API', 'PostgreSQL'],
-    demoUrl: 'https://quoteflow-demo.teessidedigital.uk',
+      'A planned web app where users create templates, add services and rates, and generate professional quotes quickly, with AI assistance to speed up the process.',
+    technologies: ['Astro', 'Tailwind CSS', 'React'],
+    servicesProvided: ['web-development', 'ai-automation'],
+    status: 'in-development',
     caseStudyUrl: '/work/quoteflow',
   },
   {
     id: 'siteguard',
     slug: 'siteguard',
     title: 'SiteGuard — Security Monitoring Dashboard (Demo)',
-    shortDescription: 'A real-time dashboard for monitoring website security, uptime, and performance.',
+    shortDescription: 'A planned demonstration of a real-time dashboard for monitoring website security, uptime, and performance.',
     description:
-      'SiteGuard is a demo project showing how security and performance monitoring can be presented to clients. Real-time alerts for downtime, SSL certificate expiry, broken links, and security vulnerabilities.',
+      'SiteGuard is a demo project showing how security and performance monitoring could be presented to clients: real-time alerts for downtime, SSL certificate expiry, broken links, and security issues.',
     heroImage: '/images/work/siteguard-hero.jpg',
-    heroImageAlt: 'SiteGuard security dashboard',
+    heroImageAlt: 'SiteGuard security dashboard concept',
     featured: false,
     tags: ['web-app', 'monitoring', 'security'],
     challenge:
-      'Website owners have no easy way to monitor security threats, downtime, or performance issues without expensive tools or technical knowledge.',
+      'Website owners often have no easy way to monitor security threats, downtime, or performance issues without expensive tools or specialist knowledge.',
     solution:
-      'Built a dashboard that continuously monitors websites for vulnerabilities, checks SSL certificates, detects broken links, and tracks performance metrics. Mobile-friendly, real-time alerts via email and Slack.',
-    results: [
-      'Detects security issues 95% faster than manual checks',
-      'Average fix time reduced from 8 hours to 15 minutes',
-      'Prevents ~2 breaches per client per year',
-      'Zero false positives after tuning',
-    ],
-    technologies: ['React', 'Node.js', 'MongoDB', 'Socket.io', 'Slack API'],
-    demoUrl: 'https://siteguard-demo.teessidedigital.uk',
+      'A planned dashboard that would continuously monitor websites for vulnerabilities, check SSL certificates, detect broken links, and track performance, with real-time alerts.',
+    technologies: ['Astro', 'Tailwind CSS', 'React'],
+    servicesProvided: ['web-development', 'cybersecurity'],
+    status: 'in-development',
     caseStudyUrl: '/work/siteguard',
   },
 ];

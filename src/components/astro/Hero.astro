@@ -11,7 +11,12 @@
  *
  * Props:
  * - title: string (main headline)
- * - subtitle?: string (subheading)
+ * - highlightWord?: string (exact substring of title to render in accent
+ *   colour, e.g. title="Precision Engineering for Small Businesses"
+ *   highlightWord="Small Businesses". Must match the text in title exactly,
+ *   including case -- if it isn't found, the headline just renders plain
+ *   with no highlight and no error.)
+ * - subtitle?: string (subheading, rendered as a small-caps badge)
  * - description?: string (longer description)
  * - ctaText?: string (button text)
  * - ctaHref?: string (button link)
@@ -24,6 +29,7 @@ import Button from './Button.astro';
 
 interface Props {
   title: string;
+  highlightWord?: string;
   subtitle?: string;
   description?: string;
   ctaText?: string;
@@ -38,6 +44,7 @@ interface Props {
 
 const {
   title,
+  highlightWord,
   subtitle,
   description,
   ctaText = 'Get Started',
@@ -46,6 +53,18 @@ const {
   backgroundImage,
   backgroundGradient = false,
 } = Astro.props as Props;
+
+/**
+ * Split the title around highlightWord so it can be wrapped in a coloured
+ * span. This is a plain string match, not a template-driven Tailwind class
+ * (that trap doesn't apply here), but it has its own quiet failure mode:
+ * title.split() only returns exactly 2 parts if highlightWord occurs
+ * exactly once. If it's missing, mistyped, or appears more than once, we
+ * fall back to rendering the plain title untouched rather than guessing --
+ * a silent no-op is safer than mangling the headline.
+ */
+const titleParts = highlightWord ? title.split(highlightWord) : [title];
+const hasHighlight = Boolean(highlightWord) && titleParts.length === 2;
 ---
 
 <section
@@ -73,6 +92,10 @@ const {
 
   {/* Decorative elements (optional, for premium feel) */}
   <div
+    class="hero-dot-grid absolute inset-0"
+    aria-hidden="true"
+  />
+  <div
     class="absolute top-20 right-10 w-64 h-64 bg-accent opacity-5 rounded-full blur-3xl"
     aria-hidden="true"
   />
@@ -87,7 +110,8 @@ const {
     {
       subtitle && (
         <div class="mb-6 md:mb-8 inline-block">
-          <span class="text-sm md:text-base font-medium text-accent bg-surface rounded-full px-4 py-2 border border-border">
+          <span class="inline-flex items-center gap-2 text-xs md:text-sm font-semibold uppercase tracking-widest text-accent-text bg-surface rounded-full px-4 py-2 border border-border">
+            <span class="w-1.5 h-1.5 rounded-full bg-accent" aria-hidden="true" />
             {subtitle}
           </span>
         </div>
@@ -96,7 +120,15 @@ const {
 
     {/* Main Headline */}
     <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-text-primary mb-6 md:mb-8 leading-tight">
-      {title}
+      {
+        hasHighlight ? (
+          <>
+            {titleParts[0]}<span class="text-accent">{highlightWord}</span>{titleParts[1]}
+          </>
+        ) : (
+          title
+        )
+      }
     </h1>
 
     {/* Description */}
@@ -139,6 +171,22 @@ const {
     pointer-events: none;
   }
 
+  /*
+   * Static dot-grid background -- a "structured/technical" texture without
+   * any animation, JS, or motion. Purely decorative (aria-hidden), so it
+   * has no accessibility exception to account for and needs no
+   * prefers-reduced-motion fallback, unlike an animated equivalent would.
+   * Faded via a radial mask so it reads as a subtle texture rather than
+   * ending in a hard rectangular edge.
+   */
+  .hero-dot-grid {
+    background-image: radial-gradient(circle, rgba(91, 127, 158, 0.35) 1px, transparent 1px);
+    background-size: 28px 28px;
+    mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+    opacity: 0.4;
+  }
+
   /* Smooth gradient text (optional, uncomment if needed) */
   /*
   h1 {
@@ -163,6 +211,10 @@ const {
 
     p {
       font-size: 1rem;
+    }
+
+    .hero-dot-grid {
+      background-size: 20px 20px;
     }
   }
 </style>

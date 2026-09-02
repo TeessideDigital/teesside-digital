@@ -1,0 +1,57 @@
+---
+/**
+ * ServiceCard.astro
+ *
+ * Card for displaying a service/capability. Wraps Card.astro, applying the
+ * "technical capability" treatment from PLAN.md's Phase 3.5 brief:
+ * a numbered category label ("01 / WEB"), a coloured accent bar (via
+ * Card's existing accentColor prop from Priority 1), a short features list,
+ * and a "View Capability" link.
+ *
+ * Accessibility note: like ProjectCard.astro, this does NOT pass an href to
+ * Card.astro. The previous pattern (Card wrapped in its own <a>, with
+ * another <Button href="..."> nested inside its slot) put a link inside a
+ * link, which is invalid HTML and ambiguous for screen readers about what's
+ * actually clickable. The "View Capability" button is the only interactive
+ * element here.
+ *
+ * Props:
+ * - service: Service (from @data/services)
+ * - index: number (0-based position in the list, used for the "01 / 02 / 03" label)
+ */
+
+import Card from './Card.astro';
+import Button from './Button.astro';
+import type { Service } from '@data/services';
+
+interface Props {
+  service: Service;
+  index: number;
+}
+
+const { service, index } = Astro.props as Props;
+
+const number = String(index + 1).padStart(2, '0');
+---
+
+<Card
+  image={service.image}
+  imageAlt={service.imageAlt}
+  accentColor={service.accentColor}
+  hover="shadow"
+>
+  <p class="text-xs font-semibold uppercase tracking-widest text-text-secondary mb-3">
+    {number} / {service.categoryCode}
+  </p>
+
+  <h3 class="text-lg md:text-xl font-semibold text-text-primary mb-2">{service.title}</h3>
+  <p class="text-sm md:text-base text-text-secondary mb-4">{service.shortDescription}</p>
+
+  <p class="text-xs font-medium text-text-secondary uppercase tracking-wide mb-4">
+    {service.features.join(' · ')}
+  </p>
+
+  <Button href={`/services/${service.slug}`} variant="outline" size="sm">
+    View Capability →
+  </Button>
+</Card>

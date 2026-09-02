@@ -41,8 +41,8 @@ const containerClasses =
 <form
   name={formName}
   method="POST"
-  class={`contact-form ${standaloneClasses}`}
-  netlify
+  class={`contact-form bg-surface-raised rounded-lg p-6 md:p-8 ${standaloneClasses}`}
+  data-netlify="true"
   netlify-honeypot="bot-field"
 >
   <!-- Honeypot field (hidden from real users) -->
@@ -60,7 +60,7 @@ const containerClasses =
       <div>
         <label for="name" class="block text-sm font-medium text-text-primary mb-2">
           Your Name
-          <span class="text-accent">*</span>
+          <span class="text-accent-text">*</span>
         </label>
         <input
           id="name"
@@ -84,7 +84,7 @@ const containerClasses =
       <div>
         <label for="email" class="block text-sm font-medium text-text-primary mb-2">
           Email Address
-          <span class="text-accent">*</span>
+          <span class="text-accent-text">*</span>
         </label>
         <input
           id="email"
@@ -122,7 +122,7 @@ const containerClasses =
       <div>
         <label for="message" class="block text-sm font-medium text-text-primary mb-2">
           Message
-          <span class="text-accent">*</span>
+          <span class="text-accent-text">*</span>
         </label>
         <textarea
           id="message"
@@ -333,9 +333,3 @@ const containerClasses =
     });
   }
 </script>
-
-<style>
-  .contact-form {
-    background: var(--surface);
-  }
-</style>

@@ -15,8 +15,8 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Section from '../components/astro/Section.astro';
 import Hero from '../components/astro/Hero.astro';
-import Card from '../components/astro/Card.astro';
 import Button from '../components/astro/Button.astro';
+import ServiceCard from '../components/astro/ServiceCard.astro';
 import { getServices } from '@data/services';
 
 const title = 'Our Services - Teesside Digital';
@@ -30,13 +30,13 @@ const services = getServices();
 <BaseLayout
   title={title}
   description={description}
-  canonicalURL={canonicalURL}
+  canonical={canonicalURL.href}
 >
   <!-- Hero -->
   <Hero
-    headline="Our Services"
-    subheadline="Everything your business needs to build, automate, and secure your digital presence."
-    badge="Services"
+    title="Our Services"
+    description="Everything your business needs to build, automate, and secure your digital presence."
+    subtitle="Services"
   />
 
   <!-- Services Grid -->
@@ -50,23 +50,8 @@ const services = getServices();
 
       <div class="grid md:grid-cols-3 gap-8">
         {
-          services.map((service) => (
-            <Card
-              href={`/services/${service.slug}`}
-              image={service.image}
-              imageAlt={service.title}
-              title={service.title}
-              description={service.description}
-              tags={service.tags}
-            >
-              <Button
-                variant="outline"
-                size="sm"
-                href={`/services/${service.slug}`}
-              >
-                Learn More
-              </Button>
-            </Card>
+          services.map((service, index) => (
+            <ServiceCard service={service} index={index} />
           ))
         }
       </div>
@@ -74,7 +59,7 @@ const services = getServices();
   </Section>
 
   <!-- How Services Work Together -->
-  <Section variant="dark">
+  <Section background="surface">
     <div class="max-w-4xl mx-auto px-4 md:px-6">
       <h2 class="text-2xl md:text-3xl font-semibold text-text-primary mb-8">
         Services Work Better Together
@@ -189,7 +174,7 @@ const services = getServices();
   </Section>
 
   <!-- Pricing Section -->
-  <Section variant="dark">
+  <Section background="surface">
     <div class="max-w-3xl mx-auto px-4 md:px-6 text-center">
       <h2 class="text-2xl md:text-3xl font-semibold text-text-primary mb-4">
         Custom Pricing

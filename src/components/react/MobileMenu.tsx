@@ -14,7 +14,7 @@
  * - navigation: Array of { label: string, href: string }
  */
 
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 interface NavItem {
   label: string;
@@ -97,7 +97,7 @@ export default function MobileMenu({ navigation }: MobileMenuProps) {
           flex items-center justify-center
           rounded transition-all duration-200 ease-out
           focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background
-          ${isOpen ? 'bg-surface-raised text-accent' : 'text-text-secondary hover:text-accent hover:bg-surface-raised'}
+          ${isOpen ? 'bg-surface-raised text-accent-text' : 'text-text-secondary hover:text-accent-text hover:bg-surface-raised'}
         `}
         aria-label={isOpen ? 'Close menu' : 'Open menu'}
         aria-expanded={isOpen}
@@ -158,7 +158,7 @@ export default function MobileMenu({ navigation }: MobileMenuProps) {
                     className={`
                       block px-4 py-3
                       text-sm font-medium
-                      text-text-secondary hover:text-accent hover:bg-surface-raised
+                      text-text-secondary hover:text-accent-text hover:bg-surface-raised
                       transition-colors duration-200 ease-out
                       ${index < navigation.length - 1 ? 'border-b border-border' : ''}
                       focus:outline-none focus:ring-2 focus:ring-accent focus:ring-inset

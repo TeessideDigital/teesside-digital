@@ -26,11 +26,23 @@
 
 import type { HTMLAttributes } from 'astro/types';
 
+/**
+ * HTMLAttributes<'button' | 'a'> does not cleanly union each tag's own
+ * attribute set the way it might look like it should -- it drops
+ * anchor-specific attributes (target, rel) entirely, and produces an
+ * over-broad `type` that isn't assignable to a real <button>'s stricter
+ * 'button' | 'submit' | 'reset' union. Rather than relying on that merged
+ * type, the properties this component actually needs are declared
+ * explicitly here, narrowing/adding to what's inherited.
+ */
 interface Props extends HTMLAttributes<'button' | 'a'> {
   href?: string;
   variant?: 'primary' | 'secondary' | 'outline';
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   disabled?: boolean;
+  type?: 'button' | 'submit' | 'reset';
+  target?: '_blank' | '_self' | '_parent' | '_top';
+  rel?: string;
 }
 
 const { href, variant = 'primary', size = 'md', disabled = false, class: customClass = '', ...attrs } = Astro.props as Props;
@@ -51,9 +63,9 @@ const sizeClasses = {
  */
 const variantClasses = {
   primary: 'bg-accent text-background hover:bg-accent-hover disabled:bg-text-secondary disabled:cursor-not-allowed',
-  secondary: 'bg-surface-raised text-accent hover:bg-surface border border-border disabled:border-text-secondary disabled:text-text-secondary disabled:cursor-not-allowed',
+  secondary: 'bg-surface-raised text-accent-text hover:bg-surface border border-border disabled:border-text-secondary disabled:text-text-secondary disabled:cursor-not-allowed',
   outline:
-    'border border-accent text-accent hover:bg-accent hover:text-background disabled:border-text-secondary disabled:text-text-secondary disabled:cursor-not-allowed',
+    'border border-accent text-accent-text hover:bg-accent hover:text-background disabled:border-text-secondary disabled:text-text-secondary disabled:cursor-not-allowed',
 };
 
 /**
@@ -73,17 +85,9 @@ const allClasses = `${baseClasses} ${sizeClasses[size]} ${variantClasses[variant
 const Element = href ? 'a' : 'button';
 ---
 
-{
-  href ? (
-    <a href={href} class={allClasses} {...attrs}>
-      <slot />
-    </a>
-  ) : (
-    <button disabled={disabled} class={allClasses} {...attrs}>
-      <slot />
-    </button>
-  )
-}
+<Element href={href} disabled={disabled} class={allClasses} {...attrs}>
+  <slot />
+</Element>
 
 <style>
   a,

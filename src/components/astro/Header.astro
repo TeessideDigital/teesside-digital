@@ -8,6 +8,7 @@
 
 import Navigation from './Navigation.astro';
 import MobileMenu from '../react/MobileMenu.tsx';
+import { NAVIGATION } from '@config/constants';
 ---
 
 <header class="sticky top-0 z-40 w-full bg-surface border-b border-border">
@@ -15,7 +16,7 @@ import MobileMenu from '../react/MobileMenu.tsx';
     <!-- Logo & Home Link -->
     <a href="/" class="flex items-center gap-2 hover:opacity-80 transition-opacity" aria-label="Teesside Digital home">
       <img 
-        src="/images/logos/teesside-digital-mark.svg" 
+        src="/images/logo/teesside-digital-mark.svg" 
         alt="Teesside Digital" 
         class="h-8 w-auto"
       />
@@ -31,13 +32,7 @@ import MobileMenu from '../react/MobileMenu.tsx';
 
     <!-- Mobile Menu Toggle (React Island) -->
     <div class="md:hidden">
-      <MobileMenu client:load />
+      <MobileMenu client:load navigation={NAVIGATION.header} />
     </div>
   </div>
 </header>
-
-<style>
-  header {
-    background: var(--surface);
-  }
-</style>

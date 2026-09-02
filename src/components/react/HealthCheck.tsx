@@ -15,7 +15,7 @@
 
 import React, { useState, useRef } from 'react';
 import { runHealthCheck, type HealthCheckResult } from '@lib/health-check';
-import { validateUrl, sanitiseInput, normaliseText } from '@lib/validation';
+import { validateUrl } from '@lib/validation';
 import HealthCheckForm from './HealthCheckForm';
 
 interface Props {
@@ -307,7 +307,7 @@ export default function HealthCheck({ onCheckComplete }: Props) {
             onClick={handleReset}
             className={`
               w-full px-4 py-3
-              bg-surface-raised text-accent font-medium rounded
+              bg-surface-raised text-accent-text font-medium rounded
               border border-border
               transition-all duration-200 ease-out
               focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background

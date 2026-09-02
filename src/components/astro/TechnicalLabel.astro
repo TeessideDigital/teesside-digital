@@ -1,0 +1,53 @@
+---
+/**
+ * TechnicalLabel.astro
+ *
+ * Small-caps technical metadata label used throughout the site for things
+ * like status indicators, project numbers, location tags, and availability
+ * notices -- e.g. "Status: Live", "Project / 001", "Teesside / North East / UK".
+ *
+ * One shared component so every metadata label on the site gets the same
+ * visual treatment (small caps via CSS text-transform, letter-spaced, muted)
+ * instead of each page hand-rolling its own one-off version, the way the
+ * Hero badge was before it got centralised.
+ *
+ * Props:
+ * - text: string (the label content -- write it in normal case, uppercase
+ *   is applied visually via CSS, not by shouting in the source string)
+ * - tone?: 'neutral' | 'live' | 'in-development' (colour + status dot)
+ *   - neutral: muted grey, no colour meaning (e.g. "Project / 001")
+ *   - live: success green with a dot (matches PLAN.md's Health Check "Pass" colour)
+ *   - in-development: warning amber with a dot (matches "Warning" colour)
+ * - showDot?: boolean (override the tone's default dot behaviour)
+ */
+
+interface Props {
+  text: string;
+  tone?: 'neutral' | 'live' | 'in-development';
+  showDot?: boolean;
+}
+
+const { text, tone = 'neutral', showDot } = Astro.props as Props;
+
+const toneTextClasses: Record<string, string> = {
+  neutral: 'text-text-secondary',
+  live: 'text-success',
+  'in-development': 'text-warning',
+};
+
+const toneDotClasses: Record<string, string> = {
+  neutral: 'bg-text-secondary',
+  live: 'bg-success',
+  'in-development': 'bg-warning',
+};
+
+// Status-like tones (live / in-development) show a dot by default;
+// plain neutral metadata (e.g. "Project / 001") doesn't need one unless
+// explicitly requested.
+const shouldShowDot = showDot ?? tone !== 'neutral';
+---
+
+<span class={`inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest ${toneTextClasses[tone]}`}>
+  {shouldShowDot && <span class={`w-1.5 h-1.5 rounded-full ${toneDotClasses[tone]}`} aria-hidden="true" />}
+  {text}
+</span>

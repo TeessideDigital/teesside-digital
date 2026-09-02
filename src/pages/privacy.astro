@@ -20,7 +20,7 @@ const canonicalURL = new URL('/privacy', Astro.site);
 <BaseLayout
   title={title}
   description={description}
-  canonicalURL={canonicalURL}
+  canonical={canonicalURL.href}
 >
   <!-- Header -->
   <Section>
@@ -42,7 +42,7 @@ const canonicalURL = new URL('/privacy', Astro.site);
   </Section>
 
   <!-- Table of Contents -->
-  <Section variant="dark">
+  <Section background="surface">
     <div class="max-w-4xl mx-auto px-4 md:px-6">
       <h2 class="text-lg font-semibold text-text-primary mb-4">Quick Links</h2>
       <div class="grid md:grid-cols-2 gap-4">
@@ -50,7 +50,7 @@ const canonicalURL = new URL('/privacy', Astro.site);
           privacyPolicy.sections.map((section) => (
             <a
               href={`#${section.id}`}
-              class="p-3 bg-surface rounded hover:bg-surface-raised transition-colors text-accent hover:text-accent-hover"
+              class="p-3 bg-surface rounded hover:bg-surface-raised transition-colors text-accent-text hover:text-accent-hover"
             >
               {section.title}
             </a>
@@ -81,14 +81,14 @@ const canonicalURL = new URL('/privacy', Astro.site);
   </Section>
 
   <!-- Footer Info -->
-  <Section variant="dark">
+  <Section background="surface">
     <div class="max-w-4xl mx-auto px-4 md:px-6 text-center">
       <h2 class="text-lg font-semibold text-text-primary mb-4">Questions?</h2>
       <p class="text-text-secondary">
         If you have questions about this privacy policy, please contact
         <a
           href="mailto:dave@teessidedigital.uk"
-          class="text-accent hover:text-accent-hover"
+          class="text-accent-text hover:text-accent-hover"
         >
           dave@teessidedigital.uk
         </a>

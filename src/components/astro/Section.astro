@@ -7,12 +7,16 @@
  * - Max-width container
  * - Padding (vertical + horizontal)
  * - Optional background color (background, surface, surface-raised)
+ * - Optional eyebrow label (small caps, accent colour, bottom border --
+ *   the "Meta" typography tier from PLAN.md's Phase 3.5 scale)
  * - Optional section heading
  * - Consistent spacing between sections
  *
  * Props:
  * - background?: 'background' | 'surface' | 'surface-raised'
- * - heading?: string (optional h2)
+ * - eyebrow?: string (short category label shown above heading, e.g. "PROCESS")
+ * - heading?: string (optional h2 -- stays at its existing prominent size;
+ *   the small-caps treatment applies to eyebrow, not this)
  * - subheading?: string (optional subtitle)
  * - id?: string (for anchor links)
  * - class?: string (additional classes)
@@ -22,6 +26,7 @@ import type { HTMLAttributes } from 'astro/types';
 
 interface Props extends HTMLAttributes<'section'> {
   background?: 'background' | 'surface' | 'surface-raised';
+  eyebrow?: string;
   heading?: string;
   subheading?: string;
   id?: string;
@@ -29,6 +34,7 @@ interface Props extends HTMLAttributes<'section'> {
 
 const {
   background = 'background',
+  eyebrow,
   heading,
   subheading,
   id,
@@ -57,6 +63,15 @@ const backgroundClasses = {
   {...attrs}
 >
   <div class="container-content">
+    {/* Optional eyebrow label -- small caps, accent colour, subtle bottom
+        border, per PLAN.md's Meta typography tier. Sits above heading,
+        does not replace it, so heading keeps its existing visual weight. */}
+    {eyebrow && (
+      <p class="inline-block text-xs font-semibold uppercase tracking-widest text-accent-text border-b border-accent pb-2 mb-4">
+        {eyebrow}
+      </p>
+    )}
+
     {/* Optional section heading */}
     {heading && (
       <div class="mb-12 md:mb-16">

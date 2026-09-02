@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
+import sitemap from '@astrojs/sitemap';
 import { fileURLToPath } from 'node:url';
 
 export default defineConfig({
@@ -22,6 +23,11 @@ export default defineConfig({
       experimentalReactChildren: true,
     }),
     tailwind(),
+    // Generates sitemap-index.xml + sitemap-0.xml at build time from every
+    // static route Astro renders. Uses the `site` URL above as the base --
+    // if that value is ever wrong, the sitemap silently ships wrong URLs
+    // too, so there is only one source of truth to keep correct.
+    sitemap(),
   ],
 
   // Image optimization

@@ -10,6 +10,27 @@
   port = 3000
 
 # Redirects
+
+# Canonical domain enforcement: www -> apex (non-www).
+# Must come before the catch-all 404 rule below -- Netlify evaluates
+# redirects top to bottom and applies the first match. This rule also
+# needs force = true, which is easy to miss and get wrong: without it,
+# Netlify only fires a redirect when no real file matches the request
+# path, and on this site every real page IS a matching file, so the
+# redirect would silently never trigger for any actual page. force = true
+# means "redirect unconditionally, regardless of whether a file exists,"
+# which is what canonical-domain enforcement actually needs -- every
+# single request to the www host, no exceptions, gets sent to the apex
+# domain. This keeps only one URL per page indexable (matches the
+# canonical tags and og:url already generated in BaseLayout.astro),
+# rather than Google treating www and non-www as two separate,
+# duplicate-content versions of the same site.
+[[redirects]]
+  from = "https://www.teessidedigital.uk/*"
+  to = "https://teessidedigital.uk/:splat"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/*"
   to = "/404.html"

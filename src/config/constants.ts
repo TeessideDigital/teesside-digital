@@ -23,12 +23,6 @@ export const BUSINESS = {
   description: 'A solo-operated technology consultancy providing web development, AI automation, and cybersecurity services.',
 };
 
-export const SOCIAL = {
-  github: 'https://github.com/TeessideDigital',
-  linkedin: 'https://linkedin.com/company/teessidedigital',
-  twitter: 'https://twitter.com/teessidedigital',
-};
-
 export const FEATURE_FLAGS = {
   // Phase 1: Launch features
   showHealthCheck: true,

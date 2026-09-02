@@ -74,7 +74,7 @@ export async function runHealthCheck(urlInput: string): Promise<HealthCheckResul
   const findings: HealthCheckFinding[] = [];
 
   // Performance checks
-  findings.push(...analysePerformance(url, doc, html));
+  findings.push(...analysePerformance(doc, html));
 
   // Accessibility checks
   findings.push(...analyseAccessibility(doc));
@@ -132,7 +132,7 @@ function isValidUrl(url: string): boolean {
    Performance Analysis
    ============================================================ */
 
-function analysePerformance(url: string, doc: Document, html: string): HealthCheckFinding[] {
+function analysePerformance(doc: Document, html: string): HealthCheckFinding[] {
   const findings: HealthCheckFinding[] = [];
   const docSize = new Blob([html]).size;
 
@@ -238,7 +238,6 @@ function analyseAccessibility(doc: Document): HealthCheckFinding[] {
   }
 
   // Check heading hierarchy
-  const headings = doc.querySelectorAll('h1, h2, h3, h4, h5, h6');
   const h1Count = doc.querySelectorAll('h1').length;
 
   if (h1Count === 0) {

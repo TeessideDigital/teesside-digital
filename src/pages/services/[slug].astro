@@ -16,9 +16,9 @@
  */
 
 import BaseLayout from '@layouts/BaseLayout.astro';
-import Section from '../components/astro/Section.astro';
-import Hero from '../components/astro/Hero.astro';
-import Button from '../components/astro/Button.astro';
+import Section from '@components/astro/Section.astro';
+import Hero from '@components/astro/Hero.astro';
+import Button from '@components/astro/Button.astro';
 import { getServices, getServiceBySlug } from '@data/services';
 
 export function getStaticPaths() {
@@ -198,13 +198,13 @@ const serviceFaqs = faqs[service.slug] || [];
 <BaseLayout
   title={title}
   description={description}
-  canonicalURL={canonicalURL}
+  canonical={canonicalURL.href}
 >
   <!-- Hero -->
   <Hero
-    headline={service.title}
-    subheadline={service.description}
-    badge="Service"
+    title={service.title}
+    description={service.description}
+    subtitle="Service"
   />
 
   <!-- Service Overview -->
@@ -247,7 +247,7 @@ const serviceFaqs = faqs[service.slug] || [];
   </Section>
 
   <!-- Our Approach -->
-  <Section variant="dark">
+  <Section background="surface">
     <div class="max-w-4xl mx-auto px-4 md:px-6">
       <h2 class="text-2xl md:text-3xl font-semibold text-text-primary mb-8">
         How We Approach {service.title}
@@ -341,7 +341,7 @@ const serviceFaqs = faqs[service.slug] || [];
   }
 
   <!-- CTA Section -->
-  <Section variant="dark" class="py-12 md:py-16">
+  <Section background="surface" class="py-12 md:py-16">
     <div class="max-w-3xl mx-auto px-4 md:px-6 text-center">
       <h2 class="text-2xl md:text-3xl font-semibold text-text-primary mb-4">
         Ready to get started?

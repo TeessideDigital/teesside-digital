@@ -99,8 +99,20 @@ const hasHighlight = Boolean(highlightWord) && titleParts.length === 2;
     class="absolute top-20 right-10 w-64 h-64 bg-accent opacity-5 rounded-full blur-3xl"
     aria-hidden="true"
   />
+  {/*
+    NOTE: use opacity-[N] (arbitrary value syntax), not opacity-N, for any
+    percentage that isn't one of Tailwind's default named steps (0, 5, 10,
+    20, 25, 30, 40, 50, 60, 70, 75, 80, 90, 95, 100). An unrecognised class
+    like "opacity-3" doesn't error at build time -- Tailwind just skips it
+    silently -- so this element rendered at full 100% opacity instead of
+    3%, turning a subtle background wash into a solid glowing circle that
+    dominated the whole screen on mobile. Found via a live mobile
+    screenshot; desktop-only review never surfaced it because the effect
+    at 100% opacity still looked plausible as "a strong ambient glow" on a
+    wide viewport with the headline text having far more room around it.
+  */}
   <div
-    class="absolute bottom-10 left-10 w-96 h-96 bg-accent opacity-3 rounded-full blur-3xl"
+    class="absolute bottom-10 left-10 w-96 h-96 bg-accent opacity-[0.03] rounded-full blur-3xl"
     aria-hidden="true"
   />
 

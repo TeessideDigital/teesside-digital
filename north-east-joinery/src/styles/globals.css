@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-linen font-serif text-ebonised antialiased;
+  }
+
+  /* Display face for headings sitewide; body stays in the serif. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display;
+  }
+
+  /* Brass measures 4.1:1 against linen and 3.7:1 against ebonised -- both
+     clear the 3:1 non-text contrast requirement, so one focus colour works
+     across light and dark sections. */
+  :focus-visible {
+    @apply outline outline-2 outline-offset-2 outline-brass;
+  }
+}
+
+/* The one orchestrated motion moment (PROJECT_BRIEF.md Section 7): a staggered
+   rise on the hero at load. Elements opt in with the .hero-rise class and set
+   their own delay via --rise-delay.
+
+   The opacity: 0 starting state lives INSIDE the no-preference media query on
+   purpose: if it sat outside and the animation were merely disabled for
+   reduced-motion users, the hero would stay invisible forever. Structuring it
+   this way means reduced-motion users simply get a static, fully visible hero
+   with no overrides needed. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-rise {
+    opacity: 0;
+    transform: translateY(1.25rem);
+    animation: hero-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: var(--rise-delay, 0s);
+  }
+
+  @keyframes hero-rise {
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+/* Belt-and-braces: collapse any animation or transition that slips in later. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,6 +1,5 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
-import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 import { fileURLToPath } from 'node:url';
 
@@ -15,6 +14,8 @@ export default defineConfig({
 
   // Output mode: static (pre-render all pages at build time)
   output: 'static',
+  // Preserve Astro 5 whitespace compression during the framework migration.
+  compressHTML: true,
 
   // Integrations
   integrations: [
@@ -22,7 +23,6 @@ export default defineConfig({
       // Only hydrate React components on the client when necessary (islands)
       experimentalReactChildren: true,
     }),
-    tailwind(),
     // Generates sitemap-index.xml + sitemap-0.xml at build time from every
     // static route Astro renders. Uses the `site` URL above as the base --
     // if that value is ever wrong, the sitemap silently ships wrong URLs

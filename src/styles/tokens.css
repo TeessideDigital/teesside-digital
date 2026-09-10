@@ -1,0 +1,62 @@
+/* Approved Implementation 1 palette and Instrument Sans family.
+ * Typography metrics and layout values remain starting points for later phases.
+ * RGB channels keep Tailwind 3 opacity modifiers on the same semantic source.
+ */
+:root {
+  color-scheme: dark;
+  --color-canvas: 29 37 44;
+  --color-surface: 36 46 54;
+  --color-surface-subtle: 44 56 66;
+  --color-text: 223 227 230;
+  --color-text-muted: 177 194 208;
+  --color-identity: 91 127 158;
+  --color-action: 134 172 200;
+  --color-action-hover: 160 191 214;
+  --color-on-action: 29 37 44;
+  --color-rule: 115 139 155;
+  --color-focus: 191 216 233;
+  --color-error: 255 168 160;
+  --color-success: 159 205 175;
+  --color-warning: 229 194 135;
+  --color-control: 36 46 54;
+  --color-control-border: 126 147 164;
+
+  /* One family; existing V1 sizes remain until the respective V2 phase. */
+  --font-body: "Instrument Sans", system-ui, sans-serif;
+  --font-display: var(--font-body);
+  --text-body: 1rem;
+  --text-small: 0.875rem;
+  --leading-body: 1.5;
+  --leading-display: 1.2;
+  --space-inline: 1rem;
+  --space-section: 3rem;
+  --measure-reading: 65ch;
+  --layout-max: 72rem;
+  --rule-width: 1px;
+  --motion-instant: 0ms;
+  --motion-fast: 120ms;
+  --motion-standard: 200ms;
+  --motion-deliberate: 360ms;
+  --motion-image: 480ms;
+  --ease-responsive: cubic-bezier(0.2, 0, 0.2, 1);
+  --ease-settle: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --color-canvas: 236 239 240;
+  --color-surface: 243 245 246;
+  --color-surface-subtle: 225 230 232;
+  --color-text: 29 42 52;
+  --color-text-muted: 83 99 110;
+  --color-action: 47 89 119;
+  --color-action-hover: 31 64 89;
+  --color-on-action: 243 245 246;
+  --color-rule: 173 185 191;
+  --color-focus: 36 76 106;
+  --color-error: 161 46 43;
+  --color-success: 40 101 65;
+  --color-warning: 121 79 22;
+  --color-control: 243 245 246;
+  --color-control-border: 107 126 137;
+}

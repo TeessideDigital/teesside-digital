@@ -13,9 +13,23 @@
 @tailwind components;
 @tailwind utilities;
 
+/* One self-hosted upright variable file covers the required 400-700 weights. */
+@font-face {
+  font-family: "Instrument Sans";
+  src: url("/fonts/instrument-sans/instrument-sans-variable.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+}
+
 /* ============================================================
    Typography & Base Styles
    ============================================================ */
+
+html {
+  background-color: rgb(var(--color-canvas));
+  color: rgb(var(--color-text));
+}
 
 body {
   @apply bg-background text-text-primary;
@@ -42,11 +56,13 @@ h4 {
 
 p {
   @apply text-body text-text-primary;
+  /* Long URLs must remain readable within compact text columns. */
+  overflow-wrap: anywhere;
 }
 
 /* Links */
 a {
-  @apply text-accent transition-colors duration-200 ease-out;
+  @apply text-accent;
 }
 
 a:hover {
@@ -59,29 +75,29 @@ a:hover {
 
 button,
 [role='button'] {
-  @apply transition-colors duration-200 ease-out focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background;
+  @apply focus:ring-2 focus:ring-focus focus:ring-offset-2 focus:ring-offset-background;
   cursor: pointer;
 }
 
-/* Remove default focus outline and use custom ring */
-:focus-visible {
-  @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-background;
+/* An outline survives forced colours, which can remove box-shadow rings.
+ * Root specificity also overrides V1 focus:outline-none utilities.
+ */
+html:root :focus-visible {
+  outline: 2px solid rgb(var(--color-focus));
+  outline-offset: 3px;
 }
 
 /* ============================================================
    Forms
    ============================================================ */
 
-input,
-textarea,
-select {
-  @apply bg-surface border border-border rounded text-text-primary placeholder-text-secondary transition-all duration-200;
+:root :is(input, textarea, select) {
+  @apply bg-control border border-control-border rounded text-text-primary placeholder-text-secondary;
+  accent-color: rgb(var(--color-action));
 }
 
-input:focus,
-textarea:focus,
-select:focus {
-  @apply outline-none border-accent ring-1 ring-accent ring-inset;
+:root :is(input, textarea, select):focus {
+  border-color: rgb(var(--color-focus));
 }
 
 input::placeholder,
@@ -122,7 +138,7 @@ pre code {
 
 /* Gradient text utility */
 .gradient-text {
-  background: linear-gradient(135deg, #5b7f9e, #6e93b5);
+  background: linear-gradient(135deg, rgb(var(--color-action)), rgb(var(--color-action-hover)));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -258,5 +274,26 @@ pre code {
 
   .no-print {
     display: none;
+  }
+}
+
+/* V1 filled actions used canvas as their label colour. Give that combination
+ * the explicit label role and prevent global link hover from hiding its text.
+ */
+:root .bg-accent.text-background {
+  color: rgb(var(--color-on-action));
+}
+
+/* Disabled only during the synchronous theme update: no crossfade or delay. */
+:root[data-theme-changing],
+:root[data-theme-changing] *,
+:root[data-theme-changing] *::before,
+:root[data-theme-changing] *::after {
+  transition: none !important;
+}
+
+@media (forced-colors: active) {
+  html:root :focus-visible {
+    outline-color: Highlight;
   }
 }

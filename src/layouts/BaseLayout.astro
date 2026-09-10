@@ -25,6 +25,8 @@ import { SITE } from '@config/constants';
 import { getCanonicalUrl, getPageTitle, getOgImageUrl, getOrganisationSchema } from '@lib/seo';
 import Header from '../components/astro/Header.astro';
 import Footer from '../components/astro/Footer.astro';
+import themeScript from '../scripts/theme.js?raw';
+import '@styles/tokens.css';
 import '@styles/globals.css';
 
 interface Props {
@@ -71,12 +73,14 @@ const allStructuredData = structuredData ? [baseStructuredData, structuredData] 
 ---
 
 <!DOCTYPE html>
-<html lang={SITE.language}>
+<html lang={SITE.language} data-theme="dark">
   <head>
     {/* ============================================================
         Core Meta Tags
         ============================================================ */}
     <meta charset="UTF-8" />
+    <meta name="color-scheme" content="dark light" />
+    <script is:inline set:html={themeScript} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
@@ -122,9 +126,8 @@ const allStructuredData = structuredData ? [baseStructuredData, structuredData] 
     {/* ============================================================
         Fonts
         ============================================================ */}
-    {/* System fonts preferred; Inter added via Tailwind if needed */}
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    {/* The single shared font is used by the above-fold identity and heading. */}
+    <link rel="preload" href="/fonts/instrument-sans/instrument-sans-variable.woff2" as="font" type="font/woff2" crossorigin />
 
     {/* ============================================================
         Structured Data (JSON-LD)
@@ -151,11 +154,6 @@ const allStructuredData = structuredData ? [baseStructuredData, structuredData] 
       here, with a real site ID (not a placeholder) before it ships.
     */}
 
-    {/* ============================================================
-        Preload Critical Resources
-        ============================================================ */}
-    {/* Preload Inter font weights if using custom fonts */}
-    {/* <link rel="preload" as="font" href="/fonts/inter-400.woff2" type="font/woff2" crossorigin /> */}
   </head>
 
   <body>
@@ -201,10 +199,6 @@ const allStructuredData = structuredData ? [baseStructuredData, structuredData] 
 </html>
 
 <style is:global>
-  html {
-    scroll-behavior: smooth;
-  }
-
   body {
     display: flex;
     flex-direction: column;

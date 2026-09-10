@@ -4,40 +4,29 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Background & Surface
-        background: '#0a0a0a',
-        surface: '#161616',
-        'surface-raised': '#222222',
-
-        // Text
-        'text-primary': '#f0f0f0',
-        'text-secondary': '#9a9a9a',
-
-        // Accent
-        accent: '#5b7f9e',
-        'accent-hover': '#6e93b5',
-        // Lightened variant of the brand accent, used ONLY for small text
-        // sitting on surface/surface-raised backgrounds (badges, nav active
-        // state, card captions, button text). The literal brand colour
-        // (#5b7f9e) fails WCAG AA (4.5:1) as small text on those two
-        // backgrounds -- 4.29:1 and 3.77:1 respectively -- even though it
-        // passes fine on the base background (4.69:1) and for large text
-        // everywhere. This does NOT replace the brand colour anywhere it
-        // already works (borders, backgrounds, large headline text) --
-        // see PLAN.md's Phase 3.5 non-goals, which locks #5b7f9e itself.
-        'accent-text': '#7e9bb4',
-
-        // Border
-        border: '#333333',
-
-        // Status
-        success: '#4caf50',
-        warning: '#f5a623',
-        error: '#e74c3c',
+        // V1 aliases bridge components to the single semantic source in tokens.css.
+        // Identity is deliberately separate from readable action/focus roles.
+        background: 'rgb(var(--color-canvas) / <alpha-value>)',
+        surface: 'rgb(var(--color-surface) / <alpha-value>)',
+        'surface-raised': 'rgb(var(--color-surface-subtle) / <alpha-value>)',
+        'text-primary': 'rgb(var(--color-text) / <alpha-value>)',
+        'text-secondary': 'rgb(var(--color-text-muted) / <alpha-value>)',
+        accent: 'rgb(var(--color-action) / <alpha-value>)',
+        'accent-hover': 'rgb(var(--color-action-hover) / <alpha-value>)',
+        'accent-text': 'rgb(var(--color-action) / <alpha-value>)',
+        identity: 'rgb(var(--color-identity) / <alpha-value>)',
+        'on-action': 'rgb(var(--color-on-action) / <alpha-value>)',
+        border: 'rgb(var(--color-rule) / <alpha-value>)',
+        focus: 'rgb(var(--color-focus) / <alpha-value>)',
+        success: 'rgb(var(--color-success) / <alpha-value>)',
+        warning: 'rgb(var(--color-warning) / <alpha-value>)',
+        error: 'rgb(var(--color-error) / <alpha-value>)',
+        control: 'rgb(var(--color-control) / <alpha-value>)',
+        'control-border': 'rgb(var(--color-control-border) / <alpha-value>)',
       },
 
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-body)'],
       },
 
       fontSize: {
@@ -47,8 +36,8 @@ export default {
         'h3': ['1.5rem', { lineHeight: '1.4', fontWeight: '600' }],
         'h4': ['1.25rem', { lineHeight: '1.4', fontWeight: '500' }],
         // Body
-        'body': ['1rem', { lineHeight: '1.5', fontWeight: '400' }],
-        'body-sm': ['0.875rem', { lineHeight: '1.5', fontWeight: '400' }],
+        'body': ['var(--text-body)', { lineHeight: 'var(--leading-body)', fontWeight: '400' }],
+        'body-sm': ['var(--text-small)', { lineHeight: 'var(--leading-body)', fontWeight: '400' }],
       },
 
       spacing: {
@@ -57,7 +46,7 @@ export default {
       },
 
       maxWidth: {
-        '6xl': '72rem',
+        '6xl': 'var(--layout-max)',
       },
 
       borderRadius: {
@@ -66,7 +55,7 @@ export default {
       },
 
       borderWidth: {
-        DEFAULT: '1px',
+        DEFAULT: 'var(--rule-width)',
       },
 
       opacity: {

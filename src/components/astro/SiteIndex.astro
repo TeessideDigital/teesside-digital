@@ -1,0 +1,223 @@
+---
+import BrandIdentity from "./BrandIdentity.astro";
+import ThemeControl from "./ThemeControl.astro";
+import {
+  primaryNavigation,
+  projectEnquiry,
+  websiteReview,
+  isCurrentPage,
+} from "@config/navigation";
+const current = (href: string) =>
+  isCurrentPage(Astro.url.pathname, href) ? "page" : undefined;
+---
+
+<header class="site-index">
+  <div class="site-index-inner" data-site-index>
+    <div class="index-primary">
+      <BrandIdentity />
+      <nav aria-label="Site navigation">
+        <ul class="primary-navigation">
+          {
+            primaryNavigation.map((item) => (
+              <li>
+                <a href={item.href} aria-current={current(item.href)}>
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <div class="index-actions">
+          <a
+            class="project-enquiry"
+            href={projectEnquiry.href}
+            aria-current={current(projectEnquiry.href)}
+          >
+            <span>{projectEnquiry.label}</span>
+            <svg
+              aria-hidden="true"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"><path d="M4 12h15m-6-6 6 6-6 6"></path></svg
+            >
+          </a>
+          <a
+            class="website-review"
+            href={websiteReview.href}
+            aria-current={current(websiteReview.href)}>{websiteReview.label}</a
+          >
+        </div>
+      </nav>
+    </div>
+    <div class="index-utility"><ThemeControl /></div>
+  </div>
+</header>
+<script>
+  const index = document.querySelector<HTMLElement>("[data-site-index]");
+  if (index && "ResizeObserver" in window) {
+    // Measure intrinsic child heights, not the expanded rail, so enabling the
+    // tall composition cannot cause a fit/unfit feedback loop. Keep 48px spare.
+    const updateFit = () => {
+      const style = getComputedStyle(index);
+      const contentHeight = Array.from(index.children).reduce(
+        (height, child) => height + child.getBoundingClientRect().height,
+        0,
+      );
+      const minimumHeight =
+        contentHeight +
+        parseFloat(style.paddingTop) +
+        parseFloat(style.paddingBottom) +
+        parseFloat(style.rowGap);
+      index.toggleAttribute(
+        "data-fits",
+        window.innerHeight - minimumHeight >= 48,
+      );
+    };
+    const observer = new ResizeObserver(updateFit);
+    observer.observe(index);
+    Array.from(index.children).forEach((child) => observer.observe(child));
+    window.addEventListener("resize", updateFit, { passive: true });
+    window.addEventListener("pageshow", updateFit);
+    updateFit();
+  }
+</script>
+<style>
+  .site-index {
+    min-inline-size: 0;
+    background: rgb(var(--color-surface));
+    border-block-end: 1px solid rgb(var(--color-rule));
+  }
+  .site-index-inner {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0;
+    padding: 0.5rem 1rem;
+  }
+  nav {
+    margin-block-start: 0.25rem;
+  }
+  .primary-navigation {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 1.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .primary-navigation a,
+  .website-review {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 2.75rem;
+    color: rgb(var(--color-text-muted));
+  }
+  a:hover {
+    color: rgb(var(--color-action-hover));
+  }
+  a[aria-current="page"] {
+    color: rgb(var(--color-text));
+    text-decoration: underline;
+    text-underline-offset: 0.35em;
+    text-decoration-thickness: 2px;
+  }
+  .index-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 1.5rem;
+    margin-block-start: 0;
+  }
+  .project-enquiry {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.625rem 0.75rem;
+    min-block-size: 2.75rem;
+    border: 1px solid rgb(var(--color-action));
+    background: rgb(var(--color-surface-subtle));
+    color: rgb(var(--color-action));
+    line-height: 1.3;
+  }
+  .project-enquiry svg {
+    flex: none;
+  }
+  .website-review {
+    font-size: 0.9375rem;
+    color: rgb(var(--color-action));
+  }
+  .index-utility {
+    /* Reserve the utility row while its module loads, avoiding a content jump. */
+    min-block-size: 2.75rem;
+  }
+  @media (min-width: 48rem) and (max-width: 74.999rem) {
+    .site-index-inner {
+      padding-inline: 2rem;
+    }
+    .index-primary {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.25rem 2rem;
+    }
+    nav {
+      margin-block-start: 0;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem 2.5rem;
+    }
+    .index-actions {
+      margin-block-start: 0;
+    }
+  }
+  @media (min-width: 75rem) {
+    .site-index {
+      border-block-end: 0;
+      border-inline-end: 1px solid rgb(var(--color-rule));
+    }
+    .site-index-inner {
+      padding: 3rem 1.75rem 2rem;
+      row-gap: 2rem;
+    }
+    nav {
+      margin-block-start: 2.5rem;
+    }
+    .primary-navigation {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+      font-size: 1.0625rem;
+    }
+    .index-actions {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.625rem;
+      margin-block-start: 2rem;
+      padding-block-start: 1.5rem;
+      border-block-start: 1px solid rgb(var(--color-rule));
+    }
+    .index-utility {
+      min-block-size: 5.5rem;
+    }
+    @media (min-height: 48rem) {
+      .site-index-inner[data-fits] {
+        position: sticky;
+        inset-block-start: 0;
+        min-block-size: 100svh;
+      }
+      .site-index-inner[data-fits] .index-utility {
+        margin-block-start: auto;
+      }
+    }
+  }
+  @media print {
+    .site-index-inner[data-fits] {
+      position: static;
+      min-block-size: auto;
+    }
+  }
+</style>

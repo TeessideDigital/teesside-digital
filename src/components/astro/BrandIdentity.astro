@@ -1,0 +1,57 @@
+---
+import { isCurrentPage } from "@config/navigation";
+---
+
+<a
+  class="brand-identity"
+  href="/"
+  aria-label="Teesside Digital home"
+  aria-current={isCurrentPage(Astro.url.pathname, "/") ? "page" : undefined}
+>
+  <img
+    src="/images/logo/teesside-digital-mark.svg"
+    alt=""
+    width="64"
+    height="64"
+  />
+  <span class="brand-wording"><span>TEESSIDE</span><span>DIGITAL</span></span>
+</a>
+<style>
+  .brand-identity {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    inline-size: fit-content;
+    color: rgb(var(--color-text));
+  }
+  .brand-identity:hover {
+    color: rgb(var(--color-action-hover));
+  }
+  img {
+    inline-size: 2.75rem;
+    block-size: 2.75rem;
+    flex: none;
+  }
+  .brand-wording {
+    display: grid;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.1em;
+  }
+  @media (min-width: 75rem) {
+    .brand-identity {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.125rem;
+    }
+    img {
+      inline-size: 4rem;
+      block-size: 4rem;
+    }
+    .brand-wording {
+      font-size: 1.1875rem;
+    }
+  }
+</style>

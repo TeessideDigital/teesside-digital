@@ -11,7 +11,10 @@ const current = (href: string) =>
   isCurrentPage(Astro.url.pathname, href) ? "page" : undefined;
 ---
 
-<header class="site-index">
+<header
+  class="site-index"
+  class:list={{ "is-opening": Astro.url.pathname === "/" }}
+>
   <div class="site-index-inner" data-site-index>
     <div class="index-primary">
       <BrandIdentity />
@@ -218,6 +221,156 @@ const current = (href: string) =>
     .site-index-inner[data-fits] {
       position: static;
       min-block-size: auto;
+    }
+  }
+</style>
+
+<style>
+  /* The locked opening treatment is scoped to Home; other page shells retain
+     their reviewed appearance until their own implementation phase. */
+  .is-opening {
+    background: rgb(var(--color-canvas));
+  }
+  .is-opening .site-index-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.75rem 1rem;
+    padding: 1.25rem 1.5rem 0.5rem;
+  }
+  .is-opening .index-primary,
+  .is-opening nav {
+    display: contents;
+  }
+  .is-opening :global(.brand-identity) {
+    grid-column: 1;
+    grid-row: 1;
+    gap: 0.5rem;
+  }
+  .is-opening :global(.brand-wording) {
+    font-size: 0.75rem;
+  }
+  .is-opening .primary-navigation {
+    grid-column: 2;
+    grid-row: 1;
+    align-items: center;
+    gap: 0.875rem;
+    font-size: 0.875rem;
+  }
+  .is-opening .index-actions {
+    grid-column: 1;
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    border-block-start: 1px solid rgb(var(--color-rule));
+    padding-block-start: 0.25rem;
+  }
+  .is-opening .project-enquiry {
+    border: 0;
+    background: none;
+    padding: 0;
+    font-size: 0.875rem;
+  }
+  .is-opening .project-enquiry svg {
+    display: none;
+  }
+  .is-opening .website-review {
+    font-size: 0.875rem;
+  }
+  .is-opening .index-utility {
+    grid-column: 2;
+    grid-row: 2;
+    border-block-start: 1px solid rgb(var(--color-rule));
+    padding-block-start: 0.25rem;
+    min-block-size: 5.75rem;
+  }
+  .is-opening :global(.theme-control) {
+    flex-direction: column;
+    gap: 0;
+  }
+  @media (min-width: 40rem) and (max-width: 74.999rem) {
+    .is-opening .site-index-inner {
+      padding-inline: 2.5rem;
+    }
+    .is-opening .index-actions {
+      flex-direction: row;
+      gap: 1.5rem;
+    }
+    .is-opening :global(.theme-control) {
+      flex-direction: row;
+      gap: 1.25rem;
+    }
+    .is-opening .index-utility {
+      min-block-size: 3rem;
+    }
+  }
+  @media (min-width: 75rem) {
+    .is-opening .site-index-inner {
+      display: flex;
+      gap: 2rem;
+      padding: 2rem;
+    }
+    .is-opening .index-primary {
+      display: block;
+    }
+    .is-opening nav {
+      display: block;
+      margin-block-start: 3rem;
+    }
+    .is-opening :global(.brand-wording) {
+      font-size: 1.1875rem;
+    }
+    .is-opening .primary-navigation {
+      align-items: flex-start;
+      gap: 0;
+      font-size: 1rem;
+    }
+    .is-opening .index-actions {
+      border: 0;
+      margin: 0;
+      padding: 0;
+      gap: 0;
+    }
+    .is-opening .project-enquiry,
+    .is-opening .website-review {
+      font-size: 1rem;
+      color: rgb(var(--color-text));
+    }
+    .is-opening .index-utility {
+      border: 0;
+      padding: 0;
+      min-block-size: 2.75rem;
+    }
+    .is-opening .index-utility::before {
+      content: "";
+      display: block;
+      inline-size: 2.5rem;
+      border-block-start: 1px solid rgb(var(--color-rule));
+      margin-block-end: 1rem;
+    }
+    .is-opening :global(.theme-control) {
+      flex-direction: row;
+      gap: 1.25rem;
+    }
+    .is-opening .site-index-inner[data-fits] .index-utility {
+      margin-block-start: 0;
+    }
+  }
+  @media (max-width: 23rem) {
+    .is-opening .site-index-inner {
+      padding-inline: 1rem;
+      gap: 0.75rem 0.5rem;
+    }
+    .is-opening :global(.brand-identity) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
+    }
+    .is-opening :global(.brand-wording) {
+      display: flex;
+      gap: 0.35rem;
+      font-size: 0.625rem;
     }
   }
 </style>

@@ -18,7 +18,8 @@
  */
 
 import BaseLayout from '@layouts/BaseLayout.astro';
-import Hero from '../components/astro/Hero.astro';
+import HomeOpening from '../components/astro/HomeOpening.astro';
+import heroImage from '../assets/hero/tees-bridge-generated-hero.png';
 import Section from '../components/astro/Section.astro';
 import Button from '../components/astro/Button.astro';
 import ProjectCard from '../components/astro/ProjectCard.astro';
@@ -40,16 +41,7 @@ const featuredProjects = getFeaturedProjects();
   {/* ============================================================
       1. HERO SECTION
       ============================================================ */}
-  <Hero
-    title="Precision Engineering for Small Businesses"
-    highlightWord="Small Businesses"
-    subtitle="Teesside Digital"
-    description="Direct access to the developer. We build fast, secure, accessible websites and web applications. No middlemen. No excuses."
-    ctaText="Get a Free Website Review"
-    ctaHref="#health-check"
-    ctaSecondary={{ text: 'View Our Work', href: '/work' }}
-    backgroundGradient={true}
-  />
+  <HomeOpening image={heroImage} imagePosition="75% center" />
 
   {/* ============================================================
       2. POSITIONING STRIP

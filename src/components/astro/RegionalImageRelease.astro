@@ -1,0 +1,63 @@
+---
+import { Picture } from "astro:assets";
+import coast from "../../assets/home/hartlepool-coastal-release.png";
+const widths = [480, 768, 1024, 1440, coast.width].filter(
+  (width, index, all) => width <= coast.width && all.indexOf(width) === index,
+);
+---
+
+<div class="regional-release" aria-hidden="true">
+  <Picture
+    src={coast}
+    alt=""
+    formats={["avif", "webp"]}
+    fallbackFormat="jpg"
+    widths={widths}
+    sizes="(min-width: 75rem) calc(100vw - 15rem), max(39.1rem, 100vw)"
+    width={coast.width}
+    height={coast.height}
+    loading="lazy"
+    decoding="async"
+  />
+</div>
+
+<style>
+  .regional-release {
+    position: relative;
+    block-size: clamp(22rem, 38vw, 40rem);
+    margin-block-start: 1rem;
+  }
+  .regional-release::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    inset: 0 0 auto;
+    block-size: 28%;
+    background: linear-gradient(
+      rgb(var(--color-canvas)),
+      rgb(var(--color-canvas) / 0)
+    );
+    pointer-events: none;
+  }
+  .regional-release :global(picture) {
+    display: block;
+    block-size: 100%;
+  }
+  .regional-release :global(img) {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    object-position: 75% center;
+  }
+  @media (min-width: 40rem) {
+    .regional-release :global(img) {
+      object-position: center;
+    }
+  }
+  @media (forced-colors: active) {
+    .regional-release {
+      visibility: hidden;
+    }
+  }
+</style>

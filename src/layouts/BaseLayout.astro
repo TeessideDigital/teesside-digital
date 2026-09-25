@@ -35,6 +35,7 @@ import "@styles/tokens.css";
 import "@styles/globals.css";
 
 interface Props {
+  editorialFooter?: boolean;
   title?: string; // Page title (will be appended with site name)
   description?: string; // Meta description
   image?: string; // Open Graph image
@@ -51,6 +52,7 @@ interface Props {
 }
 
 const {
+  editorialFooter = false,
   title = SITE.title,
   description = SITE.description,
   image,
@@ -242,7 +244,7 @@ const allStructuredData = structuredData
         Footer
         ============================================================ */
     }
-    <Footer />
+    <Footer editorial={editorialFooter} />
 
     {
       /* ============================================================

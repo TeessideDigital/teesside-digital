@@ -1,0 +1,71 @@
+/* Homepage-only vocabulary. Final static states remain in the components. */
+.home-opening,
+.home-narrative {
+  --home-motion-micro: 210ms;
+  --home-motion-structural: 400ms;
+  --home-motion-settle: 900ms;
+  --home-ease-micro: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --home-ease-structural: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --home-ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Contain the photograph's temporary overscan without moving its frame. */
+.home-narrative .regional-release,
+.home-opening .atmospheric-media picture {
+  overflow: clip;
+}
+
+:is(.home-opening, .home-narrative)
+  :is(.service-rule, .advancing-rule, .direction > span) {
+  position: relative;
+}
+:is(.home-opening, .home-narrative)
+  :is(.service-rule, .advancing-rule, .direction > span)::after {
+  content: "";
+  position: absolute;
+  inset-block-start: -1px;
+  inset-inline-start: 100%;
+  /* Bound the extension by the existing arrow gap on very long rules. */
+  inline-size: min(5%, 7px);
+  border-block-start: 1px solid currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+@media (prefers-reduced-motion: no-preference) and (forced-colors: none) {
+  :is(.home-opening, .home-narrative) a svg,
+  :is(.home-opening, .home-narrative)
+    :is(.service-rule, .advancing-rule, .direction > span)::after {
+    transition: transform var(--home-motion-micro) var(--home-ease-micro);
+  }
+  :is(.home-opening, .home-narrative) a:focus-visible svg {
+    transform: translateX(7px);
+  }
+  :is(.home-opening, .home-narrative)
+    a:focus-visible
+    :is(.service-rule, .advancing-rule, .direction > span)::after {
+    transform: scaleX(1);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    :is(.home-opening, .home-narrative) a:hover svg {
+      transform: translateX(7px);
+    }
+    :is(.home-opening, .home-narrative)
+      a:hover
+      :is(.service-rule, .advancing-rule, .direction > span)::after {
+      transform: scaleX(1);
+    }
+  }
+}
+
+/* Immediate emphasis and the existing outline do not depend on motion. */
+:is(.home-opening, .home-narrative) a:focus-visible,
+.home-opening
+  .service-directory
+  a:is(:hover, :focus-visible)
+  .service-direction {
+  color: rgb(var(--color-action-hover));
+}
+.home-opening .service-directory a:is(:hover, :focus-visible) .service-rule {
+  border-color: currentColor;
+}

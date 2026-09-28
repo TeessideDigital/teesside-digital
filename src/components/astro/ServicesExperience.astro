@@ -1,0 +1,732 @@
+---
+import { projectEnquiry, websiteReview } from "@config/navigation";
+
+const contents = [
+  { title: "Websites & Web Development", id: "websites-web-development" },
+  { title: "Apps & Digital Tools", id: "apps-digital-tools" },
+  { title: "Automation & AI", id: "automation-ai" },
+];
+const websiteDetails = [
+  {
+    title: "Business websites",
+    description:
+      "Clear, responsive sites designed around the information customers actually need.",
+  },
+  {
+    title: "Redesigns and structure",
+    description:
+      "Improve an existing site when the content, navigation or enquiry journey is getting in the way.",
+  },
+  {
+    title: "Useful integrations",
+    description:
+      "Connect the site to the systems or services the business already relies on where that genuinely helps.",
+  },
+];
+const toolExamples = [
+  "Quoting and admin workflows",
+  "Booking and internal processes",
+  "Purpose-built business tools",
+  "Connecting useful existing systems",
+];
+const automationExamples = [
+  "Repetitive admin",
+  "Information / enquiry routing",
+  "Data movement / integrations",
+  "Summarisation or classification",
+];
+const disciplines = [
+  {
+    title: "Performance",
+    description:
+      "Build for useful speed and responsiveness rather than treating performance as a final optimisation pass.",
+  },
+  {
+    title: "Accessibility",
+    description:
+      "Make appropriate accessibility decisions during design and implementation rather than bolting them on afterwards.",
+  },
+  {
+    title: "Security",
+    description:
+      "Use sensible security practices from the beginning, proportionate to the system and the risks involved.",
+  },
+  {
+    title: "Maintainability",
+    description:
+      "Keep the result understandable and supportable instead of creating unnecessary technical complexity.",
+  },
+];
+---
+
+<div class="services-experience">
+  <header class="orientation">
+    <h1>Services</h1>
+    <p class="orientation-statement">
+      Three areas of work. One aim: make the digital side of your business
+      clearer, more useful and easier to run.
+    </p>
+    <nav aria-label="Service chapters">
+      <ul class="contents editorial-grid">
+        {
+          contents.map((service) => (
+            <li>
+              <a href={`#${service.id}`}>
+                <span>{service.title}</span>
+                <span class="direction" aria-hidden="true">
+                  <span />
+                  <svg
+                    width="32"
+                    height="32"
+                    viewBox="0 0 32 32"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  >
+                    <path d="M3 16h25M19 6l10 10-10 10" />
+                  </svg>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </header>
+
+  <section class="chapter websites" aria-labelledby="websites-web-development">
+    <div class="editorial-grid">
+      <div class="chapter-intro">
+        <h2 id="websites-web-development" tabindex="-1">
+          Websites &amp; Web Development
+        </h2>
+        <p class="lead">
+          Clear, fast websites built around what your business actually needs to
+          do.
+        </p>
+        <p class="explanation">
+          A website should make it easier for people to understand your business
+          and take the next step. That can mean a new site, a considered
+          redesign, clearer information, better enquiry routes or integrations
+          that remove unnecessary friction.
+        </p>
+      </div>
+    </div>
+    <div class="website-details editorial-grid">
+      {
+        websiteDetails.map((detail) => (
+          <div class="detail">
+            <h3>{detail.title}</h3>
+            <p>{detail.description}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="chapter apps" aria-labelledby="apps-digital-tools">
+    <div class="editorial-grid">
+      <div class="chapter-intro">
+        <h2 id="apps-digital-tools" tabindex="-1">Apps &amp; Digital Tools</h2>
+        <p class="lead">
+          Focused tools that replace awkward processes and make everyday work
+          easier to manage.
+        </p>
+        <p class="explanation">
+          Some problems do not need another large software platform. A focused
+          internal tool or purpose-built interface can often remove the
+          spreadsheet workarounds, duplicated admin and manual handoffs that
+          slow a small business down.
+        </p>
+      </div>
+    </div>
+    <ul class="tool-examples editorial-grid">
+      {toolExamples.map((example) => <li>{example}</li>)}
+    </ul>
+  </section>
+
+  <section class="chapter automation" aria-labelledby="automation-ai">
+    <div class="editorial-grid">
+      <div class="chapter-intro">
+        <h2 id="automation-ai" tabindex="-1">Automation &amp; AI</h2>
+        <p class="lead">
+          Practical automation for repetitive work, with AI used where it
+          genuinely adds value.
+        </p>
+        <p class="explanation">
+          The starting point is the repetitive problem, not the technology.
+          Automation can move information, route enquiries, connect systems or
+          remove routine admin. AI can help with tasks such as summarising or
+          classifying information where it is actually appropriate.
+        </p>
+      </div>
+      <div class="automation-position">
+        <p class="statement">AI is not the product by default.</p>
+        <p>
+          The aim is to remove useful amounts of repetition without making the
+          system unnecessarily complicated.
+        </p>
+      </div>
+    </div>
+    <ul class="automation-examples editorial-grid">
+      {automationExamples.map((example) => <li>{example}</li>)}
+    </ul>
+  </section>
+
+  <section class="chapter engineering" aria-labelledby="engineering-heading">
+    <div class="editorial-grid">
+      <h2 class="statement" id="engineering-heading">
+        The important engineering details should be part of the work from the
+        start.
+      </h2>
+    </div>
+    <div class="disciplines editorial-grid">
+      {
+        disciplines.map((discipline) => (
+          <div class="detail">
+            <h3>{discipline.title}</h3>
+            <p>{discipline.description}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="chapter fit editorial-grid" aria-labelledby="fit-heading">
+    <div class="fit-opening">
+      <h2 class="statement" id="fit-heading">
+        Teesside Digital works best with small and owner-led businesses that
+        need focused digital work without layers of account management.
+      </h2>
+      <p>
+        It tends to fit best when you want direct access to the person doing the
+        work, have a website or process that is not working as well as it
+        should, or need a focused digital solution rather than an enormous
+        platform.
+      </p>
+    </div>
+    <div class="appropriate-technology">
+      <h3>
+        The goal is appropriate technology, not as much technology as possible.
+      </h3>
+      <p>
+        If a straightforward website solves the problem, that is the right
+        answer. If a small internal tool is enough, it does not need to become a
+        software product. And if AI adds nothing useful, it does not need to be
+        there.
+      </p>
+    </div>
+    <div class="direct-working">
+      <h3>Work directly with Dave.</h3>
+      <p>
+        Design decisions, technical decisions and communication stay connected
+        instead of passing through layers of account management.
+      </p>
+    </div>
+  </section>
+
+  <section class="services-conversion" aria-label="Start a conversation">
+    <a class="conversion-primary" href={projectEnquiry.href}>
+      <span>{projectEnquiry.label}</span>
+      <span class="direction" aria-hidden="true"
+        ><span></span><svg
+          width="40"
+          height="40"
+          viewBox="0 0 32 32"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"><path d="M3 16h25M19 6l10 10-10 10"></path></svg
+        ></span
+      >
+    </a>
+    <a class="conversion-secondary" href={websiteReview.href}>
+      <span>{websiteReview.label}</span>
+      <svg
+        aria-hidden="true"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"><path d="M3 12h18m-7-7 7 7-7 7"></path></svg
+      >
+    </a>
+  </section>
+</div>
+
+<style>
+  .services-experience {
+    container: services / inline-size;
+    max-inline-size: 100rem;
+    margin-inline: auto;
+    color: rgb(var(--color-text));
+  }
+  .orientation,
+  .chapter,
+  .services-conversion {
+    margin-inline: 1.5rem;
+  }
+  h1,
+  h2,
+  h3,
+  p,
+  ul {
+    margin: 0;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    /* Keep enlarged long words inside the reading area without shrinking type. */
+    overflow-wrap: anywhere;
+  }
+  h1 {
+    font-size: clamp(3rem, 9cqi, 6.5rem);
+    line-height: 1;
+    letter-spacing: -0.055em;
+  }
+  h2 {
+    font-size: clamp(2.25rem, 6.2cqi, 4.75rem);
+    line-height: 1.08;
+    letter-spacing: -0.04em;
+  }
+  h3 {
+    font-size: 1.25rem;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+  }
+  p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: rgb(var(--color-text-muted));
+    max-inline-size: var(--measure-reading);
+  }
+  ul {
+    padding: 0;
+    list-style: none;
+  }
+  .editorial-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .editorial-grid > * {
+    min-inline-size: 0;
+  }
+  .orientation {
+    padding-block: 3.5rem 4.5rem;
+  }
+  .orientation-statement {
+    font-size: clamp(1.25rem, 2.5cqi, 1.75rem);
+    line-height: 1.4;
+    max-inline-size: 42ch;
+    margin-block-start: 1.5rem;
+  }
+  .contents {
+    gap: 1.75rem;
+    margin-block-start: 3rem;
+  }
+  .contents li:nth-child(1) {
+    margin-inline-end: 8%;
+  }
+  .contents li:nth-child(2) {
+    margin-inline-start: 12%;
+  }
+  .contents li:nth-child(3) {
+    margin-inline-start: 3%;
+  }
+  a {
+    color: rgb(var(--color-text));
+    text-decoration: none;
+  }
+  a:is(:hover, :focus-visible) {
+    color: rgb(var(--color-action-hover));
+  }
+  .contents a {
+    display: block;
+    font-size: clamp(1.25rem, 2.8cqi, 2rem);
+    line-height: 1.25;
+  }
+  .direction {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-block-size: 2.75rem;
+    color: rgb(var(--color-action));
+  }
+  .direction > span {
+    flex: 1;
+    border-block-start: var(--rule-width) solid rgb(var(--color-rule));
+  }
+  a:is(:hover, :focus-visible) .direction {
+    color: inherit;
+  }
+  a:is(:hover, :focus-visible) .direction > span {
+    border-color: currentColor;
+  }
+  svg {
+    flex: none;
+  }
+  .chapter {
+    border-block-start: var(--rule-width) solid rgb(var(--color-rule));
+    padding-block: 4rem 5rem;
+  }
+  h2[id] {
+    scroll-margin-block-start: 2rem;
+  }
+  .lead {
+    font-size: clamp(1.125rem, 2cqi, 1.375rem);
+    line-height: 1.45;
+    max-inline-size: 48ch;
+    margin-block-start: 1.5rem;
+  }
+  .explanation {
+    margin-block-start: 1.5rem;
+  }
+  .website-details {
+    gap: 2.5rem;
+    margin-block-start: 3rem;
+  }
+  .detail {
+    border-block-start: var(--rule-width) solid rgb(var(--color-rule));
+    padding-block-start: 0.875rem;
+  }
+  .detail p {
+    margin-block-start: 0.75rem;
+  }
+  .website-details .detail:nth-child(1) {
+    margin-inline: 4% 12%;
+  }
+  .website-details .detail:nth-child(2) {
+    margin-inline-start: 15%;
+    margin-block-start: 0.5rem;
+  }
+  .website-details .detail:nth-child(3) {
+    margin-inline: 7% 5%;
+    margin-block-start: 1rem;
+  }
+  .apps .chapter-intro {
+    margin-inline-start: 9%;
+  }
+  .tool-examples {
+    gap: 2rem;
+    margin-block-start: 3rem;
+  }
+  .tool-examples li {
+    border-block-start: var(--rule-width) solid rgb(var(--color-rule));
+    padding-block-start: 0.75rem;
+    font-size: 1.125rem;
+    line-height: 1.4;
+  }
+  .tool-examples li:nth-child(1) {
+    margin-inline-end: 20%;
+  }
+  .tool-examples li:nth-child(2) {
+    margin-inline-start: 21%;
+  }
+  .tool-examples li:nth-child(3) {
+    margin-inline: 5% 12%;
+  }
+  .tool-examples li:nth-child(4) {
+    margin-inline-start: 28%;
+  }
+  .automation {
+    padding-block: 5rem 6rem;
+  }
+  .automation-position {
+    margin-block-start: 3.5rem;
+  }
+  .statement {
+    font-size: clamp(2.125rem, 4.6cqi, 4rem);
+    color: rgb(var(--color-text));
+    line-height: 1.12;
+    letter-spacing: -0.035em;
+  }
+  .automation-position > p + p {
+    margin-block-start: 1.5rem;
+  }
+  .automation-examples {
+    margin-block-start: 3.5rem;
+    border-block-start: var(--rule-width) solid rgb(var(--color-rule));
+    padding-block-start: 1.25rem;
+    gap: 1.75rem;
+    font-size: 1.125rem;
+    line-height: 1.4;
+  }
+  .automation-examples li:nth-child(2) {
+    margin-inline-start: 10%;
+  }
+  .automation-examples li:nth-child(3) {
+    margin-inline-start: 4%;
+  }
+  .automation-examples li:nth-child(4) {
+    margin-inline-start: 18%;
+  }
+  .disciplines {
+    gap: 2.5rem;
+    margin-block-start: 3rem;
+  }
+  .disciplines .detail:nth-child(1) {
+    margin-inline-start: 15%;
+  }
+  .disciplines .detail:nth-child(2) {
+    margin-inline: 0 14%;
+    margin-block-start: 0.5rem;
+  }
+  .disciplines .detail:nth-child(3) {
+    margin-inline-start: 20%;
+    margin-block-start: 1rem;
+  }
+  .disciplines .detail:nth-child(4) {
+    margin-inline: 7% 5%;
+    margin-block-start: 0.5rem;
+  }
+  .fit {
+    padding-block: 5rem 6rem;
+    gap: 5rem;
+  }
+  .fit p {
+    margin-block-start: 1.5rem;
+  }
+  .appropriate-technology {
+    margin-inline-start: 8%;
+  }
+  .direct-working {
+    margin-inline: 3% 5%;
+  }
+  .fit h3 {
+    font-size: clamp(1.75rem, 3.4cqi, 3rem);
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+  }
+  .services-conversion {
+    padding-block: 3rem 4rem;
+    border-block-start: var(--rule-width) solid rgb(var(--color-rule));
+  }
+  .conversion-primary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1.5rem;
+    color: rgb(var(--color-action));
+    font-size: clamp(2rem, 4.8cqi, 4rem);
+    line-height: 1.15;
+    letter-spacing: -0.035em;
+  }
+  .conversion-primary .direction {
+    flex: 1 1 7rem;
+  }
+  .conversion-secondary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    inline-size: fit-content;
+    min-block-size: 2.75rem;
+    margin-block-start: 1rem;
+    color: rgb(var(--color-text-muted));
+    border-block-end: var(--rule-width) solid rgb(var(--color-rule));
+  }
+
+  /* Explicit rows preserve the semantic reading sequence and uneven baselines. */
+  @container services (min-width: 48rem) {
+    .orientation,
+    .chapter,
+    .services-conversion {
+      margin-inline: 3rem;
+    }
+    .editorial-grid {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: 1.5rem;
+    }
+    .orientation {
+      padding-block: 6rem 6.5rem;
+    }
+    .orientation-statement {
+      margin-block-start: 2rem;
+    }
+    .contents {
+      row-gap: 2rem;
+      margin-block-start: 4rem;
+    }
+    .contents li:nth-child(1) {
+      grid-column: 1 / 8;
+      grid-row: 1;
+      margin: 0;
+    }
+    .contents li:nth-child(2) {
+      grid-column: 5 / 12;
+      grid-row: 2;
+      margin: 0;
+    }
+    .contents li:nth-child(3) {
+      grid-column: 2 / -1;
+      grid-row: 3;
+      margin: 0;
+    }
+    .chapter {
+      padding-block: 6rem 7rem;
+    }
+    .chapter-intro {
+      grid-column: 1 / 9;
+    }
+    p {
+      font-size: 1.125rem;
+    }
+    h3 {
+      font-size: 1.5rem;
+    }
+    .website-details {
+      margin-block-start: 4rem;
+      row-gap: 2.5rem;
+    }
+    .website-details .detail:nth-child(1) {
+      grid-column: 2 / 6;
+      grid-row: 1;
+      margin: 0;
+    }
+    .website-details .detail:nth-child(2) {
+      grid-column: 6 / 11;
+      grid-row: 2;
+      margin: 0;
+    }
+    .website-details .detail:nth-child(3) {
+      grid-column: 4 / 10;
+      grid-row: 3;
+      margin: 0;
+    }
+    .apps .chapter-intro {
+      grid-column: 4 / 12;
+      margin: 0;
+    }
+    .tool-examples {
+      row-gap: 2.25rem;
+      margin-block-start: 4rem;
+    }
+    .tool-examples li {
+      font-size: 1.25rem;
+    }
+    .tool-examples li:nth-child(1) {
+      grid-column: 3 / 7;
+      grid-row: 1;
+      margin: 0;
+    }
+    .tool-examples li:nth-child(2) {
+      grid-column: 6 / 10;
+      grid-row: 2;
+      margin: 0.5rem 0 0;
+    }
+    .tool-examples li:nth-child(3) {
+      grid-column: 4 / 9;
+      grid-row: 3;
+      margin: 0;
+    }
+    .tool-examples li:nth-child(4) {
+      grid-column: 8 / -1;
+      grid-row: 4;
+      margin: 0.75rem 0 0;
+    }
+    .automation {
+      padding-block: 7.5rem 8rem;
+    }
+    .automation .chapter-intro {
+      grid-column: 2 / 10;
+    }
+    .automation-position {
+      grid-column: 3 / 12;
+      margin-block-start: 4.5rem;
+    }
+    .automation-position > p + p {
+      max-inline-size: 50ch;
+    }
+    .automation-examples {
+      margin-block-start: 5rem;
+      row-gap: 1.75rem;
+      padding-block-start: 1.5rem;
+      font-size: 1.25rem;
+    }
+    .automation-examples li:nth-child(1) {
+      grid-column: 1 / 4;
+      grid-row: 1;
+      margin: 0;
+    }
+    .automation-examples li:nth-child(2) {
+      grid-column: 4 / 8;
+      grid-row: 2;
+      margin: 0;
+    }
+    .automation-examples li:nth-child(3) {
+      grid-column: 6 / 11;
+      grid-row: 3;
+      margin: 0;
+    }
+    .automation-examples li:nth-child(4) {
+      grid-column: 8 / -1;
+      grid-row: 4;
+      margin: 0;
+    }
+    .engineering > .editorial-grid > h2 {
+      grid-column: 1 / 10;
+    }
+    .disciplines {
+      row-gap: 2.5rem;
+      margin-block-start: 4rem;
+    }
+    .disciplines .detail:nth-child(1) {
+      grid-column: 7 / 11;
+      grid-row: 1;
+      margin: 0;
+    }
+    .disciplines .detail:nth-child(2) {
+      grid-column: 3 / 7;
+      grid-row: 2;
+      margin: 1rem 0 0;
+    }
+    .disciplines .detail:nth-child(3) {
+      grid-column: 8 / -1;
+      grid-row: 3;
+      margin: 0.5rem 0 0;
+    }
+    .disciplines .detail:nth-child(4) {
+      grid-column: 5 / 10;
+      grid-row: 4;
+      margin: 1.5rem 0 0;
+    }
+    .fit {
+      padding-block: 7rem 10rem;
+      row-gap: 8rem;
+    }
+    .fit-opening {
+      grid-column: 2 / 9;
+      grid-row: 1;
+    }
+    .appropriate-technology {
+      grid-column: 7 / 12;
+      grid-row: 2;
+      margin: 1rem 0 0;
+    }
+    .direct-working {
+      grid-column: 3 / 8;
+      grid-row: 3;
+      margin: 0;
+    }
+    .services-conversion {
+      padding-block: 4rem 5rem;
+    }
+  }
+  @media (forced-colors: active) {
+    a,
+    .direction {
+      color: LinkText;
+    }
+    .direction > span {
+      border-color: LinkText;
+    }
+    .chapter,
+    .detail,
+    .automation-examples,
+    .services-conversion {
+      border-color: CanvasText;
+    }
+  }
+</style>

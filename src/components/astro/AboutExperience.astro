@@ -1,0 +1,585 @@
+---
+import { projectEnquiry, websiteReview } from "@config/navigation";
+const principles = [
+  {
+    title: "Design judgement",
+    text: "Years of client-facing visual work shape how problems are interpreted, discussed and turned into something clear.",
+  },
+  {
+    title: "Technical discipline",
+    text: "Computer Science study brings a stronger technical foundation to architecture, implementation and engineering decisions.",
+  },
+  {
+    title: "Direct accountability",
+    text: "The person discussing the project is also responsible for the design and technical decisions behind it.",
+  },
+  {
+    title: "Practicality",
+    text: "The result should suit the business and the people using it, rather than demonstrate how much technology can be added.",
+  },
+];
+---
+
+<div class="about-experience">
+  <header class="orientation scene grid">
+    <h1>About</h1>
+    <p class="framing">
+      Teesside Digital is a solo technical consultancy built around direct
+      access to the person designing and building the work.
+    </p>
+    <p class="location">
+      Based in Hartlepool, working across Teesside and the North East.
+    </p>
+  </header>
+  <section class="origin scene grid" aria-labelledby="origin-heading">
+    <p class="date">2005-2007</p>
+    <h2 id="origin-heading">
+      Technology was part of the story before Teesside Digital existed.
+    </h2>
+    <p class="early-web">Dave worked with web development around 2005-2007.</p>
+    <p class="departure short-rule">
+      His career then moved away from software for a period, including
+      construction, before eventually returning to technical work.
+    </p>
+  </section>
+  <section class="craft scene" aria-labelledby="craft-heading">
+    <div class="grid">
+      <p class="date">2010-2021</p>
+      <h2 id="craft-heading">
+        For around eleven years, the work was visual, client-facing and precise.
+      </h2>
+      <div class="craft-story prose">
+        <p>
+          Dave worked professionally as a tattoo artist and studio owner from
+          roughly 2010 to 2021.
+        </p>
+        <p>
+          The work meant listening carefully, understanding what someone was
+          actually trying to achieve, making judgement calls and executing them
+          precisely. It also meant being directly accountable for a finished
+          result another person had to live with.
+        </p>
+        <p>
+          Running a studio added the other side of that responsibility: dealing
+          with clients directly, managing expectations and standing behind the
+          work.
+        </p>
+      </div>
+    </div>
+    <div class="craft-fragments grid">
+      <p class="short-rule">
+        Understanding what someone is actually trying to achieve.
+      </p>
+      <p class="short-rule">
+        Precision and accountability matter when the result is permanent.
+      </p>
+      <p class="short-rule">
+        Running a client-facing business meant direct communication and real
+        responsibility.
+      </p>
+    </div>
+  </section>
+  <section class="study scene grid" aria-labelledby="study-heading">
+    <p class="date">2022-present</p>
+    <h2 id="study-heading">
+      From 2022, Dave returned formally to technical work through Computer
+      Science study.
+    </h2>
+    <div class="study-story prose">
+      <p>
+        Current study spans Computer Science, software and web development, AI
+        and security principles.
+      </p>
+      <p>
+        That study adds a stronger technical foundation to the same way of
+        working: understand the problem, make considered decisions and build
+        something that remains understandable afterwards.
+      </p>
+    </div>
+    <ul class="technical-cues">
+      <li>software / web development</li>
+      <li>AI</li>
+      <li>security principles</li>
+    </ul>
+  </section>
+  <section class="synthesis scene" aria-labelledby="synthesis-heading">
+    <div class="grid">
+      <h2 id="synthesis-heading">
+        The career path was not linear.<br />The working principles are.
+      </h2>
+    </div>
+    <div class="principles grid">
+      {
+        principles.map((principle) => (
+          <div class="principle short-rule">
+            <>
+              <h3>{principle.title}</h3>
+              <p>{principle.text}</p>
+            </>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+  <section
+    class="relationship scene grid"
+    aria-labelledby="relationship-heading"
+  >
+    <h2 id="relationship-heading">You work directly with Dave.</h2>
+    <div class="relationship-explanation prose short-rule">
+      <p>
+        There is no account-manager layer between the conversation and the work.
+      </p>
+      <p>
+        Context stays with the person designing and building the project, which
+        means fewer handoffs and clearer accountability.
+      </p>
+      <p>
+        Design and technical decisions stay connected from the first
+        conversation through implementation.
+      </p>
+    </div>
+  </section>
+  <section class="about-conversion scene" aria-label="Start a conversation">
+    <a class="conversion-primary" href={projectEnquiry.href}>
+      <span>{projectEnquiry.label}</span>
+      <span class="direction" aria-hidden="true"
+        ><span></span><svg
+          width="40"
+          height="40"
+          viewBox="0 0 32 32"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"><path d="M3 16h25M19 6l10 10-10 10"></path></svg
+        ></span
+      >
+    </a>
+    <a class="conversion-secondary" href={websiteReview.href}>
+      <span>{websiteReview.label}</span>
+      <svg
+        aria-hidden="true"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"><path d="M3 12h18m-7-7 7 7-7 7"></path></svg
+      >
+    </a>
+  </section>
+</div>
+
+<style>
+  .about-experience {
+    container: about / inline-size;
+    max-inline-size: 100rem;
+    margin-inline: auto;
+    color: rgb(var(--color-text));
+  }
+  .scene {
+    margin-inline: 1.5rem;
+    padding-block: 4rem 5rem;
+  }
+  .scene + .scene {
+    border-block-start: var(--rule-width) solid rgb(var(--color-rule));
+  }
+  h1,
+  h2,
+  h3,
+  p,
+  ul {
+    margin: 0;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    overflow-wrap: anywhere;
+  }
+  h1 {
+    font-size: clamp(3rem, 12cqi, 3.625rem);
+    letter-spacing: -0.055em;
+    line-height: 1;
+  }
+  h2 {
+    font-size: clamp(2.5rem, 10.3cqi, 3rem);
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+  }
+  h3 {
+    font-size: 1.125rem;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+  }
+  p,
+  li {
+    font-size: 1rem;
+    line-height: 1.55;
+    color: rgb(var(--color-text-muted));
+    overflow-wrap: anywhere;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .grid > * {
+    min-inline-size: 0;
+  }
+  .prose p + p {
+    margin-block-start: 1.25rem;
+  }
+  .orientation {
+    padding-block-start: 3.5rem;
+  }
+  .framing {
+    margin-block-start: 2rem;
+    font-size: 1.25rem;
+    line-height: 1.4;
+    max-inline-size: 35ch;
+  }
+  .location {
+    margin-block-start: 3rem;
+    border-block-start: var(--rule-width) solid rgb(var(--color-rule));
+    padding-block-start: 1rem;
+  }
+  .date {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.8125rem;
+    letter-spacing: 0.14em;
+    margin-block-end: 1.5rem;
+  }
+  .date::after {
+    content: "";
+    inline-size: 3.5rem;
+    border-block-start: var(--rule-width) solid rgb(var(--color-rule));
+  }
+  .early-web {
+    margin-block-start: 1.5rem;
+    max-inline-size: 32ch;
+  }
+  .short-rule::before {
+    content: "";
+    display: block;
+    inline-size: var(--fragment-rule, 4rem);
+    max-inline-size: 100%;
+    border-block-start: var(--rule-width) solid rgb(var(--color-rule));
+    margin-block-end: 0.875rem;
+  }
+  .departure {
+    margin-block-start: 5rem;
+    margin-inline-start: 25%;
+  }
+  .craft-story {
+    margin-block-start: 2rem;
+  }
+  .craft-fragments {
+    margin-block-start: 3.5rem;
+  }
+  .craft-fragments p:nth-child(1) {
+    margin-inline: 10% 8%;
+  }
+  .craft-fragments p:nth-child(2) {
+    margin-inline-start: 28%;
+    margin-block-start: 3rem;
+    --fragment-rule: 3rem;
+  }
+  .craft-fragments p:nth-child(3) {
+    margin-inline: 10% 5%;
+    margin-block-start: 4rem;
+    --fragment-rule: 5rem;
+  }
+  .study h2 {
+    margin-inline-start: 5%;
+    font-size: clamp(1.875rem, 8cqi, 2.25rem);
+  }
+  .study-story {
+    margin-inline-start: 5%;
+    margin-block-start: 1.5rem;
+  }
+  .technical-cues {
+    padding: 0;
+    list-style: none;
+    margin-block-start: 3rem;
+    margin-inline-start: 24%;
+  }
+  .technical-cues li {
+    border-block-start: var(--rule-width) solid rgb(var(--color-rule));
+    padding-block-start: 0.75rem;
+  }
+  .technical-cues li + li {
+    margin-block-start: 1.5rem;
+  }
+  .technical-cues li:nth-child(2) {
+    margin-inline-start: 12%;
+  }
+  .technical-cues li:nth-child(3) {
+    margin-inline-start: 5%;
+  }
+  .synthesis h2 {
+    font-size: clamp(2.375rem, 10cqi, 2.75rem);
+  }
+  .principles {
+    margin-block-start: 3rem;
+  }
+  .principle p {
+    margin-block-start: 0.5rem;
+  }
+  .principle:nth-child(1) {
+    margin-inline-start: 13%;
+  }
+  .principle:nth-child(2) {
+    margin-inline-end: 9%;
+    margin-block-start: 3rem;
+    --fragment-rule: 5rem;
+  }
+  .principle:nth-child(3) {
+    margin-inline-start: 19%;
+    margin-block-start: 3.75rem;
+    --fragment-rule: 3rem;
+  }
+  .principle:nth-child(4) {
+    margin-inline-start: 8%;
+    margin-block-start: 2.75rem;
+    --fragment-rule: 4.5rem;
+  }
+  .relationship {
+    padding-block: 4.5rem 6rem;
+  }
+  /* Separate rows keep the explanation below the statement, including at text zoom. */
+  .relationship-explanation {
+    margin-block-start: 6rem;
+    margin-inline-start: 22%;
+  }
+  .about-conversion {
+    padding-block: 3rem 4rem;
+  }
+  a {
+    color: rgb(var(--color-action));
+    text-decoration: none;
+  }
+  a:is(:hover, :focus-visible) {
+    color: rgb(var(--color-action-hover));
+  }
+  .conversion-primary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1.5rem;
+    font-size: clamp(2rem, 4.8cqi, 4rem);
+    line-height: 1.15;
+    letter-spacing: -0.035em;
+  }
+  .conversion-primary > span:first-child {
+    overflow-wrap: anywhere;
+    min-inline-size: 0;
+  }
+  .direction {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1 1 7rem;
+    min-block-size: 2.75rem;
+  }
+  .direction > span {
+    flex: 1;
+    border-block-start: var(--rule-width) solid currentColor;
+  }
+  svg {
+    flex: none;
+  }
+  .conversion-secondary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    inline-size: fit-content;
+    max-inline-size: 100%;
+    min-block-size: 2.75rem;
+    margin-block-start: 1rem;
+    border-block-end: var(--rule-width) solid rgb(var(--color-rule));
+    color: rgb(var(--color-text-muted));
+  }
+  .conversion-secondary > span {
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+  @container about (min-width: 48rem) {
+    .scene {
+      margin-inline: 3rem;
+      padding-block: 6rem 7rem;
+    }
+    .grid {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: 1.5rem;
+    }
+    p,
+    li {
+      font-size: 1.125rem;
+    }
+    h1 {
+      font-size: clamp(5.5rem, 9cqi, 6.5rem);
+    }
+    h2 {
+      font-size: clamp(3.75rem, 6cqi, 4.75rem);
+    }
+    .orientation {
+      padding-block: 5rem;
+    }
+    .orientation h1 {
+      grid-column: 1 / 6;
+      grid-row: 1;
+    }
+    .framing {
+      grid-column: 7 / 12;
+      grid-row: 1;
+      margin-block-start: 4.5rem;
+      font-size: 1.375rem;
+    }
+    .location {
+      grid-column: 1 / 8;
+      grid-row: 2;
+      font-size: 1rem;
+      margin-block-start: 5rem;
+    }
+    .origin .date {
+      grid-column: 9 / 12;
+      grid-row: 1;
+      align-self: end;
+      margin: 0;
+    }
+    .origin h2 {
+      grid-column: 1 / 8;
+      grid-row: 1;
+    }
+    .early-web {
+      grid-column: 2 / 7;
+      grid-row: 2;
+      margin-block-start: 2rem;
+    }
+    .departure {
+      grid-column: 7 / 12;
+      grid-row: 3;
+      margin-inline: 0;
+      margin-block-start: 6rem;
+    }
+    .craft .date {
+      grid-column: 2 / 9;
+      grid-row: 1;
+    }
+    .craft h2 {
+      grid-column: 2 / 9;
+      grid-row: 2;
+    }
+    .craft-story {
+      grid-column: 3 / 8;
+      grid-row: 3;
+      margin-block-start: 2.5rem;
+    }
+    .craft-fragments {
+      margin-block-start: 4rem;
+    }
+    .craft-fragments p:nth-child(1) {
+      grid-column: 9 / 13;
+      grid-row: 1;
+      margin: 0;
+    }
+    .craft-fragments p:nth-child(2) {
+      grid-column: 6 / 10;
+      grid-row: 2;
+      margin: 3rem 0 0;
+    }
+    .craft-fragments p:nth-child(3) {
+      grid-column: 9 / 13;
+      grid-row: 3;
+      margin: 3.5rem 0 0;
+    }
+    .study .date {
+      grid-column: 4 / 11;
+      grid-row: 1;
+    }
+    .study h2 {
+      grid-column: 4 / 11;
+      grid-row: 2;
+      margin: 0;
+      font-size: clamp(2.375rem, 4cqi, 3rem);
+    }
+    .study-story {
+      grid-column: 5 / 10;
+      grid-row: 3;
+      margin: 2rem 0 0;
+    }
+    .technical-cues {
+      grid-column: 7 / 12;
+      grid-row: 4;
+      margin: 4rem 0 0;
+    }
+    .technical-cues li:nth-child(2) {
+      margin-inline-start: 20%;
+    }
+    .technical-cues li:nth-child(3) {
+      margin-inline-start: 8%;
+    }
+    .synthesis h2 {
+      grid-column: 1 / 8;
+      font-size: clamp(3.25rem, 5.3cqi, 4rem);
+    }
+    .principles {
+      margin-block-start: 4rem;
+    }
+    .principle:nth-child(1) {
+      grid-column: 7 / 11;
+      grid-row: 1;
+      margin: 0;
+    }
+    .principle:nth-child(2) {
+      grid-column: 3 / 7;
+      grid-row: 2;
+      margin: 3rem 0 0;
+    }
+    .principle:nth-child(3) {
+      grid-column: 8 / 13;
+      grid-row: 3;
+      margin: 4rem 0 0;
+    }
+    .principle:nth-child(4) {
+      grid-column: 5 / 10;
+      grid-row: 4;
+      margin: 3rem 0 0;
+    }
+    .relationship {
+      padding-block: 7rem 9rem;
+    }
+    .relationship h2 {
+      grid-column: 2 / 9;
+      grid-row: 1;
+      font-size: clamp(4rem, 6.3cqi, 4.75rem);
+    }
+    .relationship-explanation {
+      grid-column: 7 / 12;
+      grid-row: 2;
+      margin-inline: 0;
+      margin-block-start: 9rem;
+    }
+    .about-conversion {
+      padding-block: 4rem 5rem;
+    }
+  }
+  @media (forced-colors: active) {
+    a {
+      color: LinkText;
+    }
+    .scene + .scene,
+    .location,
+    .date::after,
+    .short-rule::before,
+    .technical-cues li {
+      border-color: CanvasText;
+    }
+    .conversion-secondary {
+      border-color: LinkText;
+    }
+  }
+</style>

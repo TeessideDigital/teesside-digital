@@ -6,31 +6,26 @@ Last updated: 5 October 2026
 
 Branch: `redesign/v2`
 
-Current repository HEAD:
+Repository HEAD at the time of this update, and current approved product baseline:
 
-`0111e5cc4a0945a2963c0103359e8aec5936b278`
+`a6710d92b4ac2c98818d56a0ef6f65b913a70472`
 
-`docs: add Claude migration context`
+`feat: add V2.1 about motion`
 
-Current approved product baseline:
+Any commit after that baseline that only updates this file is documentation and does not change product source.
 
-`d72a55dc6d2c81c88b15a3b2c2a019a3c1fecad4`
+The V2.1 implementation remains local and has not been pushed.
 
-`feat: build V2.1 about experience`
+Local tags:
 
-The commit after the approved product baseline contains migration documentation and approved visual references only. It does not change product source.
-
-The V2.1 implementation remains local and has not been pushed during this migration work.
-
-A local recovery tag exists on the approved product baseline:
-
-`pre-claude-handover-2026-10-05`
+- `pre-claude-handover-2026-10-05` on `d72a55d` (About static, the pre-Claude product state)
+- `claude-ready-2026-10-05` on `14fc42d` (migration documentation complete)
 
 A verified Git bundle backup of the pre-Claude product state was created at:
 
 `..\teesside-digital-pre-claude.bundle`
 
-Expected working-tree state before Claude Code starts:
+Expected working-tree state before the next task starts:
 
 clean
 
@@ -46,6 +41,7 @@ clean
 - V2.1 Services motion
 - V2.1 About static experience
 - Claude migration documentation and approved Services/About visual references
+- V2.1 About motion (Implementation 7B)
 
 ## Current approved route state
 
@@ -64,36 +60,69 @@ Do not redesign unless a concrete whole-site QA issue requires it.
 ### About
 
 Static complete and committed at `d72a55d`.
+Motion complete and committed at `a6710d9`.
 Dark/Light desktop/mobile states were visually approved.
-No About motion has been implemented yet.
+Do not redesign unless a concrete whole-site QA issue requires it.
 
-## Immediate next implementation
+## Next phase
 
-**Implementation 7B — About motion.**
+**Contact: V2 redesign and functional correction.**
 
-Reuse the existing V2.1 Home/Services motion vocabulary.
-Do not redesign the approved About static composition.
-Do not alter Home or Services unless a demonstrated shared-system defect requires it.
+No implementation brief has been issued yet. Do not start without one.
+
+## Authority notes
+
+- The committed Home, Services and About motion code is the motion authority. The 210/400/900ms tokens and the once-only route coordinators supersede the 120/200/360/480ms timings and the hero-only reveal limit in `docs/v2/motion-system.md`. That document's principles still apply.
+- No V2.1 visual-grammar document exists yet. Until one is written, the approved implementation and the approved references under `docs/v2/references/` are the authority.
+
+## Implementation 7B decisions
+
+Approved by Dave on 5 October 2026 and present in `a6710d9`:
+
+- The study scene has two triggers: the headline and the cue list. The cue rules sit too far below the headline for one trigger to show them. Desktop therefore has 10 entrance groups and mobile has 7.
+- Principles have no translate, because no translate primitive exists in Home or Services. Each principle rule establishes and its title and body tone in, using the Services treatments.
+- Below 48rem the four principles resolve as one quiet group, mirroring Services' mobile behaviour.
+- `AboutMotion.astro` loads `editorial-motion.css` through a CSS `@import`, as Home does. A JavaScript import made the bundler split a shared chunk and change the Services page output.
+- Extending the shared selectors to `.about-experience` gives About's secondary link the same 7px arrow travel that Services' secondary link has.
+- Arrival rules are stricter than on Home and Services. On a scrolled, reloaded, back/forward or late arrival, targets at or above the fold never animate, including after scrolling back up. A hash arrival does nothing.
+- The coordinator checks for support of the `pseudoElement` animation option. Where it is unsupported, the generated-rule animations (the date cue rule and the principle rules) are skipped and stay static. Nothing animates their parent elements instead.
+- The About coordinator removes its listeners once its work is finished. Home and Services do not; that was deliberately not back-ported.
 
 ## Latest verification
 
-Before the About static commit:
+For Implementation 7B, on the production build in headless Microsoft Edge:
 
 - `npm run check` passed: 0 errors, 0 warnings, 2 existing hints
 - `npm run type-check` passed
 - `npm run build` passed
 - 15 pages were generated
 - `git diff --check` passed apart from Windows LF/CRLF notices
-- no About JavaScript, hydration or dependency was added in the static implementation
+- About at rest was pixel-identical to the pre-7B build and to the approved references at 1440 and 390, Dark and Light
+- Home and Services output was unchanged apart from one hashed CSS filename each; their screenshots, geometry and animation logs matched the pre-7B build
+- About coordinator: 3,076 bytes raw, 1,475 bytes gzip (Services: 3,253 / 1,477)
+- no hydration, dependency or new external script was added
 
 The two existing Astro hints are in:
 
 - `src/components/astro/ContactForm.astro`
 - `src/layouts/BaseLayout.astro`
 
-They are existing non-blocking script-processing hints and were not introduced by About.
+They are existing non-blocking script-processing hints.
 
-## Important unfinished work after About motion
+## Launch audit test debt
+
+Not yet tested for any V2.1 route. All motion and layout verification so far is browser automation on Windows.
+
+- real iOS and Android devices
+- Safari
+- Firefox
+- screen reader
+- genuine browser text zoom (200% checks so far used a font-size doubling harness)
+- bfcache restore
+- real print behaviour
+- real hidden-tab behaviour
+
+## Important unfinished work
 
 1. Contact V2 redesign and functional correction
 2. `/website-review/`

@@ -1,0 +1,13 @@
+---
+// No wrapper: the approved About document remains the static authority.
+---
+
+<script>
+  import "../../scripts/about-motion";
+</script>
+
+<style is:global>
+  /* Inlined into About's own stylesheet, as Home does, so the Services bundle
+     keeps its existing shape instead of gaining a shared chunk. */
+  @import "../../styles/editorial-motion.css";
+</style>

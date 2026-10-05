@@ -1,7 +1,8 @@
 /* Shared approved vocabulary. Keep the original token names so Home is unchanged. */
 .home-opening,
 .home-narrative,
-.services-experience {
+.services-experience,
+.about-experience {
   --home-motion-micro: 210ms;
   --home-motion-structural: 400ms;
   --home-motion-settle: 900ms;
@@ -16,11 +17,11 @@
   overflow: clip;
 }
 
-:is(.home-opening, .home-narrative, .services-experience)
+:is(.home-opening, .home-narrative, .services-experience, .about-experience)
   :is(.service-rule, .advancing-rule, .direction > span) {
   position: relative;
 }
-:is(.home-opening, .home-narrative, .services-experience)
+:is(.home-opening, .home-narrative, .services-experience, .about-experience)
   :is(.service-rule, .advancing-rule, .direction > span)::after {
   content: "";
   position: absolute;
@@ -34,26 +35,26 @@
 }
 
 @media (prefers-reduced-motion: no-preference) and (forced-colors: none) {
-  :is(.home-opening, .home-narrative, .services-experience) a svg,
-  :is(.home-opening, .home-narrative, .services-experience)
+  :is(.home-opening, .home-narrative, .services-experience, .about-experience) a svg,
+  :is(.home-opening, .home-narrative, .services-experience, .about-experience)
     :is(.service-rule, .advancing-rule, .direction > span)::after {
     transition: transform var(--home-motion-micro) var(--home-ease-micro);
   }
-  :is(.home-opening, .home-narrative, .services-experience)
+  :is(.home-opening, .home-narrative, .services-experience, .about-experience)
     a:focus-visible
     svg {
     transform: translateX(7px);
   }
-  :is(.home-opening, .home-narrative, .services-experience)
+  :is(.home-opening, .home-narrative, .services-experience, .about-experience)
     a:focus-visible
     :is(.service-rule, .advancing-rule, .direction > span)::after {
     transform: scaleX(1);
   }
   @media (hover: hover) and (pointer: fine) {
-    :is(.home-opening, .home-narrative, .services-experience) a:hover svg {
+    :is(.home-opening, .home-narrative, .services-experience, .about-experience) a:hover svg {
       transform: translateX(7px);
     }
-    :is(.home-opening, .home-narrative, .services-experience)
+    :is(.home-opening, .home-narrative, .services-experience, .about-experience)
       a:hover
       :is(.service-rule, .advancing-rule, .direction > span)::after {
       transform: scaleX(1);
@@ -62,7 +63,7 @@
 }
 
 /* Immediate emphasis and the existing outline do not depend on motion. */
-:is(.home-opening, .home-narrative, .services-experience) a:focus-visible,
+:is(.home-opening, .home-narrative, .services-experience, .about-experience) a:focus-visible,
 .home-opening
   .service-directory
   a:is(:hover, :focus-visible)

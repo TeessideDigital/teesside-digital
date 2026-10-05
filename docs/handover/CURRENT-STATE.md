@@ -6,21 +6,33 @@ Last updated: 5 October 2026
 
 Branch: `redesign/v2`
 
-Current approved HEAD:
+Current repository HEAD:
+
+`0111e5cc4a0945a2963c0103359e8aec5936b278`
+
+`docs: add Claude migration context`
+
+Current approved product baseline:
 
 `d72a55dc6d2c81c88b15a3b2c2a019a3c1fecad4`
 
 `feat: build V2.1 about experience`
 
+The commit after the approved product baseline contains migration documentation and approved visual references only. It does not change product source.
+
 The V2.1 implementation remains local and has not been pushed during this migration work.
 
-A local recovery tag exists:
+A local recovery tag exists on the approved product baseline:
 
 `pre-claude-handover-2026-10-05`
 
-A verified Git bundle backup was created before the Claude migration documentation:
+A verified Git bundle backup of the pre-Claude product state was created at:
 
 `..\teesside-digital-pre-claude.bundle`
+
+Expected working-tree state before Claude Code starts:
+
+clean
 
 ## Completed
 
@@ -33,6 +45,7 @@ A verified Git bundle backup was created before the Claude migration documentati
 - V2.1 Services experience
 - V2.1 Services motion
 - V2.1 About static experience
+- Claude migration documentation and approved Services/About visual references
 
 ## Current approved route state
 

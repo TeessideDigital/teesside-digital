@@ -1,22 +1,22 @@
-/** Honest submission states for the enquiry form.
- * The static form already validates and posts natively. This only replaces that
- * with an accessible summary and outcomes that follow the receiver's response.
- * Nothing is stored, logged or retried, and success is never assumed.
+/** Honest submission states for any static form on the site.
+ * A form already validates and posts natively. This only replaces that with an
+ * accessible summary and outcomes that follow the receiver's response. Nothing
+ * is stored, logged or retried, and success is never assumed.
+ *
+ * The engine holds no copy. Each form supplies its own in its markup:
+ * - on the form: data-sending, data-rejected, data-uncertain;
+ * - on a validated field: data-missing (shown when a required field is empty)
+ *   and data-format (shown when an email or web address does not parse);
+ * - data-rule="website" marks a field checked as a web address;
+ * - the confirmation block's mailto link names the address linked in messages.
  */
 type Field = HTMLInputElement | HTMLTextAreaElement;
 type Outcome = "accepted" | "rejected" | "uncertain";
 
 const TIMEOUT = 15000;
-const SENDING = "Sending your enquiry...";
-const REJECTED = (email: string) =>
-  `Your enquiry was not sent. Please try again, or email Dave at ${email}.`;
-const UNCERTAIN = (email: string) =>
-  `The website could not confirm whether your enquiry was received. To check, email Dave at ${email}. Sending again may create a duplicate.`;
 
-/** Optional. A bare domain is welcome; anything that is not a web address is not. */
-function isWebAddress(raw: string) {
-  const value = raw.trim();
-  if (!value) return true;
+/** A bare domain is welcome; anything that is not a web address is not. */
+function isWebAddress(value: string) {
   if (/\s/.test(value)) return false;
   try {
     const url = new URL(value.includes("://") ? value : `https://${value}`);
@@ -29,9 +29,17 @@ function isWebAddress(raw: string) {
   }
 }
 
-function enhanceContactForm() {
-  const form = document.querySelector<HTMLFormElement>("form.contact-form");
-  if (!form) return;
+/** An empty result means valid. Values are trimmed to check, never to send. */
+function check(field: Field) {
+  const value = field.value.trim();
+  if (!value) return field.required ? (field.dataset.missing ?? "") : "";
+  const format = field.dataset.format ?? "";
+  if (field.type === "email" && field.validity.typeMismatch) return format;
+  if (field.dataset.rule === "website" && !isWebAddress(value)) return format;
+  return "";
+}
+
+function enhance(form: HTMLFormElement) {
   const find = <T extends HTMLElement>(selector: string) =>
     form.querySelector<T>(selector);
   const fields = find(".fields");
@@ -43,10 +51,11 @@ function enhanceContactForm() {
   const confirmation = find(".confirmation");
   const heading = find(".confirmation h3");
   const email = find(".confirmation a")?.textContent?.trim();
-  const name = find<HTMLInputElement>("#contact-name");
-  const address = find<HTMLInputElement>("#contact-email");
-  const website = find<HTMLInputElement>("#contact-website");
-  const message = find<HTMLTextAreaElement>("#contact-message");
+  const { sending: sendingText, rejected, uncertain } = form.dataset;
+  // Field order in the document is the order of the summary.
+  const checked = Array.from(
+    form.querySelectorAll<Field>("[data-missing], [data-format]"),
+  );
   if (
     !fields ||
     !summary ||
@@ -57,40 +66,13 @@ function enhanceContactForm() {
     !confirmation ||
     !heading ||
     !email ||
-    !name ||
-    !address ||
-    !website ||
-    !message
+    !sendingText ||
+    !rejected ||
+    !uncertain ||
+    !checked.length
   )
     return;
 
-  // Field order is the order of the summary. An empty result means valid.
-  const checks: [Field, () => string][] = [
-    [name, () => (name.value.trim() ? "" : "Enter your name.")],
-    [
-      address,
-      () =>
-        !address.value.trim()
-          ? "Enter an email address so Dave can reply."
-          : address.validity.typeMismatch
-            ? "Enter an email address in the format name@example.com."
-            : "",
-    ],
-    [
-      website,
-      () =>
-        isWebAddress(website.value)
-          ? ""
-          : "Enter a website address like example.co.uk, or leave this blank.",
-    ],
-    [
-      message,
-      () =>
-        message.value.trim()
-          ? ""
-          : "Add a short description of what you need help with.",
-    ],
-  ];
   const idle = label.textContent ?? "";
   let sending = false;
 
@@ -115,8 +97,8 @@ function enhanceContactForm() {
     else field.removeAttribute("aria-invalid");
   };
   const summarise = () => {
-    const items = checks
-      .map(([field]) => [field, slot(field)?.textContent ?? ""] as const)
+    const items = checked
+      .map((field) => [field, slot(field)?.textContent ?? ""] as const)
       .filter(([, text]) => text)
       .map(([field, text]) => {
         const item = document.createElement("li");
@@ -146,7 +128,7 @@ function enhanceContactForm() {
   };
   const busy = (on: boolean) => {
     sending = on;
-    label.textContent = on ? SENDING : idle;
+    label.textContent = on ? sendingText : idle;
     if (on) button.setAttribute("aria-disabled", "true");
     else button.removeAttribute("aria-disabled");
   };
@@ -158,7 +140,7 @@ function enhanceContactForm() {
       const response = await fetch("/", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        // Values go exactly as entered. The form has no file inputs.
+        // Values go exactly as entered. These forms have no file inputs.
         body: new URLSearchParams(
           new FormData(form) as unknown as Record<string, string>,
         ).toString(),
@@ -179,14 +161,14 @@ function enhanceContactForm() {
   const submit = async (event: SubmitEvent) => {
     event.preventDefault();
     if (sending) return;
-    for (const [field, check] of checks) mark(field, check());
+    for (const field of checked) mark(field, check(field));
     if (summarise()) {
       say();
       summary.focus();
       return;
     }
     busy(true);
-    say(SENDING);
+    say(sendingText);
     const outcome = await send();
     if (outcome === "accepted") {
       // The guard stays set: there is nothing left to send from this page.
@@ -197,8 +179,8 @@ function enhanceContactForm() {
       return;
     }
     busy(false);
-    if (outcome === "rejected") say(REJECTED(email), "error");
-    else say(UNCERTAIN(email), "warning");
+    if (outcome === "rejected") say(rejected, "error");
+    else say(uncertain, "warning");
   };
 
   form.addEventListener("submit", (event) => {
@@ -206,9 +188,9 @@ function enhanceContactForm() {
   });
   // After a failed attempt, a message leaves as soon as its field is valid.
   form.addEventListener("input", (event) => {
-    const entry = checks.find(([field]) => field === event.target);
-    if (!entry || !entry[0].hasAttribute("aria-invalid") || entry[1]()) return;
-    mark(entry[0], "");
+    const field = checked.find((candidate) => candidate === event.target);
+    if (!field || !field.hasAttribute("aria-invalid") || check(field)) return;
+    mark(field, "");
     summarise();
   });
   // A summary link takes the keyboard to its field, without changing the URL.
@@ -224,9 +206,12 @@ function enhanceContactForm() {
   form.noValidate = true;
 }
 
-try {
-  enhanceContactForm();
-} catch {
-  // The static form keeps working natively.
-  document.querySelector("form.contact-form")?.removeAttribute("novalidate");
+/** Enhances one form. Any failure leaves it working natively. */
+export function initForm(form: HTMLFormElement | null) {
+  if (!form) return;
+  try {
+    enhance(form);
+  } catch {
+    form.removeAttribute("novalidate");
+  }
 }

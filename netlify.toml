@@ -31,6 +31,37 @@
   status = 301
   force = true
 
+# Retired V1 URLs. Each old address goes permanently to its closest V2 page,
+# so no existing link or search result breaks. These must stay above the
+# catch-all 404 rule: Netlify applies the first match. Netlify matches a path
+# with or without its trailing slash, so one rule covers both forms.
+[[redirects]]
+  from = "/services/web-development"
+  to = "/services/#websites-web-development"
+  status = 301
+
+[[redirects]]
+  from = "/services/ai-automation"
+  to = "/services/#automation-ai"
+  status = 301
+
+# No matching V2 section: security is an engineering discipline, not a service.
+[[redirects]]
+  from = "/services/cybersecurity"
+  to = "/services/"
+  status = 301
+
+# Work stays withheld until real evidence passes the evidence gate.
+[[redirects]]
+  from = "/work"
+  to = "/services/"
+  status = 301
+
+[[redirects]]
+  from = "/work/*"
+  to = "/services/"
+  status = 301
+
 [[redirects]]
   from = "/*"
   to = "/404.html"

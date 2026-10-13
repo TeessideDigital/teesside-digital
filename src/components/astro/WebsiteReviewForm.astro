@@ -4,10 +4,12 @@
 // states. The copy the engine shows lives here, beside the fields it describes.
 import { SITE } from "@config/constants";
 import "../../styles/forms.css";
+import ArrowIcon from "../system/ArrowIcon.astro";
 ---
 
 <form
   class="site-form review-form"
+  aria-labelledby="request"
   name="website-review"
   method="POST"
   data-netlify="true"
@@ -123,17 +125,9 @@ import "../../styles/forms.css";
       <p><a href="/privacy/">Read the privacy notice</a></p>
     </div>
     <div>
-      <button class="submit" type="submit">
+      <button class="submit td-button td-button--primary" type="submit">
         <span>Send review request</span>
-        <svg
-          aria-hidden="true"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"><path d="M4 12h15m-6-6 6 6-6 6"></path></svg
-        >
+        <ArrowIcon />
       </button>
       <div class="status status-region" role="status" aria-live="polite"></div>
     </div>

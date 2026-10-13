@@ -1,0 +1,10 @@
+---
+// Mono label, set in capitals by CSS so the source stays readable text.
+// Hide it from assistive technology only where it repeats the heading below it.
+interface Props {
+  hidden?: boolean;
+}
+const { hidden = false } = Astro.props;
+---
+
+<p class="td-label" aria-hidden={hidden ? "true" : undefined}><slot /></p>

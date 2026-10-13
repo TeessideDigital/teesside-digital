@@ -1,292 +1,106 @@
 ---
 import { SITE } from "@config/constants";
+import PageOpening from "../system/PageOpening.astro";
 ---
 
 <div class="accessibility-experience">
-  <header class="orientation scene grid">
-    <h1>Accessibility</h1>
-    <p class="framing">
-      Teesside Digital wants this website to be usable by as many people as
-      possible, including people who use a keyboard, screen magnification,
-      high-contrast settings or assistive technology.
-    </p>
-    <p class="fact">Last reviewed: 13 October 2026</p>
-  </header>
-  <div class="statement scene">
-    <section class="block grid" aria-labelledby="standard-heading">
-      <h2 id="standard-heading">The standard</h2>
-      <div class="block-body prose">
-        <p>
-          The target is WCAG 2.2 level AA, the widely used international
-          standard for web accessibility.
-        </p>
-        <p>
-          It is a target, not a certificate. The website has not been
-          independently audited.
-        </p>
-      </div>
-    </section>
-    <section class="block grid" aria-labelledby="checked-heading">
-      <h2 id="checked-heading">What has been checked</h2>
-      <div class="block-body prose">
-        <p>These checks were carried out in Microsoft Edge on Windows:</p>
-        <ul role="list">
-          <li>
-            using every page and both forms with a keyboard only, with a
-            visible focus indicator throughout
-          </li>
-          <li>text enlarged to twice its normal size</li>
-          <li>narrow screens down to 320 pixels wide</li>
-          <li>high-contrast (forced colours) mode</li>
-          <li>reduced-motion settings, which turn off the page animations</li>
-          <li>with JavaScript turned off, including submitting both forms</li>
-          <li>
-            colour contrast of text, links and form controls in both the Dark
-            and Light themes
-          </li>
-        </ul>
-        <!-- UPDATE-AFTER-TEST: screen reader -->
-      </div>
-    </section>
-    <section class="block grid" aria-labelledby="unchecked-heading">
-      <h2 id="unchecked-heading">Not yet checked</h2>
-      <div class="block-body prose">
-        <ul role="list">
-          <li>other browsers, including Safari and Firefox</li>
-          <li>real phones and tablets</li>
-          <li>screen readers</li>
-          <li>a full independent audit</li>
-        </ul>
-        <p>
-          These will be checked as the website develops, and this page will be
-          updated.
-        </p>
-      </div>
-    </section>
-    <section class="block grid" aria-labelledby="issues-heading">
-      <h2 id="issues-heading">Known issues</h2>
-      <div class="block-body prose">
-        <p>
-          On a very narrow screen with text enlarged to twice its normal size,
-          some pages, including the home and services pages, become wider than
-          the screen and need sideways scrolling. The Teesside Digital name at
-          the top of the navigation can also run past the edge of the screen.
-          These are due to be fixed.
-        </p>
-      </div>
-    </section>
-    <section class="block grid" aria-labelledby="features-heading">
-      <h2 id="features-heading">Features that help</h2>
-      <div class="block-body prose">
-        <ul role="list">
-          <li>a "Skip to main content" link at the start of every page</li>
-          <li>a choice of Dark or Light theme, remembered on your device</li>
-          <li>
-            animations are switched off if your device is set to reduce motion
-          </li>
-          <li>the website works without JavaScript, including both forms</li>
-        </ul>
-      </div>
-    </section>
-    <section class="block grid" aria-labelledby="report-heading">
-      <h2 id="report-heading">Report a problem</h2>
-      <div class="block-body prose">
-        <p>
-          If something on this website is difficult to use, or you need
-          information from it in a different format, email
-          <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
-        </p>
-        <p>
-          It helps to say which page you were on and what happened. Dave will
-          reply by email and, where he can, provide the information another
-          way.
-        </p>
-      </div>
-    </section>
+  <PageOpening
+    label="Accessibility"
+    title="Accessibility"
+    lead="Teesside Digital wants this website to be usable by as many people as possible, including people who use a keyboard, screen magnification, high-contrast settings or assistive technology."
+  >
+    <p>Last reviewed: 13 October 2026</p>
+  </PageOpening>
+  <div class="td-section">
+    <div class="td-wrap">
+      <section class="td-split" aria-labelledby="standard-heading">
+        <h2 class="td-h2-statement" id="standard-heading">The standard</h2>
+        <div class="td-prose">
+          <p>
+            The target is WCAG 2.2 level AA, the widely used international
+            standard for web accessibility.
+          </p>
+          <p>
+            It is a target, not a certificate. The website has not been
+            independently audited.
+          </p>
+        </div>
+      </section>
+      <section class="td-split" aria-labelledby="checked-heading">
+        <h2 class="td-h2-statement" id="checked-heading">What has been checked</h2>
+        <div class="td-prose">
+          <p>These checks were carried out in Microsoft Edge on Windows:</p>
+          <ul role="list">
+            <li>
+              using every page and both forms with a keyboard only, with a
+              visible focus indicator throughout
+            </li>
+            <li>text enlarged to twice its normal size</li>
+            <li>narrow screens down to 320 pixels wide</li>
+            <li>high-contrast (forced colours) mode</li>
+            <li>reduced-motion settings, which turn off the page animations</li>
+            <li>with JavaScript turned off, including submitting both forms</li>
+            <li>
+              colour contrast of text, links and form controls in both the Dark
+              and Light themes
+            </li>
+          </ul>
+          <!-- UPDATE-AFTER-TEST: screen reader -->
+        </div>
+      </section>
+      <section class="td-split" aria-labelledby="unchecked-heading">
+        <h2 class="td-h2-statement" id="unchecked-heading">Not yet checked</h2>
+        <div class="td-prose">
+          <ul role="list">
+            <li>other browsers, including Safari and Firefox</li>
+            <li>real phones and tablets</li>
+            <li>screen readers</li>
+            <li>a full independent audit</li>
+          </ul>
+          <p>
+            These will be checked as the website develops, and this page will be
+            updated.
+          </p>
+        </div>
+      </section>
+      <section class="td-split" aria-labelledby="issues-heading">
+        <h2 class="td-h2-statement" id="issues-heading">Known issues</h2>
+        <div class="td-prose">
+          <p>
+            On a very narrow screen with text enlarged to twice its normal size,
+            the home and services pages become wider than the screen and need
+            sideways scrolling. This is due to be fixed.
+          </p>
+        </div>
+      </section>
+      <section class="td-split" aria-labelledby="features-heading">
+        <h2 class="td-h2-statement" id="features-heading">Features that help</h2>
+        <div class="td-prose">
+          <ul role="list">
+            <li>a "Skip to main content" link at the start of every page</li>
+            <li>a choice of Dark or Light theme, remembered on your device</li>
+            <li>
+              animations are switched off if your device is set to reduce motion
+            </li>
+            <li>the website works without JavaScript, including both forms</li>
+          </ul>
+        </div>
+      </section>
+      <section class="td-split" aria-labelledby="report-heading">
+        <h2 class="td-h2-statement" id="report-heading">Report a problem</h2>
+        <div class="td-prose">
+          <p>
+            If something on this website is difficult to use, or you need
+            information from it in a different format, email
+            <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+          </p>
+          <p>
+            It helps to say which page you were on and what happened. Dave will
+            reply by email and, where he can, provide the information another
+            way.
+          </p>
+        </div>
+      </section>
+    </div>
   </div>
 </div>
-
-<style>
-  /* Privacy's sibling: the same container, grid, title scale, rules, lists and spacing. */
-  .accessibility-experience {
-    container: accessibility / inline-size;
-    max-inline-size: 100rem;
-    margin-inline: auto;
-    color: rgb(var(--color-text));
-  }
-  .scene {
-    margin-inline: 1.5rem;
-    padding-block: 3rem 3.5rem;
-  }
-  .scene + .scene {
-    border-block-start: var(--rule-width) solid rgb(var(--color-rule));
-  }
-  h1,
-  h2,
-  p,
-  ul {
-    margin: 0;
-  }
-  h1,
-  h2 {
-    font-family: var(--font-display);
-    font-weight: 400;
-    overflow-wrap: anywhere;
-  }
-  h1 {
-    font-size: clamp(3rem, 12cqi, 3.625rem);
-    letter-spacing: -0.055em;
-    line-height: 1;
-  }
-  h2 {
-    font-size: clamp(1.875rem, 8cqi, 2.25rem);
-    line-height: 1.1;
-    letter-spacing: -0.04em;
-  }
-  p,
-  li {
-    font-size: 1rem;
-    line-height: 1.55;
-    color: rgb(var(--color-text-muted));
-    overflow-wrap: anywhere;
-  }
-  .grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .grid > * {
-    min-inline-size: 0;
-  }
-  .orientation {
-    padding-block-start: 3.5rem;
-  }
-  .framing {
-    margin-block-start: 2rem;
-    font-size: 1.25rem;
-    line-height: 1.4;
-    max-inline-size: 35ch;
-  }
-  .fact {
-    margin-block-start: 3rem;
-    border-block-start: var(--rule-width) solid rgb(var(--color-rule));
-    padding-block-start: 1rem;
-  }
-  a {
-    color: rgb(var(--color-action));
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-    overflow-wrap: anywhere;
-  }
-  a:is(:hover, :focus-visible) {
-    color: rgb(var(--color-action-hover));
-  }
-  /* Lead-ins are picked out by colour, not weight alone. */
-  strong {
-    font-weight: 500;
-    color: rgb(var(--color-text));
-  }
-  /* The eight sections are separated by space alone. */
-  .block + .block {
-    margin-block-start: 3.5rem;
-  }
-  .block-body {
-    margin-block-start: 1.5rem;
-    max-inline-size: 65ch;
-  }
-  .prose > * + * {
-    margin-block-start: 1.25rem;
-  }
-  ul {
-    padding: 0;
-    list-style: none;
-  }
-  /* A short dash in the text colour: the rule token is too faint in Light. */
-  li {
-    position: relative;
-    padding-inline-start: 1.75rem;
-  }
-  li::before {
-    content: "";
-    position: absolute;
-    inset-inline-start: 0;
-    inset-block-start: 0.775em;
-    inline-size: 0.875rem;
-    border-block-start: var(--rule-width) solid currentColor;
-  }
-  li + li {
-    margin-block-start: 0.5rem;
-  }
-  @container accessibility (min-width: 48rem) {
-    .scene {
-      margin-inline: 3rem;
-      padding-block: 4rem 4.5rem;
-    }
-    .grid {
-      grid-template-columns: repeat(12, minmax(0, 1fr));
-      column-gap: 1.5rem;
-    }
-    p,
-    li {
-      font-size: 1.125rem;
-    }
-    h1 {
-      font-size: clamp(5.5rem, 9cqi, 6.5rem);
-    }
-    h2 {
-      font-size: clamp(2.375rem, 4cqi, 3rem);
-    }
-    .orientation {
-      padding-block: 4rem 3.5rem;
-    }
-    .orientation h1 {
-      grid-column: 1 / 6;
-      grid-row: 1;
-    }
-    .framing {
-      grid-column: 7 / 12;
-      grid-row: 1;
-      margin-block-start: 4.5rem;
-      font-size: 1.375rem;
-    }
-    .fact {
-      grid-column: 1 / 6;
-      grid-row: 2;
-      font-size: 1rem;
-      margin-block-start: 3.5rem;
-    }
-    .block + .block {
-      margin-block-start: 5rem;
-    }
-    .block h2 {
-      grid-column: 1 / 4;
-      grid-row: 1;
-    }
-    .block-body {
-      grid-column: 5 / 12;
-      grid-row: 1;
-      margin-block-start: 0.5rem;
-    }
-  }
-  /* "Accessibility" is one long word: it takes a sixth column and scales to stay on one line. */
-  @container accessibility (min-width: 48rem) {
-    .orientation h1 {
-      grid-column: 1 / 7;
-      font-size: min(
-        clamp(5.5rem, 9cqi, 6.5rem),
-        calc((50cqi - 3.75rem) / 5.3)
-      );
-    }
-  }
-  @media (forced-colors: active) {
-    a {
-      color: LinkText;
-    }
-    strong {
-      color: CanvasText;
-    }
-    .scene + .scene,
-    .fact {
-      border-color: CanvasText;
-    }
-  }
-</style>

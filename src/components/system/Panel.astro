@@ -1,0 +1,12 @@
+---
+// Surface, border and radius. The closing variant is the larger call-to-action panel.
+interface Props {
+  closing?: boolean;
+  class?: string;
+}
+const { closing = false, class: extra } = Astro.props;
+---
+
+<div class:list={["td-panel", closing && "td-panel--closing", extra]}>
+  <slot />
+</div>

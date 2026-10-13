@@ -1,0 +1,84 @@
+---
+// Desktop "Call Dave" pill. Rendered only when a phone number is configured.
+// It slides in once; under reduced motion it is simply there.
+import { SITE, telephoneHref } from "@config/constants";
+---
+
+{
+  SITE.phone && (
+    <a class="call-pill" href={telephoneHref(SITE.phone)}>
+      <svg
+        aria-hidden="true"
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linejoin="round"
+      >
+        <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2" />
+      </svg>
+      <span>Call Dave</span>
+    </a>
+  )
+}
+<style>
+  .call-pill {
+    display: none;
+  }
+  @media (min-width: 48rem) {
+    .call-pill,
+    .call-pill:hover {
+      position: fixed;
+      z-index: 40;
+      inset-inline-end: 32px;
+      inset-block-end: 32px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-block-size: 52px;
+      padding: 0 22px 0 18px;
+      border: 1px solid var(--border-strong);
+      border-radius: 999px;
+      background: var(--surface-2);
+      color: var(--text);
+      font-size: 1rem;
+      font-weight: 500;
+      text-decoration: none;
+    }
+    .call-pill:hover {
+      border-color: var(--text-2);
+    }
+    .call-pill svg {
+      flex: none;
+      color: var(--accent-text);
+    }
+  }
+  @media (min-width: 48rem) and (prefers-reduced-motion: no-preference) {
+    .call-pill {
+      animation: call-pill-in 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.8s both;
+    }
+  }
+  @keyframes call-pill-in {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @media (forced-colors: active) {
+    .call-pill {
+      border-color: ButtonText;
+      background: Canvas;
+    }
+  }
+  @media print {
+    .call-pill {
+      display: none;
+    }
+  }
+</style>

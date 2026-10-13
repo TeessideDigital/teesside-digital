@@ -14,7 +14,16 @@ export const SITE = {
   language: "en-GB",
   author: "Dave",
   email: "dave@teessidedigital.uk",
+  // The dedicated business line, written as it should be read, with spaces.
+  // Leave it empty until that line exists: while it is empty, nothing
+  // phone-related is rendered anywhere on the site.
+  phone: "",
 };
+
+/** A tel: link for a phone number written with spaces. */
+export function telephoneHref(phone: string): string {
+  return `tel:${phone.replace(/[^\d+]/g, "")}`;
+}
 
 export const BUSINESS = {
   name: "Teesside Digital",

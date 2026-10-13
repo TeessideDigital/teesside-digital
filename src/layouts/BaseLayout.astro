@@ -30,9 +30,13 @@ import {
 } from "@lib/seo";
 import SiteIndex from "../components/astro/SiteIndex.astro";
 import Footer from "../components/astro/Footer.astro";
+import ActionBar from "../components/astro/ActionBar.astro";
+import CallPill from "../components/astro/CallPill.astro";
+import { isCurrentPage, projectEnquiry, websiteReview } from "@config/navigation";
 import themeScript from "../scripts/theme.js?raw";
 import "@styles/tokens.css";
 import "@styles/globals.css";
+import "@styles/system.css";
 
 interface Props {
   editorialFooter?: boolean;
@@ -62,6 +66,11 @@ const {
   article,
   structuredData,
 } = Astro.props as Props;
+
+// The phone-width action bar is left off the two pages whose form is the action.
+const showActionBar = ![projectEnquiry.href, websiteReview.href].some((href) =>
+  isCurrentPage(Astro.url.pathname, href),
+);
 
 // Generate canonical URL
 const canonicalUrl = canonical || getCanonicalUrl(Astro.url.pathname);
@@ -161,11 +170,18 @@ const allStructuredData = structuredData
         ============================================================ */
     }
     {
-      /* The single shared font is used by the above-fold identity and heading. */
+      /* Body and interface text, then the serif used by every page heading. */
     }
     <link
       rel="preload"
       href="/fonts/instrument-sans/instrument-sans-variable.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/instrument-serif/instrument-serif-regular.woff2"
       as="font"
       type="font/woff2"
       crossorigin
@@ -208,18 +224,13 @@ const allStructuredData = structuredData
     }
   </head>
 
-  <body>
+  <body class:list={{ "has-action-bar": showActionBar }}>
     {
       /* ============================================================
         Skip to Main Content (Accessibility)
         ============================================================ */
     }
-    <a
-      href="#main"
-      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-accent focus:text-background focus:px-4 focus:py-2 focus:rounded"
-    >
-      Skip to main content
-    </a>
+    <a href="#main" class="td-skip">Skip to main content</a>
 
     {
       /* ============================================================
@@ -234,17 +245,15 @@ const allStructuredData = structuredData
         Main Content
         ============================================================ */
       }
-      <main id="main" tabindex="-1">
-        <slot />
-      </main>
+      <div class="site-field">
+        <main id="main" tabindex="-1">
+          <slot />
+        </main>
+        <Footer editorial={editorialFooter} />
+      </div>
     </div>
-
-    {
-      /* ============================================================
-        Footer
-        ============================================================ */
-    }
-    <Footer editorial={editorialFooter} />
+    {showActionBar && <ActionBar />}
+    <CallPill />
 
     {
       /* ============================================================
@@ -279,8 +288,21 @@ const allStructuredData = structuredData
     display: grid;
     grid-template-columns: minmax(0, 1fr);
   }
-  .site-shell > main {
+  /* The page and its footer share the column beside the rail. */
+  .site-field {
+    display: flex;
+    flex-direction: column;
     min-inline-size: 0;
+  }
+  .site-field > main {
+    flex: 1;
+    min-inline-size: 0;
+  }
+  /* Keep anything scrolled or focused clear of the fixed action bar. */
+  @media (max-width: 47.999rem) {
+    :root:has(body.has-action-bar) {
+      scroll-padding-block-end: 88px;
+    }
   }
   @media (min-width: 75rem) {
     .site-shell {

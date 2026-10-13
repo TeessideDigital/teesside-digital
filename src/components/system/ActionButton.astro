@@ -1,0 +1,49 @@
+---
+// Primary (amber fill) or secondary (outline) action. A link when it has an
+// href, otherwise a real button.
+import ArrowIcon from "./ArrowIcon.astro";
+
+interface Props {
+  href?: string;
+  variant?: "primary" | "secondary";
+  size?: "default" | "large";
+  block?: boolean;
+  arrow?: boolean;
+  type?: "button" | "submit";
+  class?: string;
+}
+const {
+  href,
+  variant = "primary",
+  size = "default",
+  block = false,
+  arrow = variant === "primary",
+  type = "button",
+  class: extra,
+} = Astro.props;
+const classes = [
+  "td-button",
+  `td-button--${variant}`,
+  size === "large" && "td-button--large",
+  block && "td-button--block",
+  extra,
+];
+---
+
+{
+  href ? (
+    <a class:list={classes} href={href}>
+      <span>
+        <slot />
+      </span>
+      {arrow && <ArrowIcon />}
+    </a>
+  ) : (
+    <button class:list={classes} type={type}>
+      <span>
+        <slot />
+      </span>
+      {arrow && <ArrowIcon />}
+    </button>
+  )
+}

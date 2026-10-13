@@ -1,0 +1,12 @@
+---
+// A full-width background band. Inverse flips the tokens for everything inside it.
+interface Props {
+  inverse?: boolean;
+  class?: string;
+}
+const { inverse = false, class: extra } = Astro.props;
+---
+
+<div class:list={["td-band", inverse && "td-band--inverse", extra]}>
+  <slot />
+</div>

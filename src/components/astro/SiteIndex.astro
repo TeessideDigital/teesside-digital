@@ -7,21 +7,40 @@ import {
   websiteReview,
   isCurrentPage,
 } from "@config/navigation";
+const links = [...primaryNavigation, projectEnquiry, websiteReview];
 const current = (href: string) =>
   isCurrentPage(Astro.url.pathname, href) ? "page" : undefined;
 ---
 
-<header
-  class="site-index"
-  class:list={{ "is-opening": Astro.url.pathname === "/" }}
->
+<header class="site-index">
   <div class="site-index-inner" data-site-index>
-    <div class="index-primary">
+    <div class="index-bar" data-fit-part>
       <BrandIdentity />
-      <nav aria-label="Site navigation">
-        <ul class="primary-navigation">
+      <button
+        class="menu-button"
+        type="button"
+        aria-expanded="false"
+        aria-controls="site-menu"
+        data-menu-button
+        hidden
+      >
+        <span class="sr-only">Menu</span>
+        <svg
+          aria-hidden="true"
+          width="18"
+          height="12"
+          viewBox="0 0 18 12"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"><path d="M0 1h18M0 6h18M0 11h18"></path></svg
+        >
+      </button>
+    </div>
+    <div class="index-menu" id="site-menu" data-menu>
+      <nav aria-label="Site navigation" data-fit-part>
+        <ul>
           {
-            primaryNavigation.map((item) => (
+            links.map((item) => (
               <li>
                 <a href={item.href} aria-current={current(item.href)}>
                   {item.label}
@@ -30,50 +49,60 @@ const current = (href: string) =>
             ))
           }
         </ul>
-        <div class="index-actions">
-          <a
-            class="project-enquiry"
-            href={projectEnquiry.href}
-            aria-current={current(projectEnquiry.href)}
-          >
-            <span>{projectEnquiry.label}</span>
-            <svg
-              aria-hidden="true"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"><path d="M4 12h15m-6-6 6 6-6 6"></path></svg
-            >
-          </a>
-          <a
-            class="website-review"
-            href={websiteReview.href}
-            aria-current={current(websiteReview.href)}>{websiteReview.label}</a
-          >
-        </div>
       </nav>
+      <div class="index-utility" data-fit-part><ThemeControl /></div>
     </div>
-    <div class="index-utility"><ThemeControl /></div>
   </div>
 </header>
+<script is:inline>
+  /* Inline and directly after the menu, so a phone never paints it open first.
+   * Without this script the navigation simply stays visible. */
+  (() => {
+    const button = document.querySelector("[data-menu-button]");
+    const menu = document.querySelector("[data-menu]");
+    if (!button || !menu) return;
+    const root = document.documentElement;
+    const isOpen = () => button.getAttribute("aria-expanded") === "true";
+    const set = (open) => {
+      button.setAttribute("aria-expanded", String(open));
+      root.toggleAttribute("data-menu-open", open);
+    };
+    root.setAttribute("data-menu-ready", "");
+    button.hidden = false;
+    button.addEventListener("click", () => {
+      set(!isOpen());
+      if (isOpen()) menu.querySelector("a")?.focus();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape" || !isOpen()) return;
+      set(false);
+      button.focus();
+    });
+    // Leaving the phone layout always leaves the menu's closed state behind.
+    matchMedia("(min-width: 48rem)").addEventListener("change", () =>
+      set(false),
+    );
+  })();
+</script>
 <script>
   const index = document.querySelector<HTMLElement>("[data-site-index]");
   if (index && "ResizeObserver" in window) {
-    // Measure intrinsic child heights, not the expanded rail, so enabling the
-    // tall composition cannot cause a fit/unfit feedback loop. Keep 48px spare.
+    // Measure the three parts' own heights, not the expanded rail, so enabling
+    // the tall composition cannot cause a fit/unfit feedback loop. Keep 48px spare.
+    const parts = Array.from(
+      index.querySelectorAll<HTMLElement>("[data-fit-part]"),
+    );
     const updateFit = () => {
       const style = getComputedStyle(index);
-      const contentHeight = Array.from(index.children).reduce(
-        (height, child) => height + child.getBoundingClientRect().height,
+      const contentHeight = parts.reduce(
+        (height, part) => height + part.getBoundingClientRect().height,
         0,
       );
       const minimumHeight =
         contentHeight +
         parseFloat(style.paddingTop) +
         parseFloat(style.paddingBottom) +
-        parseFloat(style.rowGap);
+        (parseFloat(style.rowGap) || 0) * (parts.length - 1);
       index.toggleAttribute(
         "data-fits",
         window.innerHeight - minimumHeight >= 48,
@@ -81,7 +110,7 @@ const current = (href: string) =>
     };
     const observer = new ResizeObserver(updateFit);
     observer.observe(index);
-    Array.from(index.children).forEach((child) => observer.observe(child));
+    parts.forEach((part) => observer.observe(part));
     window.addEventListener("resize", updateFit, { passive: true });
     window.addEventListener("pageshow", updateFit);
     updateFit();
@@ -90,123 +119,147 @@ const current = (href: string) =>
 <style>
   .site-index {
     min-inline-size: 0;
-    background: rgb(var(--color-surface));
-    border-block-end: 1px solid rgb(var(--color-rule));
+    background: var(--bg-deep);
+    border-block-end: 1px solid var(--border);
+    color: var(--text);
   }
   .site-index-inner {
     display: flex;
     flex-direction: column;
-    row-gap: 0;
-    padding: 0.5rem 1rem;
+    padding: 0 20px;
   }
-  nav {
-    margin-block-start: 0.25rem;
-  }
-  .primary-navigation {
+  .index-bar {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0 1.5rem;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  .primary-navigation a,
-  .website-review {
-    display: inline-flex;
-    align-items: center;
-    min-block-size: 2.75rem;
-    color: rgb(var(--color-text-muted));
-  }
-  a:hover {
-    color: rgb(var(--color-action-hover));
-  }
-  a[aria-current="page"] {
-    color: rgb(var(--color-text));
-    text-decoration: underline;
-    text-underline-offset: 0.35em;
-    text-decoration-thickness: 2px;
-  }
-  .index-actions {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0 1.5rem;
-    margin-block-start: 0;
-  }
-  .project-enquiry {
-    display: inline-flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
-    padding: 0.625rem 0.75rem;
-    min-block-size: 2.75rem;
-    border: 1px solid rgb(var(--color-action));
-    background: rgb(var(--color-surface-subtle));
-    color: rgb(var(--color-action));
-    line-height: 1.3;
+    gap: 16px;
+    min-block-size: 64px;
   }
-  .project-enquiry svg {
+  .menu-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     flex: none;
+    inline-size: 44px;
+    block-size: 44px;
+    padding: 0;
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text);
   }
-  .website-review {
-    font-size: 0.9375rem;
-    color: rgb(var(--color-action));
+  .menu-button[hidden] {
+    display: none;
+  }
+  .menu-button:focus {
+    box-shadow: none;
+  }
+  .menu-button[aria-expanded="true"] {
+    border-color: var(--accent-text);
+    color: var(--accent-text);
+  }
+  .index-menu {
+    padding-block: 4px 16px;
+    border-block-start: 1px solid var(--border);
+  }
+  ul {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  nav a,
+  nav a:hover {
+    display: flex;
+    align-items: center;
+    min-block-size: 44px;
+    color: var(--text);
+    font-size: 1rem;
+    line-height: 1.3;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  nav a:hover {
+    color: var(--accent-text-hover);
+  }
+  /* Weight as well as colour, so the current page is not marked by colour alone. */
+  nav a[aria-current="page"] {
+    color: var(--accent-text);
+    font-weight: 600;
   }
   .index-utility {
-    /* Reserve the utility row while its module loads, avoiding a content jump. */
-    min-block-size: 2.75rem;
+    margin-block-start: 8px;
+    padding-block-start: 8px;
+    border-block-start: 1px solid var(--border);
+  }
+  /* The menu button pattern is for phones. It only collapses once its script ran. */
+  @media (max-width: 47.999rem) {
+    :global(:root[data-menu-ready]) .index-menu {
+      display: none;
+    }
+    :global(:root[data-menu-ready][data-menu-open]) .index-menu {
+      display: block;
+    }
+  }
+  @media (min-width: 48rem) {
+    .menu-button {
+      display: none;
+    }
   }
   @media (min-width: 48rem) and (max-width: 74.999rem) {
     .site-index-inner {
-      padding-inline: 2rem;
-    }
-    .index-primary {
-      display: flex;
-      align-items: center;
+      flex-direction: row;
       flex-wrap: wrap;
-      gap: 0.25rem 2rem;
-    }
-    nav {
-      margin-block-start: 0;
-      display: flex;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem 2.5rem;
+      gap: 0 32px;
+      padding: 8px 40px;
     }
-    .index-actions {
-      margin-block-start: 0;
+    .index-menu {
+      display: flex;
+      flex: 1;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0 32px;
+      padding: 0;
+      border: 0;
+    }
+    ul {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 0 24px;
+    }
+    .index-utility {
+      margin: 0;
+      padding: 0;
+      border: 0;
     }
   }
   @media (min-width: 75rem) {
     .site-index {
       border-block-end: 0;
-      border-inline-end: 1px solid rgb(var(--color-rule));
+      border-inline-end: 1px solid var(--border);
     }
     .site-index-inner {
-      padding: 3rem 1.75rem 2rem;
-      row-gap: 2rem;
+      padding: 40px 32px 32px;
+      row-gap: 40px;
     }
-    nav {
-      margin-block-start: 2.5rem;
+    .index-bar {
+      min-block-size: 0;
     }
-    .primary-navigation {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.5rem;
-      font-size: 1.0625rem;
+    .index-menu {
+      display: contents;
     }
-    .index-actions {
-      flex-direction: column;
-      align-items: stretch;
-      gap: 0.625rem;
-      margin-block-start: 2rem;
-      padding-block-start: 1.5rem;
-      border-block-start: 1px solid rgb(var(--color-rule));
+    ul {
+      gap: 0;
     }
     .index-utility {
-      min-block-size: 5.5rem;
+      margin: 0;
+      padding: 0;
+      border: 0;
     }
-    @media (min-height: 48rem) {
+    @media (min-height: 40rem) {
       .site-index-inner[data-fits] {
         position: sticky;
         inset-block-start: 0;
@@ -217,160 +270,19 @@ const current = (href: string) =>
       }
     }
   }
+  @media (forced-colors: active) {
+    .menu-button {
+      border-color: ButtonText;
+    }
+    nav a[aria-current="page"] {
+      text-decoration: underline;
+      text-underline-offset: 0.3em;
+    }
+  }
   @media print {
     .site-index-inner[data-fits] {
       position: static;
       min-block-size: auto;
-    }
-  }
-</style>
-
-<style>
-  /* The locked opening treatment is scoped to Home; other page shells retain
-     their reviewed appearance until their own implementation phase. */
-  .is-opening {
-    background: rgb(var(--color-canvas));
-  }
-  .is-opening .site-index-inner {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 0.75rem 1rem;
-    padding: 1.25rem 1.5rem 0.5rem;
-  }
-  .is-opening .index-primary,
-  .is-opening nav {
-    display: contents;
-  }
-  .is-opening :global(.brand-identity) {
-    grid-column: 1;
-    grid-row: 1;
-    gap: 0.5rem;
-  }
-  .is-opening :global(.brand-wording) {
-    font-size: 0.75rem;
-  }
-  .is-opening .primary-navigation {
-    grid-column: 2;
-    grid-row: 1;
-    align-items: center;
-    gap: 0.875rem;
-    font-size: 0.875rem;
-  }
-  .is-opening .index-actions {
-    grid-column: 1;
-    grid-row: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0;
-    border-block-start: 1px solid rgb(var(--color-rule));
-    padding-block-start: 0.25rem;
-  }
-  .is-opening .project-enquiry {
-    border: 0;
-    background: none;
-    padding: 0;
-    font-size: 0.875rem;
-  }
-  .is-opening .project-enquiry svg {
-    display: none;
-  }
-  .is-opening .website-review {
-    font-size: 0.875rem;
-  }
-  .is-opening .index-utility {
-    grid-column: 2;
-    grid-row: 2;
-    border-block-start: 1px solid rgb(var(--color-rule));
-    padding-block-start: 0.25rem;
-    min-block-size: 5.75rem;
-  }
-  .is-opening :global(.theme-control) {
-    flex-direction: column;
-    gap: 0;
-  }
-  @media (min-width: 40rem) and (max-width: 74.999rem) {
-    .is-opening .site-index-inner {
-      padding-inline: 2.5rem;
-    }
-    .is-opening .index-actions {
-      flex-direction: row;
-      gap: 1.5rem;
-    }
-    .is-opening :global(.theme-control) {
-      flex-direction: row;
-      gap: 1.25rem;
-    }
-    .is-opening .index-utility {
-      min-block-size: 3rem;
-    }
-  }
-  @media (min-width: 75rem) {
-    .is-opening .site-index-inner {
-      display: flex;
-      gap: 2rem;
-      padding: 2rem;
-    }
-    .is-opening .index-primary {
-      display: block;
-    }
-    .is-opening nav {
-      display: block;
-      margin-block-start: 3rem;
-    }
-    .is-opening :global(.brand-wording) {
-      font-size: 1.1875rem;
-    }
-    .is-opening .primary-navigation {
-      align-items: flex-start;
-      gap: 0;
-      font-size: 1rem;
-    }
-    .is-opening .index-actions {
-      border: 0;
-      margin: 0;
-      padding: 0;
-      gap: 0;
-    }
-    .is-opening .project-enquiry,
-    .is-opening .website-review {
-      font-size: 1rem;
-      color: rgb(var(--color-text));
-    }
-    .is-opening .index-utility {
-      border: 0;
-      padding: 0;
-      min-block-size: 2.75rem;
-    }
-    .is-opening .index-utility::before {
-      content: "";
-      display: block;
-      inline-size: 2.5rem;
-      border-block-start: 1px solid rgb(var(--color-rule));
-      margin-block-end: 1rem;
-    }
-    .is-opening :global(.theme-control) {
-      flex-direction: row;
-      gap: 1.25rem;
-    }
-    .is-opening .site-index-inner[data-fits] .index-utility {
-      margin-block-start: 0;
-    }
-  }
-  @media (max-width: 23rem) {
-    .is-opening .site-index-inner {
-      padding-inline: 1rem;
-      gap: 0.75rem 0.5rem;
-    }
-    .is-opening :global(.brand-identity) {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.25rem;
-    }
-    .is-opening :global(.brand-wording) {
-      display: flex;
-      gap: 0.35rem;
-      font-size: 0.625rem;
     }
   }
 </style>

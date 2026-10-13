@@ -52,7 +52,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.25rem 1.25rem;
-    color: rgb(var(--color-text-muted));
+    color: var(--text-2);
     font-size: 0.875rem;
   }
   .theme-control[hidden] {
@@ -75,7 +75,7 @@
     border: 1px solid currentColor;
     border-radius: 50%;
     background: transparent;
-    color: rgb(var(--color-text-muted));
+    color: var(--text-2);
     cursor: pointer;
   }
   input::before {
@@ -90,16 +90,10 @@
     visibility: visible;
   }
   .theme-control input:checked {
-    color: rgb(var(--color-action));
+    color: var(--accent-text);
   }
   label:has(:checked) {
-    color: rgb(var(--color-text));
-  }
-  @media (min-width: 75rem) {
-    .theme-control {
-      flex-direction: column;
-      gap: 0;
-    }
+    color: var(--text);
   }
   @media (forced-colors: active), (prefers-contrast: more) {
     .theme-control input[type="radio"] {

@@ -22,6 +22,31 @@
   font-display: swap;
 }
 
+/* Headings. The official web font, unchanged; see its SOURCE.md. */
+@font-face {
+  font-family: "Instrument Serif";
+  src: url("/fonts/instrument-serif/instrument-serif-regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* Labels. IBM's own Latin 1 subset, in the two weights used. */
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("/fonts/ibm-plex-mono/ibm-plex-mono-400-latin1.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("/fonts/ibm-plex-mono/ibm-plex-mono-500-latin1.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
 /* ============================================================
    Typography & Base Styles
    ============================================================ */
@@ -83,7 +108,8 @@ button,
  * Root specificity also overrides V1 focus:outline-none utilities.
  */
 html:root :focus-visible {
-  outline: 2px solid rgb(var(--color-focus));
+  /* The token, not its alias, so the outline follows an inverse band. */
+  outline: 2px solid var(--accent-text);
   outline-offset: 3px;
 }
 

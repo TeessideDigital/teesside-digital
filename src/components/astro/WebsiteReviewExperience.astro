@@ -1,6 +1,8 @@
 ---
 import { projectEnquiry } from "@config/navigation";
 import WebsiteReviewForm from "./WebsiteReviewForm.astro";
+import PageOpening from "../system/PageOpening.astro";
+import ArrowLink from "../system/ArrowLink.astro";
 
 const looksAt = [
   "First impression, and how clearly the site explains what you offer",
@@ -25,319 +27,105 @@ const excludes = [
 ---
 
 <div class="review-experience">
-  <header class="orientation scene grid">
-    <h1>Free website review</h1>
-    <p class="framing">
-      Dave reviews your website and emails you a structured report explaining
-      the main issues he observes and the improvements worth considering.
-    </p>
-    <p class="fact">
+  <PageOpening
+    label="Free website review"
+    title="Free website review"
+    lead="Dave reviews your website and emails you a structured report explaining the main issues he observes and the improvements worth considering."
+  >
+    <p>
       Free of charge, and reviewed by hand by Dave rather than an automated
       scanner.
     </p>
-    <div class="turnaround">
+    <div>
       <p>There is no fixed turnaround. Each report is emailed personally.</p>
-      <p><a href="#request">Go to the request form</a></p>
+      <p><a class="td-link" href="#request">Go to the request form</a></p>
     </div>
-  </header>
-  <div class="scope scene">
-    <section class="block grid" aria-labelledby="looks-heading">
-      <h2 id="looks-heading">What Dave looks at</h2>
-      <div class="block-body">
-        <p>
-          The review covers the main public-facing website and the route a
-          customer takes to get in touch. It may include:
-        </p>
-        <ul role="list">
-          {looksAt.map((item) => <li>{item}</li>)}
-        </ul>
-      </div>
-    </section>
-    <section class="block grid" aria-labelledby="receive-heading">
-      <h2 id="receive-heading">What you receive</h2>
-      <div class="block-body prose">
-        <p>
-          A written report by email. It separates what Dave observed, the
-          evidence for it and the limits of the review, then sets out the
-          improvements worth considering in priority order, with why each one
-          matters.
-        </p>
-        <p>
-          It should be useful whether or not you go on to work with Teesside
-          Digital.
-        </p>
-        <p>
-          If nothing significant turns up, the report says so. That is not a
-          guarantee that no issues exist.
-        </p>
-      </div>
-    </section>
-    <section class="block grid" aria-labelledby="excludes-heading">
-      <h2 id="excludes-heading">What it does not include</h2>
-      <div class="block-body">
-        <ul role="list">
-          {excludes.map((item) => <li>{item}</li>)}
-        </ul>
-      </div>
-    </section>
+  </PageOpening>
+  <div class="td-section">
+    <div class="td-wrap">
+      <section class="td-split" aria-labelledby="looks-heading">
+        <h2 class="td-h2-statement" id="looks-heading">What Dave looks at</h2>
+        <div class="td-prose">
+          <p>
+            The review covers the main public-facing website and the route a
+            customer takes to get in touch. It may include:
+          </p>
+          <ul role="list">
+            {looksAt.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+      </section>
+      <section class="td-split" aria-labelledby="receive-heading">
+        <h2 class="td-h2-statement" id="receive-heading">What you receive</h2>
+        <div class="td-prose">
+          <p>
+            A written report by email. It separates what Dave observed, the
+            evidence for it and the limits of the review, then sets out the
+            improvements worth considering in priority order, with why each one
+            matters.
+          </p>
+          <p>
+            It should be useful whether or not you go on to work with Teesside
+            Digital.
+          </p>
+          <p>
+            If nothing significant turns up, the report says so. That is not a
+            guarantee that no issues exist.
+          </p>
+        </div>
+      </section>
+      <section class="td-split" aria-labelledby="excludes-heading">
+        <h2 class="td-h2-statement" id="excludes-heading">
+          What it does not include
+        </h2>
+        <div class="td-prose">
+          <ul role="list">
+            {excludes.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+      </section>
+    </div>
   </div>
-  <section class="request scene grid" aria-labelledby="request">
-    <h2 id="request" tabindex="-1">Request a review</h2>
-    <div class="request-form"><WebsiteReviewForm /></div>
-  </section>
-  <section class="alternative scene grid" aria-label="Project enquiry">
-    <div class="alternative-block short-rule">
+  {/* The form carries the "Request a review" name, so this wrapper is not a second landmark. */}
+  <div class="td-section">
+    <div class="td-wrap">
+      <div class="td-split">
+        <h2 class="td-h2-statement" id="request" tabindex="-1">
+          Request a review
+        </h2>
+        <div><WebsiteReviewForm /></div>
+      </div>
+    </div>
+  </div>
+  <section class="td-section alternative" aria-label="Project enquiry">
+    <div class="td-wrap">
       <p>Already know what you need?</p>
-      <a class="alternative-link" href={projectEnquiry.href}>
-        <span>{projectEnquiry.label}</span>
-        <svg
-          aria-hidden="true"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"><path d="M3 12h18m-7-7 7 7-7 7"></path></svg
-        >
-      </a>
+      <ArrowLink href={projectEnquiry.href}>{projectEnquiry.label}</ArrowLink>
     </div>
   </section>
 </div>
 
 <style>
-  /* Contact's sibling: the same container, grid, title scale, rules and spacing. */
-  .review-experience {
-    container: review / inline-size;
-    max-inline-size: 100rem;
-    margin-inline: auto;
-    color: rgb(var(--color-text));
-  }
-  .scene {
-    margin-inline: 1.5rem;
-    padding-block: 3rem 3.5rem;
-  }
-  .scene + .scene {
-    border-block-start: var(--rule-width) solid rgb(var(--color-rule));
-  }
-  h1,
-  h2,
-  p,
-  ul {
-    margin: 0;
-  }
-  h1,
-  h2 {
-    font-family: var(--font-display);
-    font-weight: 400;
-    overflow-wrap: anywhere;
-  }
-  h1 {
-    font-size: clamp(3rem, 12cqi, 3.625rem);
-    letter-spacing: -0.055em;
-    line-height: 1;
-  }
-  h2 {
-    font-size: clamp(1.875rem, 8cqi, 2.25rem);
-    line-height: 1.1;
-    letter-spacing: -0.04em;
-  }
-  p,
-  li {
-    font-size: 1rem;
-    line-height: 1.55;
-    color: rgb(var(--color-text-muted));
-    overflow-wrap: anywhere;
-  }
-  .grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .grid > * {
-    min-inline-size: 0;
-  }
-  .orientation {
-    padding-block-start: 3.5rem;
-  }
-  .framing {
-    margin-block-start: 2rem;
-    font-size: 1.25rem;
-    line-height: 1.4;
-    max-inline-size: 35ch;
-  }
-  .fact {
-    margin-block-start: 3rem;
-    border-block-start: var(--rule-width) solid rgb(var(--color-rule));
-    padding-block-start: 1rem;
-  }
-  .turnaround {
-    margin-block-start: 1.5rem;
-  }
-  a {
-    color: rgb(var(--color-action));
-    overflow-wrap: anywhere;
-  }
-  a:is(:hover, :focus-visible) {
-    color: rgb(var(--color-action-hover));
-  }
-  .turnaround a {
-    display: inline-block;
-    padding-block: 0.375rem;
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-  }
-  /* The three scope blocks are separated by space alone. */
-  .block + .block {
-    margin-block-start: 3.5rem;
-  }
-  .block-body {
-    margin-block-start: 1.5rem;
-    max-inline-size: 65ch;
-  }
-  .prose p + p {
-    margin-block-start: 1.25rem;
-  }
-  ul {
-    padding: 0;
-    list-style: none;
-  }
-  .block-body p + ul {
-    margin-block-start: 1.25rem;
-  }
-  /* A short dash in the text colour: the rule token is too faint in Light. */
-  li {
-    position: relative;
-    padding-inline-start: 1.75rem;
-  }
-  li::before {
-    content: "";
-    position: absolute;
-    inset-inline-start: 0;
-    inset-block-start: 0.775em;
-    inline-size: 0.875rem;
-    border-block-start: var(--rule-width) solid currentColor;
-  }
-  li + li {
-    margin-block-start: 0.5rem;
-  }
-  .request h2 {
+  #request {
     /* Keeps the focus outline clear of the section rule above. */
-    scroll-margin-block-start: 1.5rem;
+    scroll-margin-block-start: 24px;
   }
-  .request-form {
-    margin-block-start: 2rem;
+  /* A quieter close than a full section. */
+  .alternative {
+    padding-block: 40px 56px;
   }
-  /* The alternative is a quieter close: a short rule, not a full section rule. */
-  .scene + .scene.alternative {
-    border-block-start: 0;
-    padding-block: 0.5rem 4rem;
+  .alternative p {
+    margin: 0 0 4px;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--text-2);
   }
-  .short-rule::before {
-    content: "";
-    display: block;
-    inline-size: 4rem;
-    max-inline-size: 100%;
-    border-block-start: var(--rule-width) solid rgb(var(--color-rule));
-    margin-block-end: 0.875rem;
-  }
-  .alternative-link {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
-    inline-size: fit-content;
-    max-inline-size: 100%;
-    min-block-size: 2.75rem;
-    margin-block-start: 0.5rem;
-    border-block-end: var(--rule-width) solid rgb(var(--color-rule));
-    color: rgb(var(--color-text-muted));
-    text-decoration: none;
-  }
-  .alternative-link > span {
-    min-inline-size: 0;
-    overflow-wrap: anywhere;
-  }
-  svg {
-    flex: none;
-  }
-  @container review (min-width: 48rem) {
-    .scene {
-      margin-inline: 3rem;
-      padding-block: 4rem 4.5rem;
+  @media (min-width: 48rem) {
+    .alternative {
+      padding-block: 48px 72px;
     }
-    .grid {
-      grid-template-columns: repeat(12, minmax(0, 1fr));
-      column-gap: 1.5rem;
-    }
-    p,
-    li {
-      font-size: 1.125rem;
-    }
-    h1 {
-      font-size: clamp(5.5rem, 9cqi, 6.5rem);
-    }
-    h2 {
-      font-size: clamp(2.375rem, 4cqi, 3rem);
-    }
-    .orientation {
-      padding-block: 4rem 3.5rem;
-    }
-    .orientation h1 {
-      grid-column: 1 / 6;
-      grid-row: 1;
-    }
-    .framing {
-      grid-column: 7 / 12;
-      grid-row: 1;
-      margin-block-start: 4.5rem;
-      font-size: 1.375rem;
-    }
-    .fact {
-      grid-column: 1 / 6;
-      grid-row: 2;
-      font-size: 1rem;
-      margin-block-start: 3.5rem;
-    }
-    .turnaround {
-      grid-column: 7 / 12;
-      grid-row: 2;
-      margin-block-start: 3.5rem;
-      padding-block-start: calc(1rem + var(--rule-width));
-    }
-    .turnaround p {
-      font-size: 1rem;
-    }
-    .block + .block {
-      margin-block-start: 5rem;
-    }
-    .block h2,
-    .request h2 {
-      grid-column: 1 / 4;
-      grid-row: 1;
-    }
-    .block-body,
-    .request-form {
-      grid-column: 5 / 12;
-      grid-row: 1;
-      margin-block-start: 0.5rem;
-    }
-    .alternative-block {
-      grid-column: 1 / 7;
-    }
-    .scene + .scene.alternative {
-      padding-block: 0.5rem 5rem;
-    }
-  }
-  @media (forced-colors: active) {
-    a {
-      color: LinkText;
-    }
-    .scene + .scene,
-    .fact,
-    .short-rule::before {
-      border-color: CanvasText;
-    }
-    .alternative-link {
-      border-color: LinkText;
+    .alternative p {
+      font-size: 1.0625rem;
     }
   }
 </style>

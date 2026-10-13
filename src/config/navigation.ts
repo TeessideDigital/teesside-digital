@@ -26,9 +26,9 @@ export const websiteReview = {
   href: "/website-review/",
 };
 export const legalNavigation: NavigationItem[] = [
-  { label: "Privacy policy", href: "/privacy/" },
-  { label: "Accessibility", href: "/accessibility/" },
+  { label: "Privacy", href: "/privacy/" },
   { label: "Terms", href: "/terms/" },
+  { label: "Accessibility", href: "/accessibility/" },
 ];
 
 export function isCurrentPage(pathname: string, href: string): boolean {

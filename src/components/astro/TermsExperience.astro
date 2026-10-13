@@ -1,288 +1,114 @@
 ---
 import { SITE } from "@config/constants";
+import PageOpening from "../system/PageOpening.astro";
 ---
 
 <div class="terms-experience">
-  <header class="orientation scene grid">
-    <h1>Terms</h1>
-    <p class="framing">
-      These terms cover your use of this website. They do not cover project
-      work: anything Teesside Digital does for you is agreed separately, in
-      writing.
-    </p>
-    <p class="fact">Last updated: 13 October 2026</p>
-  </header>
-  <div class="terms scene">
-    <section class="block grid" aria-labelledby="who-heading">
-      <h2 id="who-heading">Who runs this website</h2>
-      <div class="block-body prose">
-        <p>
-          This website is run by David Young, trading as Teesside Digital, a
-          sole trader.
-        </p>
-        <p>Email: <a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
-        <!-- LAUNCH-BLOCKER: postal address -->
-        <p>Postal address: [TO BE CONFIRMED BEFORE LAUNCH]</p>
-      </div>
-    </section>
-    <section class="block grid" aria-labelledby="using-heading">
-      <h2 id="using-heading">Using this website</h2>
-      <div class="block-body prose">
-        <p>You are welcome to read this website and share links to it.</p>
-        <p>
-          Please do not try to break or bypass its security, overload it, add
-          malicious code, or use the forms to send automated or bulk
-          submissions.
-        </p>
-      </div>
-    </section>
-    <section class="block grid" aria-labelledby="content-heading">
-      <h2 id="content-heading">Content</h2>
-      <div class="block-body prose">
-        <p>
-          The text and design of this website belong to Teesside Digital unless
-          stated otherwise. You may quote short passages with a credit and a
-          link. Please ask before reusing anything more.
-        </p>
-      </div>
-    </section>
-    <section class="block grid" aria-labelledby="accuracy-heading">
-      <h2 id="accuracy-heading">Accuracy</h2>
-      <div class="block-body prose">
-        <p>
-          The information on this website is general. It describes the kind of
-          work Teesside Digital does, and is not advice about your particular
-          situation until that has been discussed and agreed.
-        </p>
-        <p>
-          Dave aims to keep it accurate and up to date, but cannot guarantee
-          that it always is.
-        </p>
-      </div>
-    </section>
-    <section class="block grid" aria-labelledby="links-heading">
-      <h2 id="links-heading">Links to other websites</h2>
-      <div class="block-body prose">
-        <p>
-          This website links to a few other websites, such as Netlify, Zoho and
-          the Information Commissioner's Office. Teesside Digital is not
-          responsible for their content.
-        </p>
-      </div>
-    </section>
-    <section class="block grid" aria-labelledby="liability-heading">
-      <h2 id="liability-heading">Liability</h2>
-      <div class="block-body prose">
-        <p>
-          Nothing in these terms limits any liability that cannot be limited by
-          law, such as liability for death or personal injury caused by
-          negligence, or for fraud.
-        </p>
-        <p>
-          Otherwise, Teesside Digital is not liable for any loss arising from
-          your use of this website or from relying on its content. This does
-          not affect your legal rights as a consumer.
-        </p>
-      </div>
-    </section>
-    <section class="block grid" aria-labelledby="privacy-heading">
-      <h2 id="privacy-heading">Privacy</h2>
-      <div class="block-body prose">
-        <p>
-          How information you send through this website is handled is explained
-          in the privacy notice.
-          <a href="/privacy/">Read the privacy notice</a>
-        </p>
-      </div>
-    </section>
-    <section class="block grid" aria-labelledby="changes-heading">
-      <h2 id="changes-heading">Changes and law</h2>
-      <div class="block-body prose">
-        <p>
-          These terms may be updated. The date at the top shows when they last
-          changed.
-        </p>
-        <p>
-          These terms are governed by the law of England and Wales. If you live
-          in Scotland or Northern Ireland, you can also bring proceedings in
-          your local courts.
-        </p>
-      </div>
-    </section>
+  <PageOpening
+    label="Terms"
+    title="Terms"
+    lead="These terms cover your use of this website. They do not cover project work: anything Teesside Digital does for you is agreed separately, in writing."
+  >
+    <p>Last updated: 13 October 2026</p>
+  </PageOpening>
+  <div class="td-section">
+    <div class="td-wrap">
+      <section class="td-split" aria-labelledby="who-heading">
+        <h2 class="td-h2-statement" id="who-heading">Who runs this website</h2>
+        <div class="td-prose">
+          <p>
+            This website is run by David Young, trading as Teesside Digital, a
+            sole trader.
+          </p>
+          <p>Email: <a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+          <!-- LAUNCH-BLOCKER: postal address -->
+          <p>Postal address: [TO BE CONFIRMED BEFORE LAUNCH]</p>
+        </div>
+      </section>
+      <section class="td-split" aria-labelledby="using-heading">
+        <h2 class="td-h2-statement" id="using-heading">Using this website</h2>
+        <div class="td-prose">
+          <p>You are welcome to read this website and share links to it.</p>
+          <p>
+            Please do not try to break or bypass its security, overload it, add
+            malicious code, or use the forms to send automated or bulk
+            submissions.
+          </p>
+        </div>
+      </section>
+      <section class="td-split" aria-labelledby="content-heading">
+        <h2 class="td-h2-statement" id="content-heading">Content</h2>
+        <div class="td-prose">
+          <p>
+            The text and design of this website belong to Teesside Digital unless
+            stated otherwise. You may quote short passages with a credit and a
+            link. Please ask before reusing anything more.
+          </p>
+        </div>
+      </section>
+      <section class="td-split" aria-labelledby="accuracy-heading">
+        <h2 class="td-h2-statement" id="accuracy-heading">Accuracy</h2>
+        <div class="td-prose">
+          <p>
+            The information on this website is general. It describes the kind of
+            work Teesside Digital does, and is not advice about your particular
+            situation until that has been discussed and agreed.
+          </p>
+          <p>
+            Dave aims to keep it accurate and up to date, but cannot guarantee
+            that it always is.
+          </p>
+        </div>
+      </section>
+      <section class="td-split" aria-labelledby="links-heading">
+        <h2 class="td-h2-statement" id="links-heading">Links to other websites</h2>
+        <div class="td-prose">
+          <p>
+            This website links to a few other websites, such as Netlify, Zoho and
+            the Information Commissioner's Office. Teesside Digital is not
+            responsible for their content.
+          </p>
+        </div>
+      </section>
+      <section class="td-split" aria-labelledby="liability-heading">
+        <h2 class="td-h2-statement" id="liability-heading">Liability</h2>
+        <div class="td-prose">
+          <p>
+            Nothing in these terms limits any liability that cannot be limited by
+            law, such as liability for death or personal injury caused by
+            negligence, or for fraud.
+          </p>
+          <p>
+            Otherwise, Teesside Digital is not liable for any loss arising from
+            your use of this website or from relying on its content. This does
+            not affect your legal rights as a consumer.
+          </p>
+        </div>
+      </section>
+      <section class="td-split" aria-labelledby="privacy-heading">
+        <h2 class="td-h2-statement" id="privacy-heading">Privacy</h2>
+        <div class="td-prose">
+          <p>
+            How information you send through this website is handled is explained
+            in the privacy notice.
+            <a href="/privacy/">Read the privacy notice</a>
+          </p>
+        </div>
+      </section>
+      <section class="td-split" aria-labelledby="changes-heading">
+        <h2 class="td-h2-statement" id="changes-heading">Changes and law</h2>
+        <div class="td-prose">
+          <p>
+            These terms may be updated. The date at the top shows when they last
+            changed.
+          </p>
+          <p>
+            These terms are governed by the law of England and Wales. If you live
+            in Scotland or Northern Ireland, you can also bring proceedings in
+            your local courts.
+          </p>
+        </div>
+      </section>
+    </div>
   </div>
 </div>
-
-<style>
-  /* Privacy's sibling: the same container, grid, title scale, rules, lists and spacing. */
-  .terms-experience {
-    container: terms / inline-size;
-    max-inline-size: 100rem;
-    margin-inline: auto;
-    color: rgb(var(--color-text));
-  }
-  .scene {
-    margin-inline: 1.5rem;
-    padding-block: 3rem 3.5rem;
-  }
-  .scene + .scene {
-    border-block-start: var(--rule-width) solid rgb(var(--color-rule));
-  }
-  h1,
-  h2,
-  p,
-  ul {
-    margin: 0;
-  }
-  h1,
-  h2 {
-    font-family: var(--font-display);
-    font-weight: 400;
-    overflow-wrap: anywhere;
-  }
-  h1 {
-    font-size: clamp(3rem, 12cqi, 3.625rem);
-    letter-spacing: -0.055em;
-    line-height: 1;
-  }
-  h2 {
-    font-size: clamp(1.875rem, 8cqi, 2.25rem);
-    line-height: 1.1;
-    letter-spacing: -0.04em;
-  }
-  p,
-  li {
-    font-size: 1rem;
-    line-height: 1.55;
-    color: rgb(var(--color-text-muted));
-    overflow-wrap: anywhere;
-  }
-  .grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .grid > * {
-    min-inline-size: 0;
-  }
-  .orientation {
-    padding-block-start: 3.5rem;
-  }
-  .framing {
-    margin-block-start: 2rem;
-    font-size: 1.25rem;
-    line-height: 1.4;
-    max-inline-size: 35ch;
-  }
-  .fact {
-    margin-block-start: 3rem;
-    border-block-start: var(--rule-width) solid rgb(var(--color-rule));
-    padding-block-start: 1rem;
-  }
-  a {
-    color: rgb(var(--color-action));
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-    overflow-wrap: anywhere;
-  }
-  a:is(:hover, :focus-visible) {
-    color: rgb(var(--color-action-hover));
-  }
-  /* Lead-ins are picked out by colour, not weight alone. */
-  strong {
-    font-weight: 500;
-    color: rgb(var(--color-text));
-  }
-  /* The eight sections are separated by space alone. */
-  .block + .block {
-    margin-block-start: 3.5rem;
-  }
-  .block-body {
-    margin-block-start: 1.5rem;
-    max-inline-size: 65ch;
-  }
-  .prose > * + * {
-    margin-block-start: 1.25rem;
-  }
-  ul {
-    padding: 0;
-    list-style: none;
-  }
-  /* A short dash in the text colour: the rule token is too faint in Light. */
-  li {
-    position: relative;
-    padding-inline-start: 1.75rem;
-  }
-  li::before {
-    content: "";
-    position: absolute;
-    inset-inline-start: 0;
-    inset-block-start: 0.775em;
-    inline-size: 0.875rem;
-    border-block-start: var(--rule-width) solid currentColor;
-  }
-  li + li {
-    margin-block-start: 0.5rem;
-  }
-  @container terms (min-width: 48rem) {
-    .scene {
-      margin-inline: 3rem;
-      padding-block: 4rem 4.5rem;
-    }
-    .grid {
-      grid-template-columns: repeat(12, minmax(0, 1fr));
-      column-gap: 1.5rem;
-    }
-    p,
-    li {
-      font-size: 1.125rem;
-    }
-    h1 {
-      font-size: clamp(5.5rem, 9cqi, 6.5rem);
-    }
-    h2 {
-      font-size: clamp(2.375rem, 4cqi, 3rem);
-    }
-    .orientation {
-      padding-block: 4rem 3.5rem;
-    }
-    .orientation h1 {
-      grid-column: 1 / 6;
-      grid-row: 1;
-    }
-    .framing {
-      grid-column: 7 / 12;
-      grid-row: 1;
-      margin-block-start: 4.5rem;
-      font-size: 1.375rem;
-    }
-    .fact {
-      grid-column: 1 / 6;
-      grid-row: 2;
-      font-size: 1rem;
-      margin-block-start: 3.5rem;
-    }
-    .block + .block {
-      margin-block-start: 5rem;
-    }
-    .block h2 {
-      grid-column: 1 / 4;
-      grid-row: 1;
-    }
-    .block-body {
-      grid-column: 5 / 12;
-      grid-row: 1;
-      margin-block-start: 0.5rem;
-    }
-  }
-  @media (forced-colors: active) {
-    a {
-      color: LinkText;
-    }
-    strong {
-      color: CanvasText;
-    }
-    .scene + .scene,
-    .fact {
-      border-color: CanvasText;
-    }
-  }
-</style>

@@ -7,7 +7,7 @@ export const SITE = {
   title: "Teesside Digital",
   tagline: "Precision engineering for small businesses",
   description:
-    "Web development, AI automation, and cybersecurity consultancy for small and medium-sized businesses across the UK.",
+    "Websites, business tools and practical automation for small and owner-led businesses in Teesside and the North East.",
   url: import.meta.env.PROD
     ? "https://teessidedigital.uk"
     : "http://localhost:3000",

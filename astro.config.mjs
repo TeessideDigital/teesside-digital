@@ -74,8 +74,9 @@ export default defineConfig({
     },
   },
 
-  // Trailingslash: 'never' keeps URLs clean (index.html not shown)
-  trailingSlash: 'never',
+  // Every URL ends in a slash, matching the site's own links, the canonicals
+  // and the sitemap. Netlify redirects the bare form to it.
+  trailingSlash: 'always',
 
   // Prefetch configuration
   prefetch: {

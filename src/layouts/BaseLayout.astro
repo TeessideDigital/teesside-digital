@@ -60,7 +60,7 @@ const {
   title = SITE.title,
   description = SITE.description,
   image,
-  imageAlt = SITE.title,
+  imageAlt = "Teesside Digital: websites, business tools and practical automation.",
   canonical,
   robots = "index, follow",
   article,
@@ -72,8 +72,11 @@ const showActionBar = ![projectEnquiry.href, websiteReview.href].some((href) =>
   isCurrentPage(Astro.url.pathname, href),
 );
 
-// Generate canonical URL
-const canonicalUrl = canonical || getCanonicalUrl(Astro.url.pathname);
+// A page that is not to be indexed has no canonical. Every other page's
+// canonical is its own address, which always ends in a slash.
+const canonicalUrl = /noindex/.test(robots)
+  ? undefined
+  : canonical || getCanonicalUrl(Astro.url.pathname);
 
 // Format page title (append site name unless it's the homepage)
 const pageTitle = getPageTitle(title);
@@ -110,7 +113,7 @@ const allStructuredData = structuredData
     <meta name="robots" content={robots} />
 
     {/* Canonical URL (prevents duplicate content issues) */}
-    <link rel="canonical" href={canonicalUrl} />
+    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
 
     {
       /* ============================================================
@@ -121,8 +124,10 @@ const allStructuredData = structuredData
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content={imageAlt} />
-    <meta property="og:url" content={canonicalUrl} />
+    {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
     <meta property="og:type" content={article ? "article" : "website"} />
 
     {/* Article-specific meta tags */}

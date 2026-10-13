@@ -1,0 +1,191 @@
+---
+import { SITE } from "@config/constants";
+import { projectEnquiry, websiteReview } from "@config/navigation";
+
+const links = [
+  { label: "Home", href: "/" },
+  { label: "Services", href: "/services/" },
+  projectEnquiry,
+  websiteReview,
+];
+---
+
+<div class="not-found-experience">
+  <div class="orientation scene grid">
+    <h1>Page not found</h1>
+    <p class="framing">This page does not exist, or it has moved.</p>
+    <div class="recovery short-rule">
+      <ul role="list">
+        {
+          links.map((link) => (
+            <li>
+              <a class="recovery-link" href={link.href}>
+                <span>{link.label}</span>
+                <svg
+                  aria-hidden="true"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <path d="M3 12h18m-7-7 7 7-7 7" />
+                </svg>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="closing">
+        If a link on this website brought you here, please email
+        <a href={`mailto:${SITE.email}`}>{SITE.email}</a> so it can be fixed.
+      </p>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Privacy's opening, then Contact's secondary link treatment as a short list. */
+  .not-found-experience {
+    container: not-found / inline-size;
+    max-inline-size: 100rem;
+    margin-inline: auto;
+    color: rgb(var(--color-text));
+  }
+  .scene {
+    margin-inline: 1.5rem;
+    padding-block: 3rem 3.5rem;
+  }
+  h1,
+  p,
+  ul {
+    margin: 0;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(3rem, 12cqi, 3.625rem);
+    letter-spacing: -0.055em;
+    line-height: 1;
+    overflow-wrap: anywhere;
+  }
+  p {
+    font-size: 1rem;
+    line-height: 1.55;
+    color: rgb(var(--color-text-muted));
+    overflow-wrap: anywhere;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .grid > * {
+    min-inline-size: 0;
+  }
+  .orientation {
+    padding-block: 3.5rem 4rem;
+  }
+  .framing {
+    margin-block-start: 2rem;
+    font-size: 1.25rem;
+    line-height: 1.4;
+    max-inline-size: 35ch;
+  }
+  .recovery {
+    margin-block-start: 3rem;
+  }
+  .short-rule::before {
+    content: "";
+    display: block;
+    inline-size: 4rem;
+    max-inline-size: 100%;
+    border-block-start: var(--rule-width) solid rgb(var(--color-rule));
+    margin-block-end: 0.875rem;
+  }
+  /* The list is as wide as its longest link, so the four rules align. */
+  ul {
+    display: grid;
+    gap: 0.5rem;
+    inline-size: fit-content;
+    max-inline-size: 100%;
+    padding: 0;
+    list-style: none;
+  }
+  a {
+    color: rgb(var(--color-action));
+    overflow-wrap: anywhere;
+  }
+  a:is(:hover, :focus-visible) {
+    color: rgb(var(--color-action-hover));
+  }
+  .recovery-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    min-block-size: 2.75rem;
+    border-block-end: var(--rule-width) solid rgb(var(--color-rule));
+    color: rgb(var(--color-text-muted));
+    text-decoration: none;
+  }
+  .recovery-link > span {
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+  svg {
+    flex: none;
+  }
+  .closing {
+    margin-block-start: 2.5rem;
+    max-inline-size: 65ch;
+  }
+  .closing a {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+  @container not-found (min-width: 48rem) {
+    .scene {
+      margin-inline: 3rem;
+    }
+    .grid {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: 1.5rem;
+    }
+    p {
+      font-size: 1.125rem;
+    }
+    h1 {
+      font-size: clamp(5.5rem, 9cqi, 6.5rem);
+    }
+    .orientation {
+      padding-block: 4rem 5rem;
+    }
+    .orientation h1 {
+      grid-column: 1 / 6;
+      grid-row: 1;
+    }
+    .framing {
+      grid-column: 7 / 12;
+      grid-row: 1;
+      margin-block-start: 4.5rem;
+      font-size: 1.375rem;
+    }
+    .recovery {
+      grid-column: 1 / 8;
+      grid-row: 2;
+      margin-block-start: 3.5rem;
+    }
+  }
+  @media (forced-colors: active) {
+    a {
+      color: LinkText;
+    }
+    .short-rule::before {
+      border-color: CanvasText;
+    }
+    .recovery-link {
+      border-color: LinkText;
+    }
+  }
+</style>

@@ -10,6 +10,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check . --ignore-path .gitignore --plugin prettier-plugin-astro",
     "check": "astro check",
+    "check:csp": "node tools/csp-hashes.mjs",
     "type-check": "astro sync && tsc --noEmit",
     "lint": "node -e \"console.log('Compatibility alias: Astro diagnostics, not ESLint. Run npm run check directly.')\" && npm run check"
   },

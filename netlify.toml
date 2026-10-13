@@ -71,16 +71,25 @@
 [[headers]]
   for = "/*"
   [headers.values]
+    # Browsers that have seen the site over HTTPS keep using HTTPS for a year.
+    # No preload and no includeSubDomains: add them only as a deliberate step.
+    Strict-Transport-Security = "max-age=31536000"
     # Prevent browsers from MIME-sniffing
     X-Content-Type-Options = "nosniff"
-    # Prevent framing by external sites (clickjacking protection)
-    X-Frame-Options = "SAMEORIGIN"
+    # The site is never shown inside a frame (clickjacking protection)
+    X-Frame-Options = "DENY"
     # Disable legacy XSS filter (modern browsers don't need this)
     X-XSS-Protection = "0"
     # Control how much referrer info is shared
     Referrer-Policy = "strict-origin-when-cross-origin"
-    # Disable access to browser APIs unless explicitly allowed
+    # Disable access to browser APIs the site never uses
     Permissions-Policy = "geolocation=(), microphone=(), camera=(), payment=()"
+    # Everything loads from this site only. Inline scripts are allowed one by
+    # one, by hash: if a script in the shell or a route changes, its hash here
+    # must change too. Run "npm run check:csp" after a build to compare this
+    # line with the built pages. Inline styles are allowed because Astro inlines
+    # small stylesheets and the product drawings use style attributes.
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'sha256-+0brCx8++xz3SqsF7nn8s8LOHkjHRZI1WYDnZwvDLRg=' 'sha256-7OHYQNKYXUVQBE/H41vCPt+WZZHuRB8KmfNc8JOsTTI=' 'sha256-P2jcKdKc8w0P5iHtuaGEijdDjmt533wuepHFB5bns+Y=' 'sha256-eB4Vr3m4fdNpi3qpA0oCNqYbTrOSSKVlAD8XItjjD14=' 'sha256-cm8QUzWybQm9WidN7M7zgeBTH2ocMCtQ8wiCjl/KrsI='; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'"
 
 # Cache policy for hashed assets (safe to cache forever)
 [[headers]]

@@ -179,6 +179,7 @@
 }
 .td-opening__title {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 16px;
 }
 .td-opening__facts {
@@ -197,6 +198,7 @@
 }
 .td-opening__facts > * {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 6px;
   align-content: start;
   min-inline-size: 0;
@@ -396,26 +398,55 @@
   border-radius: 16px;
   padding: 32px 24px;
 }
+/* The wrapper is measured, so the band can choose its columns by its own width. */
+.td-facts-wrap {
+  container-type: inline-size;
+}
 .td-facts {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
+  /* The gap shows the border colour through, which draws the dividing lines. */
+  gap: 1px;
   margin: 0;
   padding: 0;
   list-style: none;
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: var(--surface);
+  background: var(--border);
+  overflow: hidden;
 }
 .td-facts > * {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 4px;
   align-content: start;
   min-inline-size: 0;
   margin: 0;
   padding: 18px 20px;
+  background: var(--surface);
 }
-.td-facts > * + * {
-  border-block-start: 1px solid var(--border);
+@container (min-width: 21rem) {
+  .td-facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  /* An odd one out takes the full row. */
+  .td-facts > :last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+}
+@container (min-width: 56rem) {
+  .td-facts {
+    grid-template-columns: repeat(var(--td-facts-count, 4), minmax(0, 1fr));
+  }
+  .td-facts > :last-child:nth-child(odd) {
+    grid-column: auto;
+  }
+  .td-facts > * {
+    padding: 24px 28px;
+  }
+  .td-facts__term {
+    font-size: 1.375rem;
+  }
 }
 .td-facts__term {
   font-size: 1.125rem;
@@ -437,39 +468,226 @@
   .td-panel--closing {
     padding: 56px;
   }
-  .td-facts {
-    grid-template-columns: repeat(var(--td-facts-columns, 2), minmax(0, 1fr));
-  }
-  .td-facts > * {
-    padding: 24px 28px;
-  }
-  .td-facts > * + * {
-    border-block-start: 0;
-  }
-  .td-facts > :not(:nth-child(2n + 1)) {
-    border-inline-start: 1px solid var(--border);
-  }
-  .td-facts > :nth-child(n + 3) {
-    border-block-start: 1px solid var(--border);
-  }
 }
 @media (min-width: 75rem) {
   .td-panel--closing {
     padding: 72px;
   }
-  /* One row once there is room; the count comes from the component. */
-  .td-facts {
-    grid-template-columns: repeat(var(--td-facts-count, 4), minmax(0, 1fr));
+}
+
+/* Section head: label, heading, and an optional supporting line beside it. */
+.td-section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px var(--td-gap);
+}
+.td-section-head > * {
+  min-inline-size: 0;
+}
+.td-section-head__title {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+}
+.td-section-head__support {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--text-2);
+  overflow-wrap: break-word;
+}
+@media (min-width: 64rem) {
+  .td-section-head {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    align-items: end;
   }
-  .td-facts > :nth-child(n) {
-    border-block-start: 0;
-    border-inline-start: 1px solid var(--border);
+  .td-section-head__title {
+    grid-column: 1 / span 7;
   }
-  .td-facts > :first-child {
-    border-inline-start: 0;
+  .td-section-head__support {
+    grid-column: 8 / span 5;
+    font-size: 1.0625rem;
   }
-  .td-facts__term {
+}
+
+/* Link card: media, a title that is the card's one link, a description and an
+   arrow label. The title's pseudo-element stretches the link over the card. */
+.td-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  overflow: hidden;
+}
+.td-card__media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: 150px;
+  padding: 18px;
+  border-block-end: 1px solid var(--border);
+  background: var(--surface-2);
+}
+.td-card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
+}
+.td-card__title {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--text-strong);
+  overflow-wrap: break-word;
+}
+.td-card__title a,
+.td-card__title a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+.td-card__title a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+/* The outline belongs to the whole card, which is what the link covers. */
+.td-card__title a:focus-visible {
+  outline: none;
+}
+.td-card:has(.td-card__title a:focus-visible) {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 3px;
+}
+.td-card__text {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--text-2);
+  overflow-wrap: break-word;
+}
+.td-card__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-block-start: auto;
+  padding-block-start: 12px;
+  color: var(--accent-text);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.td-card__more svg {
+  flex: none;
+}
+.td-card:hover {
+  border-color: var(--border-strong);
+}
+@media (min-width: 48rem) {
+  .td-card__media {
+    min-block-size: 200px;
+    padding: 24px;
+  }
+  .td-card__body {
+    gap: 10px;
+    padding: 28px;
+  }
+  .td-card__title {
     font-size: 1.375rem;
+  }
+  .td-card__text {
+    font-size: 1rem;
+  }
+}
+@media (prefers-reduced-motion: no-preference) and (forced-colors: none) {
+  .td-card__more svg {
+    transition: transform 0.21s var(--td-ease);
+  }
+  .td-card:is(:hover, :focus-within) .td-card__more svg {
+    transform: translateX(7px);
+  }
+}
+
+/* Numbered item: mono number under an accent rule, a title and a line. */
+.td-numbered {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 6px;
+  align-content: start;
+  min-inline-size: 0;
+  padding-block-start: 14px;
+  border-block-start: 2px solid var(--accent-text);
+}
+.td-numbered__number {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--accent-text);
+}
+.td-numbered__title {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text);
+  overflow-wrap: break-word;
+}
+.td-numbered__text {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--text-2);
+  overflow-wrap: break-word;
+}
+@media (min-width: 48rem) {
+  .td-numbered {
+    gap: 8px;
+    padding-block-start: 18px;
+  }
+  .td-numbered__title {
+    font-size: 1.125rem;
+  }
+}
+
+/* Closing panel: heading and line on the left, the two actions on the right. */
+.td-closing {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px var(--td-gap);
+}
+.td-closing > * {
+  min-inline-size: 0;
+}
+.td-closing__text {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+}
+.td-closing__actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+}
+@media (min-width: 64rem) {
+  .td-closing {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    align-items: center;
+  }
+  .td-closing__text {
+    grid-column: 1 / span 7;
+    gap: 16px;
+  }
+  .td-closing__actions {
+    grid-column: 9 / span 4;
   }
 }
 
@@ -506,8 +724,18 @@
   .td-button,
   .td-chip,
   .td-panel,
-  .td-facts {
+  .td-facts,
+  .td-card,
+  .td-card__media,
+  .td-numbered {
     border-color: CanvasText;
+  }
+  .td-card__more,
+  .td-numbered__number {
+    color: CanvasText;
+  }
+  .td-card:has(.td-card__title a:focus-visible) {
+    outline-color: Highlight;
   }
   .td-button {
     border-color: ButtonText;
@@ -526,8 +754,10 @@
   .td-section,
   .td-split + .td-split,
   .td-opening__facts,
-  .td-prose li::before,
-  .td-facts > * {
+  .td-prose li::before {
     border-color: CanvasText;
+  }
+  .td-facts > * {
+    outline: 1px solid CanvasText;
   }
 }

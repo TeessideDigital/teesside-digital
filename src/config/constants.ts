@@ -18,6 +18,10 @@ export const SITE = {
   // Leave it empty until that line exists: while it is empty, nothing
   // phone-related is rendered anywhere on the site.
   phone: "",
+  // A real photograph of Dave, as a path under public/, for example
+  // "/images/dave.jpg". Leave it empty until that photograph exists: while it
+  // is empty, no portrait and no placeholder is rendered.
+  portrait: "",
 };
 
 /** A tel: link for a phone number written with spaces. */

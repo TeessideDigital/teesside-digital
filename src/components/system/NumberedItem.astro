@@ -1,0 +1,15 @@
+---
+// A numbered principle: mono number under an accent rule, a title and a line.
+interface Props {
+  number: string;
+  title: string;
+  text?: string;
+}
+const { number, title, text } = Astro.props;
+---
+
+<li class="td-numbered">
+  <span class="td-numbered__number" aria-hidden="true">{number}</span>
+  <h3 class="td-numbered__title">{title}</h3>
+  {text && <p class="td-numbered__text">{text}</p>}
+</li>

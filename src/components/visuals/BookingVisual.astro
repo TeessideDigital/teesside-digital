@@ -1,0 +1,38 @@
+---
+// Decorative drawing of a booking tool. Pure HTML and CSS: no image, nothing
+// focusable, hidden from assistive technology. The times are example content.
+import "../../styles/product-visuals.css";
+
+interface Props {
+  size?: "compact" | "large";
+  class?: string;
+}
+const { size = "compact", class: extra } = Astro.props;
+const large = size === "large";
+const slots = [
+  { time: "09:00" },
+  { time: "10:30", state: "selected" },
+  { time: "13:00" },
+  { time: "14:30" },
+  { time: "15:00", state: "taken" },
+  { time: "16:30" },
+];
+---
+
+<div class:list={["pv", "pv-booking", `pv--${size}`, extra]} aria-hidden="true">
+  <div class="pv-booking__head">
+    <span class="pv-label">{large ? "New booking" : "Booking"}</span>
+    <span class="pv-booking__day">{large ? "Thursday 16" : "Thursday"}</span>
+  </div>
+  <div class="pv-slots">
+    {
+      slots.map((slot) => (
+        <span class:list={["pv-slot", slot.state && `pv-slot--${slot.state}`]}>
+          {slot.time}
+        </span>
+      ))
+    }
+  </div>
+  <div class="pv-fields"><span></span><span></span></div>
+  <span class="pv-confirm">Confirm booking</span>
+</div>

@@ -6,7 +6,8 @@ interface Props {
 const { facts } = Astro.props;
 ---
 
-<dl class="td-facts" style={`--td-facts-count: ${facts.length}`}>
+<div class="td-facts-wrap">
+  <dl class="td-facts" style={`--td-facts-count: ${facts.length}`}>
   {
     facts.map((fact) => (
       <div>
@@ -15,4 +16,5 @@ const { facts } = Astro.props;
       </div>
     ))
   }
-</dl>
+  </dl>
+</div>

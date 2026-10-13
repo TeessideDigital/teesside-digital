@@ -1,0 +1,503 @@
+---
+import { SITE } from "@config/constants";
+import { projectEnquiry, websiteReview } from "@config/navigation";
+import ActionButton from "../system/ActionButton.astro";
+import ArrowLink from "../system/ArrowLink.astro";
+import Band from "../system/Band.astro";
+import Chip from "../system/Chip.astro";
+import ClosingPanel from "../system/ClosingPanel.astro";
+import FactsBand from "../system/FactsBand.astro";
+import LinkCard from "../system/LinkCard.astro";
+import NumberedItem from "../system/NumberedItem.astro";
+import SectionLabel from "../system/SectionLabel.astro";
+import WebsiteVisual from "../visuals/WebsiteVisual.astro";
+import BookingVisual from "../visuals/BookingVisual.astro";
+import AutomationVisual from "../visuals/AutomationVisual.astro";
+
+const facts = [
+  { term: "Direct", detail: "Dave designs and builds your project." },
+  {
+    term: "Local",
+    detail: "Based in Hartlepool, working across Teesside and the North East.",
+  },
+  {
+    term: "Three areas",
+    detail: "Websites, apps and digital tools, automation and AI.",
+  },
+  {
+    term: "Free review",
+    detail: "A written review of your current website, by email.",
+  },
+];
+const services = [
+  {
+    title: "Websites & Web Development",
+    text: "Clear, fast websites built around what your business actually needs to do.",
+    more: "Websites",
+    href: "/services/#websites-web-development",
+    visual: WebsiteVisual,
+  },
+  {
+    title: "Apps & Digital Tools",
+    text: "Focused tools that replace awkward processes and make everyday work easier to manage.",
+    more: "Apps and tools",
+    href: "/services/#apps-digital-tools",
+    visual: BookingVisual,
+  },
+  {
+    title: "Automation & AI",
+    text: "Practical automation for repetitive work, with AI used where it genuinely adds value.",
+    more: "Automation",
+    href: "/services/#automation-ai",
+    visual: AutomationVisual,
+  },
+];
+const principles = [
+  {
+    title: "Clear scope before unnecessary complexity.",
+    text: "Understand the problem first, then decide what actually needs building.",
+  },
+  {
+    title: "Performance and accessibility belong in the work.",
+    text: "They should be considered during the build, not added as an afterthought.",
+  },
+  {
+    title: "Security starts with sensible implementation.",
+    text: "Make appropriate choices from the beginning rather than treating security as a bolt-on.",
+  },
+  {
+    title: "Build for the person who has to live with it afterwards.",
+    text: "Keep systems understandable and maintainable instead of adding complexity for its own sake.",
+  },
+];
+// Shown only once a real photograph is configured. There is no placeholder.
+const portrait = SITE.portrait;
+---
+
+<div class="home-experience">
+  <section class="hero" aria-labelledby="home-heading">
+    <div class="td-wrap">
+      <div class="hero-grid">
+        <div class="hero-text">
+          <Chip href={websiteReview.href}>Free website review, by email</Chip>
+          <h1 class="td-h1" id="home-heading">
+            Websites, business tools and practical automation.
+          </h1>
+          <p class="td-lead">
+            For small and owner-led businesses that need a clearer website, a
+            better way to handle everyday tasks, or less repetitive work.
+          </p>
+          <div class="hero-actions">
+            <ActionButton href={projectEnquiry.href}>
+              {projectEnquiry.label}
+            </ActionButton>
+            <ActionButton href={websiteReview.href} variant="secondary">
+              {websiteReview.label}
+            </ActionButton>
+          </div>
+        </div>
+        <div class="hero-stage" data-hero-stage>
+          <WebsiteVisual class="stage-website" />
+          <BookingVisual class="stage-booking" />
+          <AutomationVisual class="stage-automation" />
+        </div>
+      </div>
+      <div class="hero-facts" data-reveal>
+        <FactsBand facts={facts} />
+      </div>
+    </div>
+  </section>
+
+  <section class="td-section" aria-labelledby="services-heading">
+    <div class="td-wrap" data-reveal>
+      <div class="td-section-head">
+        <div class="td-section-head__title">
+          <SectionLabel>01 / Services</SectionLabel>
+          <h2 class="td-h2" id="services-heading">
+            Three areas of work. One aim.
+          </h2>
+        </div>
+        <p class="td-section-head__support">
+          Make the digital side of your business clearer, more useful and easier
+          to run.
+        </p>
+      </div>
+      <div class="service-cards">
+        {
+          services.map((service) => {
+            const Visual = service.visual;
+            return (
+              <LinkCard
+                href={service.href}
+                title={service.title}
+                text={service.text}
+                more={service.more}
+              >
+                <Visual />
+              </LinkCard>
+            );
+          })
+        }
+      </div>
+    </div>
+  </section>
+
+  <Band inverse>
+    <section class="td-section principles" aria-labelledby="principles-heading">
+      <div class="td-wrap principles-grid" data-reveal>
+        <div class="principles-head">
+          <SectionLabel>02 / How Dave works</SectionLabel>
+          <h2 class="td-h2" id="principles-heading">
+            Use the right technology for the job. Build the important details in
+            from the start.
+          </h2>
+        </div>
+        <ul class="principles-list" role="list">
+          {
+            principles.map((principle, index) => (
+              <NumberedItem
+                number={String(index + 1).padStart(2, "0")}
+                title={principle.title}
+                text={principle.text}
+              />
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+  </Band>
+
+  <section class="td-section person" aria-labelledby="person-heading">
+    <div
+      class="td-wrap person-grid"
+      class:list={{ "has-portrait": Boolean(portrait) }}
+      data-reveal
+    >
+      {
+        portrait && (
+          <div class="person-portrait">
+            <img
+              src={portrait}
+              alt="Dave, who runs Teesside Digital"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        )
+      }
+      <div class="person-head">
+        <SectionLabel>03 / Who you work with</SectionLabel>
+        <h2 class="td-h2" id="person-heading">Work directly with Dave.</h2>
+      </div>
+      <div class="person-text">
+        <p class="td-lead">
+          Teesside Digital is a solo technical consultancy built around direct
+          access to the person designing and building the work.
+        </p>
+        <ArrowLink href="/about/">About Teesside Digital</ArrowLink>
+      </div>
+    </div>
+  </section>
+
+  <div class="closing">
+    <div class="td-wrap" data-reveal>
+      <ClosingPanel
+        title="Tell Dave what your business needs."
+        text="You do not need a technical brief."
+      />
+    </div>
+  </div>
+</div>
+
+<style>
+  .home-experience {
+    /* The committed motion vocabulary, read by the Home coordinator. */
+    --home-motion-micro: 210ms;
+    --home-motion-structural: 400ms;
+    --home-ease-structural: cubic-bezier(0.22, 0.61, 0.36, 1);
+    color: var(--text);
+  }
+
+  /* Hero ------------------------------------------------------------------ */
+  .hero {
+    padding-block: 32px 48px;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px var(--td-gap);
+    align-items: center;
+  }
+  .hero-text {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+    justify-items: start;
+    min-inline-size: 0;
+  }
+  .hero-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+    inline-size: 100%;
+  }
+  /* Three overlapping screens. Sizes follow the stage's own width, so the
+     composition keeps its proportions and never stretches. */
+  .hero-stage {
+    container-type: inline-size;
+    position: relative;
+    inline-size: 100%;
+    max-inline-size: 420px;
+    aspect-ratio: 350 / 300;
+    margin-inline: auto;
+  }
+  .hero-stage :global(.pv) {
+    position: absolute;
+  }
+  .hero-stage :global(.stage-website) {
+    inset-block-start: 0;
+    inset-inline-end: 0;
+    inline-size: 91cqi;
+    block-size: 63cqi;
+  }
+  .hero-stage :global(.stage-booking) {
+    inset-inline-start: 0;
+    inset-block-end: 0;
+    inline-size: 56cqi;
+  }
+  .hero-stage :global(.stage-automation) {
+    inset-inline-end: 2cqi;
+    inset-block-end: 4cqi;
+  }
+  /* Below the desktop composition the two cards are cut down: three slots,
+     and the current step alone as a pill. */
+  @media (max-width: 63.999rem) {
+    .hero-stage :global(.pv-booking__day),
+    .hero-stage :global(.pv-slot:nth-child(n + 4)),
+    .hero-stage :global(.pv-confirm),
+    .hero-stage :global(.pv-automation .pv-label),
+    .hero-stage :global(.pv-step:not(.pv-step--current)),
+    .hero-stage :global(.pv-step__more) {
+      display: none;
+    }
+    .hero-stage :global(.stage-booking),
+    .hero-stage :global(.stage-automation) {
+      padding: 10px 12px;
+      border-radius: 8px;
+    }
+    .hero-stage :global(.pv-slot) {
+      font-size: 11px;
+    }
+  }
+  .hero-facts {
+    margin-block-start: 40px;
+  }
+  @media (min-width: 30rem) {
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+  }
+  @media (min-width: 48rem) {
+    .hero {
+      padding-block: 56px 64px;
+    }
+    .hero-text {
+      gap: 26px;
+    }
+    .hero-facts {
+      margin-block-start: 56px;
+    }
+  }
+  @media (min-width: 64rem) {
+    .hero-grid {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+    .hero-text {
+      grid-column: 1 / span 6;
+      gap: 28px;
+    }
+    .hero-text :global(.td-lead) {
+      max-inline-size: 520px;
+    }
+    .hero-stage {
+      grid-column: 7 / span 6;
+      max-inline-size: 524px;
+      aspect-ratio: 524 / 540;
+      margin-inline: auto 0;
+    }
+    .hero-stage :global(.stage-website) {
+      inline-size: 95cqi;
+      block-size: 69cqi;
+    }
+    .hero-stage :global(.stage-booking) {
+      inset-block-end: 1cqi;
+      inline-size: 47cqi;
+    }
+    .hero-stage :global(.stage-automation) {
+      inset-inline-end: 0;
+      inset-block-end: 0;
+      inline-size: 51cqi;
+    }
+  }
+  @media (min-width: 75rem) {
+    .hero {
+      padding-block: 88px 88px;
+    }
+    .hero-facts {
+      margin-block-start: 72px;
+    }
+  }
+
+  /* Services ---------------------------------------------------------------- */
+  .service-cards {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+    margin-block-start: 32px;
+  }
+  /* One drawing per card, sized to sit inside the media area. */
+  .service-cards :global(.pv) {
+    inline-size: 100%;
+    max-inline-size: 280px;
+  }
+  .service-cards :global(.pv-website) {
+    block-size: 152px;
+  }
+  .service-cards :global(.pv-booking),
+  .service-cards :global(.pv-automation) {
+    max-inline-size: 250px;
+  }
+  @media (min-width: 64rem) {
+    .service-cards {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-block-start: 48px;
+    }
+  }
+
+  /* How Dave works ---------------------------------------------------------- */
+  .principles {
+    border-block-start: 0;
+  }
+  .principles-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px var(--td-gap);
+  }
+  .principles-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    align-content: start;
+    min-inline-size: 0;
+  }
+  .principles-list {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 26px 32px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    min-inline-size: 0;
+  }
+  @media (min-width: 48rem) {
+    .principles-grid {
+      row-gap: 48px;
+    }
+    .principles-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: 40px;
+    }
+  }
+  @media (min-width: 64rem) {
+    .principles-grid {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+    .principles-head {
+      grid-column: 1 / span 5;
+    }
+    .principles-list {
+      grid-column: 7 / span 6;
+    }
+  }
+
+  /* Who you work with ------------------------------------------------------ */
+  .person {
+    border-block-start: 0;
+  }
+  .person-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px var(--td-gap);
+  }
+  .person-head,
+  .person-text {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    align-content: start;
+    justify-items: start;
+    min-inline-size: 0;
+  }
+  .person-portrait {
+    aspect-ratio: 4 / 5;
+    max-inline-size: 420px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--surface);
+  }
+  .person-portrait img {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+  @media (min-width: 64rem) {
+    .person-grid {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      align-items: start;
+    }
+    /* Text only: heading on the left, text on the right. */
+    .person-head {
+      grid-column: 1 / span 5;
+    }
+    .person-text {
+      grid-column: 7 / span 6;
+      padding-block-start: 37px;
+    }
+    /* With a photograph: it takes the left, and the text stacks on the right. */
+    .has-portrait {
+      align-items: center;
+      grid-template-rows: auto auto;
+      row-gap: 20px;
+    }
+    .has-portrait .person-portrait {
+      grid-column: 1 / span 5;
+      grid-row: 1 / span 2;
+      max-inline-size: none;
+    }
+    .has-portrait .person-head {
+      grid-column: 7 / span 6;
+      grid-row: 1;
+      align-self: end;
+    }
+    .has-portrait .person-text {
+      grid-column: 7 / span 6;
+      grid-row: 2;
+      align-self: start;
+      padding-block-start: 0;
+    }
+  }
+
+  /* Closing ---------------------------------------------------------------- */
+  .closing {
+    padding-block-end: var(--td-section);
+  }
+  @media (forced-colors: active) {
+    .person-portrait {
+      border-color: CanvasText;
+    }
+  }
+</style>

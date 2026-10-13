@@ -1,9 +1,7 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
-import HomeOpening from "../components/astro/HomeOpening.astro";
-import HomeNarrative from "../components/astro/HomeNarrative.astro";
+import HomeExperience from "../components/astro/HomeExperience.astro";
 import HomeMotion from "../components/astro/HomeMotion.astro";
-import heroImage from "../assets/hero/tees-bridge-generated-hero.png";
 ---
 
 <BaseLayout
@@ -12,7 +10,6 @@ import heroImage from "../assets/hero/tees-bridge-generated-hero.png";
   image="/images/og-hero.jpg"
   editorialFooter
 >
-  <HomeOpening image={heroImage} imagePosition="75% center" />
-  <HomeNarrative />
+  <HomeExperience />
   <HomeMotion />
 </BaseLayout>

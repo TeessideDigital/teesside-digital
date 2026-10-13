@@ -1,0 +1,32 @@
+---
+// The closing call to action: a heading and a line, then the two site actions.
+import Panel from "./Panel.astro";
+import ActionButton from "./ActionButton.astro";
+import { projectEnquiry, websiteReview } from "@config/navigation";
+
+interface Props {
+  title: string;
+  text: string;
+}
+const { title, text } = Astro.props;
+---
+
+<Panel closing class="td-closing">
+  <div class="td-closing__text">
+    <h2 class="td-h2">{title}</h2>
+    <p class="td-lead">{text}</p>
+  </div>
+  <div class="td-closing__actions">
+    <ActionButton href={projectEnquiry.href} size="large" block>
+      {projectEnquiry.label}
+    </ActionButton>
+    <ActionButton
+      href={websiteReview.href}
+      variant="secondary"
+      size="large"
+      block
+    >
+      {websiteReview.label}
+    </ActionButton>
+  </div>
+</Panel>

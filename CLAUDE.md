@@ -2,7 +2,7 @@
 
 ## Read before changing anything
 
-This repository is an in-progress V2.1 redesign of Teesside Digital.
+This repository is an in-progress redesign of Teesside Digital. The V2.1 build is being moved onto the V2.2 visual direction, approved by Dave on 13 October 2026.
 
 Before the first implementation task, read:
 
@@ -13,7 +13,7 @@ Before the first implementation task, read:
 5. `docs/v2/phase-0-decisions.md`
 6. `docs/v2/content-system.md`
 7. `docs/v2/experience-architecture.md`
-8. the latest V2/V2.1 visual/design specification available in `docs/v2/`
+8. `docs/v2/decisions/2026-10-13-visual-direction.md`, the current visual direction
 9. approved visual references if present under `docs/v2/references/`
 
 Always inspect Git before editing:
@@ -46,10 +46,10 @@ When information conflicts, use this precedence:
 
 1. Actual current repository source and Git state.
 2. `docs/handover/CURRENT-STATE.md`.
-3. Explicitly approved later V2.1 implementation/design decisions.
+3. Explicitly approved later implementation/design decisions, including the decision records in `docs/v2/decisions/`.
 4. `docs/handover/HANDOVER-CODEX.md` for repository/implementation history.
 5. `docs/handover/HANDOVER-CHATGPT.md` for broader project, product and design history.
-6. Latest approved V2/V2.1 documents.
+6. Latest approved V2/V2.1 documents. Where they describe the irregular-grid composition, the V2.2 decision record overrides them.
 7. Older planning documents.
 8. V1 source and historical plans.
 
@@ -117,24 +117,57 @@ Never invent:
 
 ## Design authority
 
-The central V2.1 creative concept is the Structural Datum.
+The current visual direction is V2.2, recorded in:
 
-The desktop SiteIndex is an architectural datum, not merely a sidebar.
+`docs/v2/decisions/2026-10-13-visual-direction.md`
 
-The experience should feel closer to an architectural publication, infrastructure monograph or carefully art-directed technical journal than a SaaS template or generic agency site.
+It retires the irregular-grid "Structural Datum" composition by Dave's decision. `docs/v2/creative-direction.md` and `docs/v2/hero-spec.md` remain as history only.
 
 Visual character:
 
-- quietly formidable;
-- editorial;
-- engineered;
-- asymmetric;
-- atmospheric;
-- precise;
+- bold but restrained;
+- high end;
 - calm;
+- precise;
 - grounded.
 
-Do not imitate engineering software.
+Never use neon, glows, pulsing effects or a grid texture.
+
+Typefaces, all self-hosted:
+
+- `Instrument Serif` for headings;
+- `Instrument Sans` for body text and interface;
+- `IBM Plex Mono` for small uppercase labels.
+
+Colour:
+
+- tokens live in `src/styles/tokens.css`, with the names in the decision record;
+- amber is the accent and is for actions only: primary buttons, link arrows, the current page and focus;
+- some sections use an inverse band, at most one or two per page.
+
+Layout:
+
+- content is capped at 1200px inside the area beside the rail;
+- a regular 12-column grid with a 24px gap;
+- no stagger: grouped items share starts and ends;
+- verify at 320, 390, 768, 1024, 1440, 1920, 2560 and 3440 wide, in both themes.
+
+Shell:
+
+- a 240px desktop left rail;
+- a mobile header with a menu button, which must work without JavaScript and by keyboard;
+- a mobile sticky action bar, except on Contact and the website review;
+- phone features render only when `SITE.phone` is set. It stays empty until the dedicated business line exists.
+
+Dark is the default theme.
+
+Light is an explicit persisted option, not simply an OS inversion.
+
+Theme controls remain explicit accessible Dark / Light radio choices.
+
+Shared components and classes live in `src/components/system/` and `src/styles/system.css`. Use them before writing page-specific styles.
+
+Product visuals are drawn in HTML and CSS, hidden from assistive technology, and use neutral example content.
 
 Never introduce decorative:
 
@@ -143,37 +176,17 @@ Never introduce decorative:
 - HUD elements;
 - terminals;
 - dashboards;
-- service numbering;
-- fake technical metadata.
+- fake technical metadata;
+- statistics that cannot be backed up.
 
 Do not reintroduce generic:
 
-- card grids;
-- bento layouts;
 - SaaS heroes;
 - glowing borders;
 - gradient blobs;
-- generic CTA button rows;
-- equal three-column services;
-- generic mobile hamburger navigation.
+- stock photography or generated images in place of real photographs.
 
-Typeface:
-
-`Instrument Sans`
-
-Desktop SiteIndex target is approximately 240px.
-
-Desktop main field uses an irregular 12-column editorial grid.
-
-Mobile uses a 4-column editorial grid.
-
-Dark is the default theme.
-
-Light is an explicit persisted option, not simply an OS inversion.
-
-Theme controls remain explicit accessible Dark / Light radio choices.
-
-No hamburger is approved for the current navigation architecture.
+Photographs are real ones taken by Dave. Until they exist, their slots stay hidden. Never show a placeholder on a live page.
 
 ---
 
@@ -195,6 +208,8 @@ Do not add React, Vue, Svelte or an animation library for something that does no
 
 Required content must exist and remain usable when JavaScript is unavailable.
 
+Make no third-party requests. Fonts and scripts are self-hosted, and the Privacy page says so.
+
 Base document state must be the complete visible state.
 
 Motion enhancement may temporarily establish pre-animation state only after successful enhancement initialisation.
@@ -203,7 +218,7 @@ Motion enhancement may temporarily establish pre-animation state only after succ
 
 ## Motion
 
-The existing Home/Services motion system is the authority.
+The committed motion system is the authority: its tokens, the Web Animations API, one IntersectionObserver per route and once-only entrances.
 
 Do not invent another motion language.
 
@@ -250,7 +265,7 @@ Avoid generic agency and AI language including:
 
 Use `Teesside Digital` for company-level statements.
 
-Use `Dave` / `I` where personal responsibility is relevant.
+Write about Dave in the third person site-wide. Use `David Young` only on legal pages.
 
 Do not use fake team language.
 
@@ -369,31 +384,24 @@ Never push without explicit approval.
 
 ## Current implementation checkpoint
 
-At migration time, the approved product baseline was:
+Always check Git and `docs/handover/CURRENT-STATE.md` first; this section is a summary and may be behind.
 
-`d72a55dc6d2c81c88b15a3b2c2a019a3c1fecad4`
+At the V2.2 decision, the product baseline was:
 
-`feat: build V2.1 about experience`
+`41af0e2f4319942b0a32eada0864686fe1a17866`
 
-Home:
-- static complete;
-- motion complete;
-- do not redesign.
+`feat: build V2.1 accessibility, terms and 404 pages`
 
-Services:
-- static complete;
-- motion complete;
-- do not redesign.
+The V2.2 work is phased:
 
-About:
-- static complete and visually approved;
-- motion not yet implemented at the migration checkpoint.
+- 11A: design foundation, shell, and Contact, website review, Privacy, Terms, Accessibility and 404 moved onto the system;
+- 11B: Home rebuilt;
+- 11C: Services and About rebuilt;
+- later: a content proposal (price guide, care plan, "how it works", FAQ) and real photographs.
 
-The immediate next implementation after reconciliation is expected to be:
+Until 11B and 11C, Home, Services and About are interim pages. Do not restyle them outside their own phase.
 
-`Implementation 7B — About motion`
-
-Do not assume this is still current without checking Git and `docs/handover/CURRENT-STATE.md`.
+Each phase needs its own brief from Dave. Do not start one without it.
 
 ---
 

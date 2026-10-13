@@ -8,19 +8,19 @@ Branch: `redesign/v2`
 
 Repository HEAD at the time of this update, and current approved product baseline:
 
-`17cc9dd16362258c90282961a17a03ff3a48ad5d`
+`41af0e2f4319942b0a32eada0864686fe1a17866`
 
-`feat: build V2.1 website review page`
+`feat: build V2.1 accessibility, terms and 404 pages`
 
-The commit before it is the Implementation 9A refactor:
+The commit before it is Implementation 10A:
 
-`fe4899cfc9d03c88984339eed6dead0574762889`
+`40bf386fb95d4f1c88bdc568938850952391672a`
 
-`refactor: extract shared form engine from contact`
+`feat: build V2.1 privacy page`
 
 Any commit after that baseline that only updates this file or adds approved references is documentation and does not change product source.
 
-The V2.1 implementation remains local and has not been pushed. Production still serves V1 from `main`.
+The V2.1 implementation remains local. Nothing has been pushed. Production still serves V1 from `main`.
 
 Two Netlify draft deploys have been made to verify the form receiver. Neither is published and both sit behind Netlify team login:
 
@@ -57,27 +57,28 @@ clean
 - V2.1 Contact form behaviour and live receiver verification (Implementation 8B)
 - Shared form engine and V2.1 website review page (Implementation 9A)
 - Live receiver verification for the website review form, with a Contact regression (Implementation 9B)
+- V2.1 Privacy page (Implementation 10A)
+- V2.1 Accessibility, Terms and 404 pages (Implementation 10B)
+- Wide-screen investigation at `41af0e2` (read-only; findings below)
 
 ## Current approved route state
 
 ### Home
 
-Static complete and committed.
-Motion complete and committed.
-Do not redesign unless a concrete whole-site QA issue requires it.
+V2.1 static and motion are complete and committed.
+It is to be rebuilt in Implementation 11B under the V2.2 visual direction. Until then it is an interim page, not an approved final state.
 
 ### Services
 
-Static complete and committed.
-Motion complete and committed.
-Do not redesign unless a concrete whole-site QA issue requires it.
+V2.1 static and motion are complete and committed.
+It is to be rebuilt in Implementation 11C under the V2.2 visual direction. Until then it is an interim page.
 
 ### About
 
 Static complete and committed at `d72a55d`.
 Motion complete and committed at `a6710d9`.
-Dark/Light desktop/mobile states were visually approved.
-Do not redesign unless a concrete whole-site QA issue requires it.
+Dark/Light desktop/mobile states were visually approved for V2.1.
+It is to be rebuilt in Implementation 11C under the V2.2 visual direction. Until then it is an interim page.
 
 ### Contact
 
@@ -85,22 +86,45 @@ Static complete and committed at `a420368` (Implementation 8A).
 Form behaviour complete and committed at `bd5382f` (Implementation 8B).
 Dark/Light desktop/mobile states were visually approved. The approved references are under `docs/v2/references/contact/`, captured at 1440 x 900 and 390 x 844.
 Contact has no motion.
-Do not redesign unless a concrete whole-site QA issue requires it.
+Its presentation moves onto the V2.2 design system in Implementation 11A. Copy and form behaviour do not change.
 
 ### Website review
 
 Complete and committed at `17cc9dd` (Implementation 9A), on the shared form engine committed at `fe4899c`.
 Dark/Light desktop/mobile states were visually approved. The approved references are under `docs/v2/references/website-review/`, captured at 1440 x 900 and 390 x 844.
 The website review page has no motion.
-Do not redesign unless a concrete whole-site QA issue requires it.
+Its presentation moves onto the V2.2 design system in Implementation 11A. Copy and form behaviour do not change.
+
+### Privacy
+
+Complete and committed at `40bf386` (Implementation 10A).
+The notice is static, with no script or motion. It states that the site uses no cookies, analytics or tracking and loads nothing from other websites; that was verified on every route.
+Two launch blockers are marked in the page source: the postal address (visible placeholder) and the ICO registration number (comment only).
+Its presentation moves onto the V2.2 design system in Implementation 11A. Copy does not change.
+
+### Accessibility, Terms and 404
+
+Complete and committed at `41af0e2` (Implementation 10B).
+The 404 page is `noindex`. Terms carries the same postal-address placeholder as Privacy. Accessibility carries an `UPDATE-AFTER-TEST: screen reader` comment for the line to add after Dave's screen-reader test.
+Their presentation moves onto the V2.2 design system in Implementation 11A. Copy does not change.
 
 ## Next phase
 
-**Privacy, Accessibility, Terms and 404 V2 cleanup, with Privacy first.**
+**Implementation 11A: design foundation, shell and utility pages (V2.2 visual direction).**
 
-No implementation brief has been issued yet. Do not start without one.
+The direction was approved by Dave on 13 October 2026 and is recorded in `docs/v2/decisions/2026-10-13-visual-direction.md`. The phases are:
+
+- 11A: tokens, fonts, shared components, shell (rail, mobile menu, sticky action bar, call pill behind a phone setting, footer), and Contact, website review, Privacy, Terms, Accessibility and 404 moved onto the system
+- 11B: Home rebuilt
+- 11C: Services and About rebuilt
+- a later content proposal: price guide, care plan, "how it works", FAQ
+- assets: Dave's portrait and real photographs
+
+Each phase needs its own brief. Do not start one without it.
 
 ## Authority notes
+
+- The V2.2 visual direction in `docs/v2/decisions/2026-10-13-visual-direction.md` supersedes the irregular-grid "Structural Datum" composition in `docs/v2/creative-direction.md`, by Dave's decision. Root `CLAUDE.md` was updated to match on 13 October 2026.
 
 - The committed Home, Services and About motion code is the motion authority. The 210/400/900ms tokens and the once-only route coordinators supersede the 120/200/360/480ms timings and the hero-only reveal limit in `docs/v2/motion-system.md`. That document's principles still apply.
 - No V2.1 visual-grammar document exists yet. Until one is written, the approved implementation and the approved references under `docs/v2/references/` are the authority.
@@ -159,9 +183,35 @@ The receiver was verified live on 13 October 2026 against draft deploy `6ac49a4b
 - Dave received three notification emails at dave@teessidedigital.uk.
 - All three test submissions were verified, not spam.
 
+## Wide-screen investigation findings
+
+Read-only, at `41af0e2`, in headless Microsoft Edge at 1440, 1920, 2560 and 3440 wide. Dave's own monitor is 3440 x 1440.
+
+- Home has no maximum content width. At 3440 its content spans about 3,100px, and its rules and column gaps stretch with it. Services, About and the utility pages cap at 1,600px.
+- The footer has no maximum width on any route.
+- The Home hero image is 1672 x 941. Its area is a fixed 720px tall, as wide as the field and cropped from the bottom, so the bridge is cut away as the window widens: 76% of the image height shows at 1920, 55% at 2560 and 40% at 3440, where the file is also stretched to 1.9 times its size.
+- Home repeats content: each service is linked twice, "Discuss your project" and "Free website review" each appear four times, and "Work directly with Dave" and its line appear three times.
+- The voice is mixed: "I design and build your project" sits beside third-person "Dave" copy.
+- `astro.config.mjs` sets `trailingSlash: 'never'`, but the site's links use trailing slashes. `astro preview` and `astro dev` return 404 for those links. Netlify serves both forms, so the built site is unaffected. Local preview currently needs a plain static server.
+- At 320px with text doubled, the shell wordmark runs 11px past the edge on most routes, Home's page content runs 21px past it, and Services scrolls sideways by 20px. The Accessibility page's "Known issues" text describes this.
+
 ## Latest verification
 
-For Implementation 9A, on the production build in headless Microsoft Edge with a simulated receiver:
+For Implementation 10B, on the production build in headless Microsoft Edge:
+
+- `npm run check` passed: 0 errors, 0 warnings, 1 existing hint
+- `npm run type-check` passed
+- `npm run build` passed
+- 16 pages were generated
+- `git diff --check` passed apart from Windows LF/CRLF notices
+- all three pages matched the approved copy exactly
+- Home, Services, About, Contact, the website review and Privacy were pixel-identical to the pre-10B build at 1440 Dark; their HTML was identical apart from the shared stylesheet's hashed filename
+- the shared stylesheet lost 11 utility rules that only the legacy markup used; the seven legacy service and Work pages each lost one line break inside an inlined style block
+- no hydration or dependency was added
+
+For Implementation 10A, the same commands passed with 16 pages, the page matched the approved copy exactly, only `privacy/index.html` changed in the build, and no route set a cookie or made a request to another origin.
+
+Earlier, for Implementation 9A, on the production build in headless Microsoft Edge with a simulated receiver:
 
 - `npm run check` passed: 0 errors, 0 warnings, 1 existing hint
 - `npm run type-check` passed
@@ -218,22 +268,30 @@ Not yet tested for any V2.1 route. All motion and layout verification so far is 
 
 ## Other launch debt
 
-- `/privacy/` must be rewritten before launch. Both forms now link to it, and it is still legacy content.
+- Trailing-slash and canonical consistency: `trailingSlash: 'never'` conflicts with the site's trailing-slash links, and canonicals are written without a trailing slash.
+- The 404 page has a self-canonical of `https://teessidedigital.uk/404`. It is `noindex`, but the canonical should go.
+- The default description in `src/config/constants.ts` is stale V1 copy that names cybersecurity as a service. Every V2 page passes its own description, so it reaches only legacy routes.
+- `src/data/legal.ts` has no importers and can be removed.
+- Netlify's Data Privacy Framework certification, which the Privacy page relies on, must be re-checked at launch and then annually.
+- The postal address on Privacy and Terms, and the ICO registration number on Privacy, are launch blockers marked `LAUNCH-BLOCKER` in the source.
+- The Contact form has no accessible name. Fixed in Implementation 11A.
+- Home's service links have long accessible names (title plus description). To be fixed in Implementation 11B.
 - A branded no-JavaScript confirmation page is a future decision. Netlify's default page is truthful but unbranded and says "Back to our site".
 - `globals.css` gives every input a radius and every button a V1 focus ring, and recolours a focused input's border. `src/styles/forms.css` overrides all three for both forms.
 - `validateContactForm` in `src/lib/validation.ts` is unused.
 - The form script is now one external module shared by Contact and the website review page. The shared form styles are inlined as a style element on both pages, so any future Content Security Policy must allow that inline style, alongside the existing inline shell scripts.
-- Tailwind's source scan reads the word "fixed" in the review copy as a utility class, which adds one unused rule to the shared stylesheet. It is harmless and can be blocklisted later.
-- The review page's "Go to the request form" link relies on the browser moving focus to the form heading. That has been tested only in Edge.
+- Tailwind's source scan reads the word "fixed" in page copy as a utility class, which adds one unused rule to the shared stylesheet. It is harmless and can be blocklisted later.
+- The review page's in-page "Go to the request form" link relies on the browser moving focus to the form heading. That has been tested only in Edge.
 
 ## Important unfinished work
 
-1. Privacy / Accessibility / Terms / 404 V2 cleanup, with Privacy first
-2. Legacy service-route migration
-3. Work publication/evidence decision
-4. SEO/schema cleanup
-5. Dependency/tooling review
-6. Final studio/launch audit
+1. V2.2 visual direction: Implementations 11A, 11B and 11C
+2. Content proposal (price guide, care plan, "how it works", FAQ) and real photographs
+3. Legacy service-route migration
+4. Work publication/evidence decision
+5. SEO/schema cleanup, including trailing slashes and canonicals
+6. Dependency/tooling review
+7. Final studio/launch audit
 
 ## Known transitional route state
 
@@ -260,7 +318,7 @@ For repository state:
 
 For approved product/design decisions:
 
-1. Latest explicitly approved V2.1 decision / implementation
+1. Latest explicitly approved decision / implementation, including the V2.2 visual direction
 2. Current route-specific approved references
 3. Handover documents
 4. Approved V2 documents

@@ -22,6 +22,10 @@ export const SITE = {
   // "/images/dave.jpg". Leave it empty until that photograph exists: while it
   // is empty, no portrait and no placeholder is rendered.
   portrait: "",
+  // A real photograph of the local area, taken by Dave: a path under public/
+  // and the text that describes it. Leave both empty until it exists: while
+  // src is empty, nothing is rendered.
+  localPhoto: { src: "", alt: "" },
 };
 
 /** A tel: link for a phone number written with spaces. */

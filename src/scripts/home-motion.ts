@@ -140,17 +140,19 @@ function enhance(root: HTMLElement) {
     });
   }
 
-  // Section groups. Only a group that is wholly below the viewport is held
-  // back; anything already on screen stays exactly as it is.
+  // Section groups. Only a group that is well below the viewport is held back.
+  // Anything on screen, or within a short scroll of it, stays exactly as it is.
   observer = new IntersectionObserver(
     (entries) => {
       for (const entry of entries)
         if (entry.isIntersecting) release(entry.target);
     },
-    { threshold: 0, rootMargin: "0px 0px -8% 0px" },
+    // No inset: a held group plays the moment any of it reaches the viewport,
+    // so nothing can sit hidden on screen waiting for a scroll.
+    { threshold: 0, rootMargin: "0px" },
   );
   for (const group of root.querySelectorAll("[data-reveal]")) {
-    if (group.getBoundingClientRect().top <= innerHeight) continue;
+    if (group.getBoundingClientRect().top <= innerHeight * 1.25) continue;
     const animation = track(
       group.animate(rise, { duration: structural, easing, fill: "backwards" }),
     );
@@ -158,6 +160,17 @@ function enhance(root: HTMLElement) {
     armed.set(group, animation);
     observer.observe(group);
   }
+  // The browser may restore a scroll position after this ran. Whatever is
+  // then on screen is shown at once, without waiting for a scroll.
+  const settle = () => {
+    for (const element of [...armed.keys()]) {
+      const box = element.getBoundingClientRect();
+      if (box.top < innerHeight) show(element);
+    }
+    retire();
+  };
+  window.addEventListener("load", settle, { signal: listeners.signal });
+  window.addEventListener("pageshow", settle, { signal: listeners.signal });
   retire();
   return stop;
 }

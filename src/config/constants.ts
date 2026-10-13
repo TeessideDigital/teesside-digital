@@ -5,7 +5,6 @@
 
 export const SITE = {
   title: "Teesside Digital",
-  tagline: "Precision engineering for small businesses",
   description:
     "Websites, business tools and practical automation for small and owner-led businesses in Teesside and the North East.",
   url: import.meta.env.PROD
@@ -32,37 +31,3 @@ export const SITE = {
 export function telephoneHref(phone: string): string {
   return `tel:${phone.replace(/[^\d+]/g, "")}`;
 }
-
-export const BUSINESS = {
-  name: "Teesside Digital",
-  founder: "Dave",
-  location: "Hartlepool",
-  region: "North East England",
-  founded: 2026,
-  description:
-    "A solo-operated technology consultancy providing web development, AI automation, and cybersecurity services.",
-};
-
-export const FEATURE_FLAGS = {
-  // Phase 1: Launch features
-  showHealthCheck: true,
-  showDemoProjects: true,
-  showTestimonials: false,
-
-  // Phase 2: Future features (set to true when ready)
-  showAnalytics: false,
-  showServerHealthCheckAudit: false,
-  showClientPortal: false,
-};
-
-export const SEO = {
-  // Local SEO keywords (Teesside/North East focus)
-  keywords: [
-    "web development Hartlepool",
-    "web design North East",
-    "cybersecurity consultancy UK",
-    "AI automation Teesside",
-    "web developer Middlesbrough",
-    "freelance developer Stockton",
-  ],
-};

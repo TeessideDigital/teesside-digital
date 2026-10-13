@@ -1,7 +1,9 @@
 ---
-// Loaded only by Services. It adds no markup and no styles of its own.
+// Loaded only by Services. Each section fades and rises once, as one group.
 ---
 
 <script>
-  import "../../scripts/services-motion";
+  import { revealSections } from "../../scripts/section-reveal";
+
+  revealSections(".services-experience");
 </script>

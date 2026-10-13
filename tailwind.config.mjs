@@ -1,6 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,ts,tsx}'],
+  content: ['./src/**/*.{astro,html,js,md,mdx,ts}'],
+  // The word "fixed" appears in page copy, and the scanner reads it as the
+  // position utility. Nothing on the site uses that class.
+  blocklist: ['fixed'],
   theme: {
     extend: {
       colors: {

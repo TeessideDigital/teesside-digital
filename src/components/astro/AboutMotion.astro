@@ -1,7 +1,9 @@
 ---
-// Loaded only by About. It adds no markup and no styles of its own.
+// Loaded only by About. Each section fades and rises once, as one group.
 ---
 
 <script>
-  import "../../scripts/about-motion";
+  import { revealSections } from "../../scripts/section-reveal";
+
+  revealSections(".about-experience");
 </script>

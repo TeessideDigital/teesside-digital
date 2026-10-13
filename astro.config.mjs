@@ -1,5 +1,4 @@
 import { defineConfig } from 'astro/config';
-import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import { fileURLToPath } from 'node:url';
 
@@ -19,10 +18,6 @@ export default defineConfig({
 
   // Integrations
   integrations: [
-    react({
-      // Only hydrate React components on the client when necessary (islands)
-      experimentalReactChildren: true,
-    }),
     // Generates sitemap-index.xml + sitemap-0.xml at build time from every
     // static route Astro renders. Uses the `site` URL above as the base --
     // if that value is ever wrong, the sitemap silently ships wrong URLs
@@ -50,9 +45,6 @@ export default defineConfig({
 
   // Vite configuration (build tool settings)
   vite: {
-    ssr: {
-      external: ['react', 'react-dom'],
-    },
     // Explicit aliases matching tsconfig.json's "paths", defined directly
     // here rather than relying on Astro's automatic tsconfig-paths-to-Vite
     // wiring. That implicit mechanism depends on tsconfig.json being
@@ -68,7 +60,6 @@ export default defineConfig({
         '@layouts': fileURLToPath(new URL('./src/layouts', import.meta.url)),
         '@lib': fileURLToPath(new URL('./src/lib', import.meta.url)),
         '@config': fileURLToPath(new URL('./src/config', import.meta.url)),
-        '@data': fileURLToPath(new URL('./src/data', import.meta.url)),
         '@styles': fileURLToPath(new URL('./src/styles', import.meta.url)),
       },
     },

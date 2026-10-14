@@ -113,16 +113,18 @@
   [headers.values]
     Cache-Control = "public, max-age=604800"
 
-# Cache policy for HTML (pages update frequently)
+# Cache policy for HTML: browsers check for a new version on every visit,
+# so a deploy shows at once. This matches Netlify's default for the other
+# pages, which are served from folder URLs and never match "/*.html".
 [[headers]]
   for = "/"
   [headers.values]
-    Cache-Control = "public, max-age=3600"
+    Cache-Control = "public, max-age=0, must-revalidate"
 
 [[headers]]
   for = "/*.html"
   [headers.values]
-    Cache-Control = "public, max-age=3600"
+    Cache-Control = "public, max-age=0, must-revalidate"
 
 # Form handling
 [build.processing]

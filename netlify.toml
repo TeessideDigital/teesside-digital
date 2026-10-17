@@ -108,6 +108,14 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+# Cache policy for self-hosted fonts. File names are not hashed, so use
+# 30 days rather than a year with "immutable": a changed font file still
+# reaches visitors within a month without needing a rename.
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
 # Cache policy for images (can update, so shorter TTL)
 [[headers]]
   for = "/images/*"

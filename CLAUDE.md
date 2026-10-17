@@ -1,5 +1,7 @@
 # Teesside Digital — Claude Code Project Instructions
 
+> **V4 note (17 October 2026).** On branch `redesign/v4`, the approved V4 brief `design/v4-reference/BRIEF-V4-BUILD.md` and `docs/handover/CURRENT-STATE.md` override the V2.2 design, voice, service and motion rules below (single dark theme, lime accent, Schibsted Grotesk and JetBrains Mono, pill nav and drawer, first-person marketing copy, eight services). The business truth, honesty, static-first, privacy, Git and verification rules still apply.
+
 ## Read before changing anything
 
 This repository is an in-progress redesign of Teesside Digital. The V2.1 build is being moved onto the V2.2 visual direction, approved by Dave on 13 October 2026.

@@ -1,142 +1,106 @@
-# Teesside Digital V2.2 - Current State
+# Teesside Digital V4 - Current State
 
-Last updated: 14 October 2026
+Last updated: 17 October 2026
 
 ## Repository
 
-Branch: `redesign/v2`
+Branch: `redesign/v4`, created from `main` at `f61bbcb`. It has no upstream and has not been pushed. `redesign/v2` is untouched and remains the V2.2 fallback.
 
-Current approved product baseline:
-
-`137a546` `fix: logo accessible name and Home cache headers`
-
-Any commit after that baseline that only updates this file is documentation and does not change product source.
-
-The redesign remains local. Nothing has been pushed. Production still serves V1 from `main`.
-
-Netlify draft deploys, none published, all behind Netlify team login:
-
-- `6ac41773af93e69e0d3bd207`, of `bd5382f`, on 5 October 2026 (Contact receiver);
-- `6ac49a4b72eb0cc522ca5010`, of `17cc9dd`, on 6 October 2026 (website review receiver, Contact again);
-- `6ace38008c4aece5be63687d`, of `62e372e`, on 13 October 2026 (Implementation 12 launch checks).
-
-Local tags:
-
-- `pre-claude-handover-2026-10-05` on `d72a55d` (About static, the pre-Claude product state)
-- `claude-ready-2026-10-05` on `14fc42d` (migration documentation complete)
-
-A verified Git bundle backup of the pre-Claude product state is at `..\teesside-digital-pre-claude.bundle`.
-
-Expected working-tree state before the next task starts: clean.
-
-## Status
-
-The V2.2 redesign and launch preparation are complete. **Launch is pending** Dave's go-ahead. The site builds 9 pages: Home, Services, About, Contact, Free website review, Privacy, Terms, Accessibility and the 404 page.
-
-## Completed
-
-V2.1 (history; its composition is superseded by V2.2):
-
-- V2 strategy, architecture, theme, typography and shell
-- Home, Services and About experiences and motion (to Implementation 7B)
-- Contact static page and form behaviour, with live receiver verification (8A, 8B)
-- Shared form engine and website review page, with live receiver verification (9A, 9B)
-- Privacy (10A), Accessibility, Terms and 404 (10B)
-- Wide-screen investigation at `41af0e2`
-
-V2.2 (visual direction approved by Dave on 13 October 2026, recorded in `docs/v2/decisions/2026-10-13-visual-direction.md`):
+V4 commits:
 
 | Phase | Commit | Content |
 | --- | --- | --- |
-| docs | `7ab53bd` | Visual direction, utility-page records, root `CLAUDE.md` |
-| 11A | `cda03e5` | Tokens, self-hosted fonts (Instrument Serif, Instrument Sans, IBM Plex Mono), shared components and classes, shell (rail, mobile menu button, sticky action bar, call pill behind `SITE.phone`, footer), Contact, website review, Privacy, Terms, Accessibility and 404 moved onto the system |
-| 11B | `fea967c` | Home rebuilt, with HTML/CSS product visuals |
-| 11C | `c3f396b` | Services and About rebuilt; shared section reveal; anchor-arrival fix |
-| 12A | `fb078d1` | V1 service and Work routes removed; 301 redirects added |
-| 12B | `b80fb9c` | `trailingSlash: 'always'`, SEO titles and descriptions, no canonical on noindex pages, new social image `og-default.jpg` |
-| 12C | `2d02f21` | Security headers and Content Security Policy; `npm run check:csp` |
-| 12D | `400d8b3` | 28 unreachable files removed; React removed; `npm audit` 14 to 7 |
-| 12F | `62e372e` | Launch blockers resolved: "Based in Hartlepool, Teesside." on Privacy and Terms; ICO line moved to a TODO |
-| 12 follow-up | `137a546` | Logo link accessible name; Home and `.html` revalidate on every visit |
+| A | `567faa8` | Foundation: reference package, tokens, fonts, Tailwind theme, Logo, favicons, manifest, config modules |
+| B | `42aae42` | Shell: progress bar, pill nav, menu drawer, footer, mobile bar, reveal, view transitions, skip link |
+| C | `022cb96` | Home, every section and interaction |
+| D | `ded03c5` | Services, About, Contact, Website review |
+| E | `7052c74` | Legal pages, 404, SEO and metadata, sitemap, `CONTENT-TBC.md` |
+| F | `3e16b8a` | Test suite, fixes found in testing, CSP, Lighthouse scores |
+| G | this commit | This file |
 
-Implementation 12 Part E (live checks on draft `6ace38008c4aece5be63687d`) passed: every page 200, unknown URLs 404 with noindex, every V1 URL redirected once to its target, all security headers present, every executable inline script allowed by hash, no third-party requests, theme and menu working, one test each to `enquiry` and `website-review` received. Lighthouse mobile (local build): 99 / 100 / 100 / 100 on Home, Services and Contact.
+The build brief is `design/v4-reference/BRIEF-V4-BUILD.md`, approved by Dave on 17 October 2026. The six reference pages and the final logo set are beside it. The original download `design/td-v4-handoff.zip` is ignored by Git.
+
+Netlify draft deploy, not published, behind Netlify team login:
+
+- `6ad35fa721d053a32c91ebe1`, of `3e16b8a`, on 17 October 2026, at https://redesign-v4--teesside-digital.netlify.app
+
+Production still serves V1 from `main`.
+
+## Status
+
+V4 is built and tested locally. **Launch is pending**: Dave's review, the deployed checks that need a Netlify sign-in (below), and the items in `CONTENT-TBC.md`.
+
+## What changed from V2.2
+
+These were approved by Dave in the V4 brief and replace the V2.2 decisions they contradict:
+
+- Visual system: single dark theme (no Light theme, no theme switch), lime accent, Schibsted Grotesk and JetBrains Mono, grain overlay, floating pill nav with a menu drawer instead of the left rail.
+- Voice: marketing pages in the first person ("I"). The website review page keeps its approved third-person copy; the legal pages are unchanged.
+- Services: eight services (Websites, Web and mobile apps, Bespoke software, Automation, AI tools, Integrations, Security reviews, Support and care) instead of three families.
+- Work: shown on Home (QuoteFlow, labelled sample data, and this website) with "Client case studies are on the way."
+- Enquiry form: four steps (needs, budget band, timing, details). The budget is now a choice of bands, replacing the free-text field.
+- Motion: the V4 motion set (marquee, typing indicator, illustration loops, contour drift, view transitions), all off under reduced motion.
 
 ## Route state
 
 | Route | State |
 | --- | --- |
-| `/` | V2.2, with hero sequence and section reveals |
-| `/services/` | V2.2, anchors `#websites-web-development`, `#apps-digital-tools`, `#automation-ai`; section reveals |
-| `/about/` | V2.2; section reveals; photo slots hidden until real photographs exist |
-| `/contact/` | V2.2; Netlify form `enquiry`; no motion |
-| `/website-review/` | V2.2; Netlify form `website-review`; no motion |
-| `/privacy/`, `/terms/`, `/accessibility/` | V2.2; static |
-| 404 | V2.2; `noindex`, no canonical |
+| `/` | V4: hero, services strip, before and after, what I build, demo, work, how I work, price guide (hidden until `pricing.confirmed`), under the bonnet, meet Dave, FAQ, contact with the four-step `enquiry` form |
+| `/services/` | V4: eight sections, anchors `#websites`, `#apps`, `#software`, `#automation`, `#ai`, `#integrations`, `#security`, `#care` |
+| `/about/` | V4; Background timeline hidden until `SITE.aboutBackgroundConfirmed` |
+| `/contact/` | V4: four-step `enquiry` form, details, review band, FAQ |
+| `/website-review/` | V4: approved third-person copy, `website-review` form (existing field names plus optional `goal`) |
+| `/privacy/`, `/terms/`, `/accessibility/` | V4 shell, wording unchanged |
+| 404 | V4; `noindex`, no canonical |
 
-Redirects (301, in `netlify.toml`, above the catch-all 404):
+Redirects (301, in `netlify.toml`, above the catch-all 404): `/services/web-development` to `/services/#websites`; `/services/ai-automation` to `/services/#automation`; `/services/cybersecurity` to `/services/#security`; `/work` and `/work/*` to `/#work`.
 
-- `/services/web-development` to `/services/#websites-web-development`
-- `/services/ai-automation` to `/services/#automation-ai`
-- `/services/cybersecurity` to `/services/`
-- `/work`, `/work/*` to `/services/`
+## Config and content switches
 
-Work stays withheld until real evidence passes the evidence gate.
+All unconfirmed content sits behind config with a safe default, listed in full in `CONTENT-TBC.md`:
+
+- `src/config/constants.ts`: `SITE.phone`, `availability`, `headline`, `portrait`, `introAbout`, `hours`, `replyTime`, `carePlan`, `ownershipConfirmed`, `aboutBackgroundConfirmed`, `tools`.
+- `src/data/pricing.ts`: `pricing.confirmed` (false), ranges, extras, care, `budgetBands`.
+- `src/data/services.ts`: per-service `confirmed` (all false), times, prices, tools.
+- `src/data/scores.ts`: Lighthouse figures shown as rings on Home.
 
 ## Engineering notes
 
-- The five inline-script hashes in the Content Security Policy are fixed in `netlify.toml`. If an inline script in the shell or on Home changes, run `npm run check:csp` after the build and update the hashes. `style-src` allows `'unsafe-inline'` because Astro inlines small stylesheets and the product visuals use style attributes.
-- The motion authority is the committed code: `src/scripts/home-motion.ts` and `src/scripts/section-reveal.ts`. Sections well below the viewport are held; anything in or near the viewport on arrival is shown at once.
-- The approved references under `docs/v2/references/` are V2.1 captures. They remain history; the V2.2 implementation is now the visual authority.
-- The remaining Astro hint is the JSON-LD script in `src/layouts/BaseLayout.astro`.
-- Local preview: `npm run build`, then serve `dist` with any static server.
+- Static Astro, no client framework. One small TypeScript module per feature, loaded only where used (Home about 10 KB of JavaScript gzipped; other pages 2 to 5 KB).
+- Page scripts are external files (`vite.build.assetsInlineLimit: 0`), so the CSP allows the single inline head script (`src/scripts/head.js`) by one hash. Line endings are normalised before hashing. After changing `head.js`, run `npm run build` then `npm run check:csp` and update `netlify.toml`.
+- `img-src` allows `data:` for the grain overlay.
+- Tailwind 3 supplies only its base reset; utility classes are deliberately not generated because names such as `ring` and `outline` collide with the site's classes.
+- The head script adds `js` to `<html>` so CSS can close the hero answers, later form steps and extra service panels without a flash. If the page scripts have not run within 4 seconds, it removes `js` again so nothing stays hidden.
+- The menu is a native modal `<dialog>`, opened by the shell script (and by invoker commands where a browser supports them without script).
+- The enquiry form posts through the shared engine `src/scripts/form-submission.ts` (`submitForm`, `encodeForm`), which joins checkbox answers with commas. Success shows only after a 2xx.
+- The contour map is one shared file, `public/images/contour-hartlepool.svg`.
+- The outlined footer wordmark and 404 figure use a 2 KB static subset of Schibsted Grotesk 800, because the variable font's overlapping contours show through a text stroke.
 
-## Contact decisions
+## Verification (17 October 2026, local production build, Chrome 155 on Windows)
 
-Approved by Dave on 5 October 2026 and still in force:
+- `npm run check`, `npm run type-check`, `npm run build`, `git diff --check`: clean.
+- `npm run test:e2e` (Playwright, `tests/`): 77 passed, 2 skipped (the price guide tests, which skip while `pricing.confirmed` is false; both passed in a temporary build with it set to true).
+- axe-core: no violations of any impact on any page at 390 and 1440.
+- Lighthouse 12.8.2, mobile: Home 99 / 100 / 100 / 100 (with the rings), Services, About, Contact and Website review 99 / 100 / 100 / 100; CLS 0 on every page.
+- `npm run check:links`: 278 internal links, every page, anchor and file resolves.
+- `npm run check:csp`: the policy matches the build; the policy replayed on every page blocks nothing.
+- No horizontal overflow at 320, 390, 768, 1024, 1440, 1920, 2560, 3440 and 844 x 390.
+- Netlify registered both forms from the draft deploy with every V4 field.
 
-- There is no response-time promise anywhere: "Enquiries go straight to Dave, who replies personally by email."
-- The budget field is optional free text, with no price bands.
-- The Netlify form is named `enquiry`. It is separate from the V1 `contact` form, which is never touched and simply stops receiving submissions at launch.
-- Without JavaScript the form validates and submits natively, and Netlify shows its default confirmation page.
-- With JavaScript the form posts to `/` and maps the response: 2xx is accepted, 4xx is a known rejection, anything else (5xx, network failure, 15-second timeout) is uncertain. Success is shown only after a 2xx.
+Not yet verified (needs the draft to be opened while signed in to Netlify):
 
-## Website review decisions
+- one test submission each to `enquiry` and `website-review` on the deploy, then deleting them;
+- the security headers and redirects as served by Netlify;
+- Lighthouse on the deployed draft.
 
-Approved by Dave on 6 October 2026 and still in force:
-
-- The review is free and manual, carried out by Dave. There is no guaranteed turnaround.
-- The page promises "a written report by email", not a particular format.
-- The Netlify form is named `website-review`. The website address is required.
-- There is no pause switch. If pausing is ever needed: keep the route, replace the form with an honest availability message, and update every "Free website review" link together.
-- Both forms use one shared engine, `src/scripts/form-submission.ts`, with styles in `src/styles/forms.css`. Each form supplies its own copy and rules through data attributes.
+Testing not done at all: real iOS and Android devices, Safari and Firefox, a screen reader, genuine browser text zoom.
 
 ## Post-launch debt
 
-Content and business:
-
-- ICO: retake the fee self-assessment once trading; add a registration number to Privacy if one is issued (TODO comment in `PrivacyExperience.astro`).
-- Full postal address on Privacy and Terms once a business address service is set up (TODO comments in both).
-- Screen-reader test by Dave, then update the Accessibility page (`UPDATE-AFTER-TEST: screen reader` comment).
-- Real photographs by Dave: portrait and local photo on About. Their slots stay hidden until then.
-- Dedicated business phone line, then set `SITE.phone` to enable the call pill and phone features.
-- Content extras: price guide, care plan, "how it works", FAQ. Each needs its own proposal and brief.
-- Work publication, once real evidence passes the evidence gate.
-- Netlify's Data Privacy Framework certification, which the Privacy page relies on: re-check at launch and then annually.
-- Delete the Netlify test submissions marked "TEST" when convenient.
-
-Engineering:
-
-- Tailwind 4 upgrade. It clears the last 7 `npm audit` findings (`braces` and `postcss-selector-parser`, through Tailwind 3's build tools; build-time only). It is a breaking change and needs its own phase.
-- A branded no-JavaScript form confirmation page is a future decision. Netlify's default is truthful but unbranded.
-
-Testing not yet done (all verification so far is browser automation on Windows, mostly headless Edge):
-
-- real iOS and Android devices
-- Safari and Firefox
-- screen reader
-- genuine browser text zoom (200% checks used a font-size doubling harness)
-- bfcache restore, print, hidden-tab behaviour
-- browser autofill on both forms
+- Everything in `CONTENT-TBC.md`, including the Privacy and Accessibility statements that V4 has made out of date (theme switch, form fields, session storage).
+- Re-measure Lighthouse on the live site and update `src/data/scores.ts`.
+- Tailwind 4 upgrade (its own phase).
+- ICO fee self-assessment and full postal address (TODO comments in the legal content).
 
 ## Authority
 
@@ -144,14 +108,7 @@ For repository state:
 
 1. Current Git/source
 2. This file
-3. `HANDOVER-CODEX.md`
-4. `HANDOVER-CHATGPT.md`
-
-For approved product/design decisions:
-
-1. Latest explicitly approved decision / implementation, including the V2.2 visual direction
-2. Handover documents
-3. Approved V2 documents
-4. Older V1 material
+3. `design/v4-reference/BRIEF-V4-BUILD.md` for the V4 design and behaviour
+4. `HANDOVER-CODEX.md`, `HANDOVER-CHATGPT.md` for history
 
 If there is a material conflict, stop and ask Dave rather than guessing.

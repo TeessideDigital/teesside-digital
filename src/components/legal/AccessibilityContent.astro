@@ -10,7 +10,7 @@ import { SITE } from "@config/constants";
       <p class="lede">
         Teesside Digital wants this website to be usable by as many people as possible, including people who use a keyboard, screen magnification, high-contrast settings or assistive technology.
       </p>
-      <p class="updated">Last reviewed: 13 October 2026</p>
+      <p class="updated">Last reviewed: 17 October 2026</p>
     </div>
   </section>
   <div class="legal">
@@ -32,21 +32,20 @@ import { SITE } from "@config/constants";
       <section aria-labelledby="checked-heading">
         <h2 id="checked-heading">What has been checked</h2>
         <div>
-          <p>These checks were carried out in Microsoft Edge on Windows:</p>
+          <p>
+            These checks were carried out on the current design in October 2026,
+            using automated browser testing and the axe accessibility checker:
+          </p>
           <ul role="list">
             <li>
               using every page and both forms with a keyboard only, with a
               visible focus indicator throughout
             </li>
-            <li>text enlarged to twice its normal size</li>
             <li>narrow screens down to 320 pixels wide</li>
             <li>high-contrast (forced colours) mode</li>
             <li>reduced-motion settings, which turn off the page animations</li>
             <li>with JavaScript turned off, including submitting both forms</li>
-            <li>
-              colour contrast of text, links and form controls in both the Dark
-              and Light themes
-            </li>
+            <li>automated colour-contrast checks of text, links and form controls</li>
           </ul>
           <!-- UPDATE-AFTER-TEST: screen reader -->
         </div>
@@ -59,6 +58,7 @@ import { SITE } from "@config/constants";
             <li>real phones and tablets</li>
             <li>screen readers</li>
             <li>a full independent audit</li>
+            <li>text enlarged to twice its normal size</li>
           </ul>
           <p>
             These will be checked as the website develops, and this page will be
@@ -77,7 +77,6 @@ import { SITE } from "@config/constants";
         <div>
           <ul role="list">
             <li>a "Skip to main content" link at the start of every page</li>
-            <li>a choice of Dark or Light theme, remembered on your device</li>
             <li>
               animations are switched off if your device is set to reduce motion
             </li>

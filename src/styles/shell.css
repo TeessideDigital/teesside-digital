@@ -586,6 +586,18 @@ footer.big:hover .wordmark {
   }
 }
 @media (forced-colors: active) {
+  /* Background colours are dropped in forced colours, so the menu bars and
+     the mark are painted in the system text colour instead. */
+  .burger span,
+  .burger span::before,
+  .burger span::after {
+    forced-color-adjust: none;
+    background: ButtonText;
+  }
+  .logo-svg > path,
+  .logo-svg > g {
+    fill: CanvasText;
+  }
   .wordmark {
     -webkit-text-stroke-color: CanvasText;
   }

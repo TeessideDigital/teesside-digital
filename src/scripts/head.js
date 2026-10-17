@@ -3,7 +3,8 @@
  * - "js" lets CSS hide what scripts will manage (closed answers, later form
  *   steps) without a flash. If the page scripts have not said "js-ok" within
  *   4 seconds, the class is removed again so nothing stays hidden.
- * - "intro" plays the logo animation on the first page view of a session only.
+ * - "intro" plays the logo animation when a visit arrives from outside the
+ *   site, and skips it when moving between pages. Nothing is stored.
  */
 (() => {
   const root = document.documentElement;
@@ -11,12 +12,11 @@
   setTimeout(() => {
     if (!root.classList.contains("js-ok")) root.classList.remove("js");
   }, 4000);
+  let internal = false;
   try {
-    if (!sessionStorage.getItem("td:intro")) {
-      sessionStorage.setItem("td:intro", "1");
-      root.classList.add("intro");
-    }
+    internal = new URL(document.referrer).origin === location.origin;
   } catch {
-    // Storage is optional: without it, the logo simply does not animate.
+    // No referrer, or not a URL: treat it as arriving from outside.
   }
+  if (!internal) root.classList.add("intro");
 })();

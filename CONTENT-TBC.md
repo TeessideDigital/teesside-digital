@@ -12,9 +12,7 @@ To change a value, edit the file named, then rebuild.
 | [ ] | Working hours | `SITE.hours` | `""`: the Hours row on Contact is hidden | Hours, for example "Monday to Friday, 9am to 5pm" |
 | [ ] | Photograph | `SITE.portrait` | Empty: the Home and About photo slots show the designed mark panel | A real 4:5 photograph (at least 800 x 1000) under `public/images/`, plus a one-sentence `alt` |
 | [ ] | Price guide estimator | `pricing.confirmed` and figures in `src/data/pricing.ts` | `false`: the Home price guide, the "Prices" nav link and the "Price guide" menu link are hidden | Real ranges for every type and size, the extras and the monthly care figure, then set `confirmed: true` |
-| [ ] | Lighthouse on the live site | `src/data/scores.ts` | Local production build figures, 17 October 2026 | Run Lighthouse on teessidedigital.uk straight after go-live, and update the figures and date |
-| [ ] | Client case studies | Work section on Home | None; the section says "Client case studies are on the way." | Real client projects that pass the evidence gate, with permission |
-| [ ] | Netlify forms after go-live | Netlify dashboard | Both forms registered with every V4 field | Check one real submission per form after the first production deploy |
+| [ ] | Text at 200%: manual check | Accessibility page, "Not yet checked" | Listed as not yet checked | Check every page with browser text enlarged to 200% by hand, then move the item to "What has been checked" |
 
 ## Confirmed by Dave, 17 October 2026
 
@@ -34,4 +32,5 @@ To change a value, edit the file named, then rebuild.
 | Price guides | `src/data/services.ts` (`priceConfirmed`) | Websites from £800; Bespoke software from £2,500; Automation from £400; Support and care from £30 a month; Web and mobile apps, AI tools, Integrations and Security reviews: Price on request |
 | Budget bands | `budgetBands` in `src/data/pricing.ts` | Under £1k, £1k–3k, £3k–10k, £10k+, Not sure |
 | Phone and hours | `SITE.phone`, `SITE.hours` | Stay empty for now (see Still open) |
-| Legal pages | Privacy, Accessibility | Wording corrected for V4 (see the V4 fix run in `docs/handover/CURRENT-STATE.md`) |
+| Legal pages | Privacy, Accessibility | Wording corrected for V4, including both optional review questions on Privacy |
+| Lighthouse on the live site | `src/data/scores.ts` | Measured on teessidedigital.uk after go-live: median of five runs, 17 October 2026 |

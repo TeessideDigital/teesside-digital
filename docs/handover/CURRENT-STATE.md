@@ -2,9 +2,25 @@
 
 Last updated: 17 October 2026
 
+## Live
+
+**V4 is live on https://teessidedigital.uk** (17 October 2026).
+
+| | |
+| --- | --- |
+| main | `5ad3889` (score rings), on top of the merge commit `114808b` (`redesign/v4` into `main`, no squash) |
+| Tags | `v4.0.0` on `114808b` (go-live); `v4.0.1` on `5ad3889` (live Lighthouse rings) |
+| Production deploys | `6ad3b977fdc53a3f9709503b` (go-live, `114808b`); `6ad3bb12192db2691d1b3665` (`5ad3889`); later docs-only commits redeploy the same site |
+| Rollback | Netlify deploy `6acf70360735b11d356429f9` (V2.2, `main` at `f61bbcb`, 14 October 2026). Publish it from the Netlify deploys list to roll back. `redesign/v2` is untouched as the source fallback |
+| Deploys | Production builds automatically from `main` on GitHub (`npm run build`, publish `dist`) |
+
+Live Lighthouse 12.8.2, mobile: Home 95 / 100 / 93 / 100 (median of five), Services 94 / 100 / 93 / 100, About 93 / 100 / 93 / 100, Contact 97 / 100 / 93 / 100, Website review 100 / 100 / 93 / 100.
+
+**Open issue: Netlify injects a script into every live page** (`<script async src="/.netlify/scripts/hud?variant=public">`, not part of the build). It tries to run an inline script, which the CSP blocks, so every page logs one console error; this is the whole Best practices deduction (93), and its 35 KB script is the likely cause of the extra blocking time seen live (up to 240 ms, against 0 ms locally). For signed-in Netlify team members it also writes a localStorage key (`nl-hud:owner-private:v1`); for anonymous visitors it stores nothing. Removing it is a Netlify site setting, left to Dave.
+
 ## Repository
 
-Branch: `redesign/v4`, created from `main` at `f61bbcb`. It has no upstream and has not been pushed. `redesign/v2` is untouched and remains the V2.2 fallback.
+Branch: `main` (V4 merged). `redesign/v4` is pushed and merged; `redesign/v2` is untouched and remains the V2.2 fallback.
 
 V4 commits:
 
@@ -24,7 +40,6 @@ Netlify draft deploys, not published, behind Netlify team login (the latest is l
 
 - `6ad35fa721d053a32c91ebe1`, of `3e16b8a`, on 17 October 2026, at https://redesign-v4--teesside-digital.netlify.app
 
-Production still serves V1 from `main`.
 
 ## V4 fix run (17 October 2026)
 
@@ -41,7 +56,7 @@ Verification on the local production build: check, type-check, lint and build cl
 
 ## Status
 
-V4 is built and tested locally. **Launch is pending**: Dave's review, the deployed checks that need a Netlify sign-in (below), and the items in `CONTENT-TBC.md`.
+V4 is live. Remaining content items are in `CONTENT-TBC.md`: phone, hours, photograph, price guide estimator, and a manual text-at-200% check.
 
 ## What changed from V2.2
 

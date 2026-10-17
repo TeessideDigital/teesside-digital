@@ -1,0 +1,25 @@
+---
+// The closing band: a heading, a line of copy and one action.
+import Icon from "./Icon.astro";
+
+interface Props {
+  title: string;
+  text: string;
+  href: string;
+  action: string;
+  /** "btn" for the lime button, "btn2" for the outline one. */
+  variant?: "btn" | "btn2";
+  class?: string;
+}
+const { title, text, href, action, variant = "btn", class: className } = Astro.props;
+---
+
+<section class:list={["band", className]}>
+  <div class="wrap">
+    <div>
+      <h2>{title}</h2>
+      <p>{text}</p>
+    </div>
+    <a href={href} class={variant}>{action} <Icon name="arrow" /></a>
+  </div>
+</section>

@@ -1,11 +1,101 @@
 ---
+// The free website review keeps its approved third-person copy, with the
+// exclusions before the form.
 import BaseLayout from "@layouts/BaseLayout.astro";
-import WebsiteReviewExperience from "@components/astro/WebsiteReviewExperience.astro";
+import Band from "@components/ui/Band.astro";
+import Icon from "@components/ui/Icon.astro";
+import ReviewForm from "@components/ui/ReviewForm.astro";
+import "@styles/sections.css";
+import "@styles/pages.css";
+
+const covers = [
+  "First impression, and how clearly the site explains what you offer",
+  "The key pages a customer needs to understand your business and make contact",
+  "How the site works on a phone, and how easy it is to find your way around",
+  "The route to making an enquiry",
+  "Obvious accessibility barriers",
+  "Performance observations, with how and when they were measured if figures are given",
+  "Obvious technical or security concerns visible from the public site",
+];
+const excludes = [
+  "Every page of the site",
+  "Your hosting, backend or source code, unless separately agreed",
+  "Penetration testing or vulnerability scanning",
+  "A formal accessibility audit or WCAG certification",
+  "A compliance assessment",
+  "A comprehensive security review",
+  "An SEO campaign or audit",
+  "Fixing the issues it finds",
+  "Any guarantee of business results",
+];
 ---
 
 <BaseLayout
   title="Free website review"
-  description="A free, manual review of your website by Dave, with a written report on the main issues and the improvements worth considering."
+  description="Dave reviews your website by hand and emails you a structured report of the main issues and the improvements worth considering. Free of charge."
 >
-  <WebsiteReviewExperience />
+  <section class="phero" data-hero>
+    <div class="wrap">
+      <span class="label"><i></i>Free website review</span>
+      <h1>Free <em>website review.</em></h1>
+      <p class="lede">
+        Dave reviews your website and emails you a structured report explaining the main issues he
+        observes and the improvements worth considering.
+      </p>
+      <div class="facts-2">
+        <div><b>Free of charge</b>Reviewed by hand by Dave rather than an automated scanner.</div>
+        <div><b>Emailed personally</b>There is no fixed turnaround. Each report is emailed personally.</div>
+      </div>
+      <div class="ctas"><a href="#request" class="btn">Request a website review <Icon name="arrow" /></a></div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section class="rsec reveal" aria-labelledby="covers-title">
+      <h2 id="covers-title">What Dave looks at</h2>
+      <div>
+        <p>
+          The review covers the main public-facing website and the route a customer takes to get in
+          touch. It may include:
+        </p>
+        <ul class="dash">{covers.map((item) => <li>{item}</li>)}</ul>
+      </div>
+    </section>
+    <section class="rsec reveal" aria-labelledby="receive-title">
+      <h2 id="receive-title">What you receive</h2>
+      <div>
+        <p>
+          A written report by email. It separates what Dave observed, the evidence for it and the
+          limits of the review, then sets out the improvements worth considering in priority order,
+          with why each one matters.
+        </p>
+        <p>It should be useful whether or not you go on to work with Teesside Digital.</p>
+        <p>If nothing significant turns up, the report says so. That is not a guarantee that no issues exist.</p>
+      </div>
+    </section>
+    <section class="rsec reveal" aria-labelledby="excludes-title">
+      <h2 id="excludes-title">What it does not include</h2>
+      <div>
+        <ul class="dash">{excludes.map((item) => <li>{item}</li>)}</ul>
+      </div>
+    </section>
+    <section class="rsec reveal">
+      <h2 id="request" tabindex="-1">Request a review</h2>
+      <ReviewForm />
+    </section>
+  </div>
+
+  <Band
+    title="Already know what you need?"
+    text="Skip the review and tell me about the project."
+    href="/contact/"
+    action="Start a project"
+    class="band-gap"
+  />
 </BaseLayout>
+
+<style>
+  :global(.band-gap) {
+    margin-top: 40px;
+  }
+</style>

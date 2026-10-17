@@ -57,7 +57,7 @@
 html {
   scroll-behavior: smooth;
   /* Anchored targets stop clear of the floating nav. */
-  scroll-padding-top: 100px;
+  scroll-padding-top: 90px;
   background: var(--ink);
 }
 body {

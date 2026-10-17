@@ -1,11 +1,92 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
-import ContactExperience from "@components/astro/ContactExperience.astro";
+import { SITE, telephoneHref } from "@config/constants";
+import Band from "@components/ui/Band.astro";
+import EnquiryForm from "@components/ui/EnquiryForm.astro";
+import Faq from "@components/ui/Faq.astro";
+import "@styles/sections.css";
+import "@styles/pages.css";
 ---
 
 <BaseLayout
   title="Contact"
-  description="Tell Dave about your project. Websites, business tools and practical automation for small and owner-led businesses in Teesside and the North East."
+  description="Tell Dave what you need in four quick steps, or email him. You'll hear back personally with honest advice. Based in Hartlepool, Teesside."
 >
-  <ContactExperience />
+  <section class="phero" data-hero>
+    <div class="wrap">
+      <span class="label"><i></i>Contact</span>
+      <h1>Let's talk about <em>what you need.</em></h1>
+      <p class="lede">
+        Four quick steps, or just email me. Either way, you'll hear back from me personally with
+        honest advice.{SITE.replyTime && ` ${SITE.replyTime}`}
+      </p>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:0">
+    <div class="wrap cgrid">
+      <div class="reveal" id="enquiry">
+        <EnquiryForm id="contact-enquiry" level={2} />
+      </div>
+      <aside class="reveal" aria-label="Contact details">
+        <dl class="info">
+          <div>
+            <dt class="k">Email</dt>
+            <dd><a class="v email" href={`mailto:${SITE.email}`}>{SITE.email}</a></dd>
+          </div>
+          {
+            SITE.phone && (
+              <div>
+                <dt class="k">Phone</dt>
+                <dd>
+                  <a class="v mono" href={telephoneHref(SITE.phone)}>
+                    {SITE.phone}
+                  </a>
+                </dd>
+              </div>
+            )
+          }
+          <div>
+            <dt class="k">Based in</dt>
+            <dd>
+              <span class="v">Hartlepool, Teesside</span>
+              <span class="note">Meetings in person around Teesside, or by video anywhere in the UK.</span>
+            </dd>
+          </div>
+          {
+            SITE.hours && (
+              <div>
+                <dt class="k">Hours</dt>
+                <dd>
+                  <span class="v">{SITE.hours}</span>
+                </dd>
+              </div>
+            )
+          }
+          <div>
+            <dt class="k">What happens next</dt>
+            <dd>
+              <ol class="next">
+                <li>I read your message properly.</li>
+                <li>I reply, or we have a quick call to understand the job.</li>
+                <li>You get a clear proposal with a fixed price. No pressure.</li>
+              </ol>
+            </dd>
+          </div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <Band
+    title="Just want a second opinion?"
+    text="Get a free, hand-written review of your current website."
+    href="/website-review/"
+    action="Free website review"
+    variant="btn2"
+  />
+
+  <div style="padding-top:clamp(80px,10vw,140px)">
+    <Faq />
+  </div>
 </BaseLayout>

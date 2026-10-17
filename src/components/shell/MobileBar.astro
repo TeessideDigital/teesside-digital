@@ -7,7 +7,12 @@ import { isCurrentPage, projectEnquiry } from "@config/navigation";
 import Icon from "../ui/Icon.astro";
 
 const path = Astro.url.pathname;
-const href = isCurrentPage(path, "/") ? "#contact" : projectEnquiry.href;
+// Home and Contact point at their own form; elsewhere, at Contact.
+const href = isCurrentPage(path, "/")
+  ? "#contact"
+  : isCurrentPage(path, projectEnquiry.href)
+    ? "#enquiry"
+    : projectEnquiry.href;
 ---
 
 <div class="mbar" id="mbar">

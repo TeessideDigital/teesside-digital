@@ -1,6 +1,8 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
-import NotFoundExperience from "@components/astro/NotFoundExperience.astro";
+import Icon from "@components/ui/Icon.astro";
+import "@styles/sections.css";
+import "@styles/pages.css";
 ---
 
 <BaseLayout
@@ -8,5 +10,16 @@ import NotFoundExperience from "@components/astro/NotFoundExperience.astro";
   description="This page could not be found on the Teesside Digital website."
   robots="noindex"
 >
-  <NotFoundExperience />
+  <section class="nf" data-hero>
+    <div class="wrap">
+      <div class="big404" aria-hidden="true">404</div>
+      <h1>This page has gone walkabout.</h1>
+      <p>It might have moved, or the link might be wrong. Try one of these instead.</p>
+      <div class="ctas">
+        <a href="/" class="btn">Back to the homepage <Icon name="arrow" /></a>
+        <a href="/services/" class="btn2">Services</a>
+        <a href="/contact/" class="btn2">Contact</a>
+      </div>
+    </div>
+  </section>
 </BaseLayout>

@@ -1,21 +1,24 @@
 ---
 import { SITE } from "@config/constants";
-import PageOpening from "../system/PageOpening.astro";
 ---
 
-<div class="accessibility-experience">
-  <PageOpening
-    label="Accessibility"
-    title="Accessibility"
-    lead="Teesside Digital wants this website to be usable by as many people as possible, including people who use a keyboard, screen magnification, high-contrast settings or assistive technology."
-  >
-    <p>Last reviewed: 13 October 2026</p>
-  </PageOpening>
-  <div class="td-section">
-    <div class="td-wrap">
-      <section class="td-split" aria-labelledby="standard-heading">
-        <h2 class="td-h2-statement" id="standard-heading">The standard</h2>
-        <div class="td-prose">
+<div>
+  <section class="phero" data-hero>
+    <div class="wrap">
+      <span class="label" aria-hidden="true"><i></i>Accessibility</span>
+      <h1>Accessibility</h1>
+      <p class="lede">
+        Teesside Digital wants this website to be usable by as many people as possible, including people who use a keyboard, screen magnification, high-contrast settings or assistive technology.
+      </p>
+      <p class="updated">Last reviewed: 13 October 2026</p>
+    </div>
+  </section>
+  <div class="legal">
+    <div class="wrap">
+      <div class="prose">
+      <section aria-labelledby="standard-heading">
+        <h2 id="standard-heading">The standard</h2>
+        <div>
           <p>
             The target is WCAG 2.2 level AA, the widely used international
             standard for web accessibility.
@@ -26,9 +29,9 @@ import PageOpening from "../system/PageOpening.astro";
           </p>
         </div>
       </section>
-      <section class="td-split" aria-labelledby="checked-heading">
-        <h2 class="td-h2-statement" id="checked-heading">What has been checked</h2>
-        <div class="td-prose">
+      <section aria-labelledby="checked-heading">
+        <h2 id="checked-heading">What has been checked</h2>
+        <div>
           <p>These checks were carried out in Microsoft Edge on Windows:</p>
           <ul role="list">
             <li>
@@ -48,9 +51,9 @@ import PageOpening from "../system/PageOpening.astro";
           <!-- UPDATE-AFTER-TEST: screen reader -->
         </div>
       </section>
-      <section class="td-split" aria-labelledby="unchecked-heading">
-        <h2 class="td-h2-statement" id="unchecked-heading">Not yet checked</h2>
-        <div class="td-prose">
+      <section aria-labelledby="unchecked-heading">
+        <h2 id="unchecked-heading">Not yet checked</h2>
+        <div>
           <ul role="list">
             <li>other browsers, including Safari and Firefox</li>
             <li>real phones and tablets</li>
@@ -63,15 +66,15 @@ import PageOpening from "../system/PageOpening.astro";
           </p>
         </div>
       </section>
-      <section class="td-split" aria-labelledby="issues-heading">
-        <h2 class="td-h2-statement" id="issues-heading">Known issues</h2>
-        <div class="td-prose">
+      <section aria-labelledby="issues-heading">
+        <h2 id="issues-heading">Known issues</h2>
+        <div>
           <p>No known issues at the moment.</p>
         </div>
       </section>
-      <section class="td-split" aria-labelledby="features-heading">
-        <h2 class="td-h2-statement" id="features-heading">Features that help</h2>
-        <div class="td-prose">
+      <section aria-labelledby="features-heading">
+        <h2 id="features-heading">Features that help</h2>
+        <div>
           <ul role="list">
             <li>a "Skip to main content" link at the start of every page</li>
             <li>a choice of Dark or Light theme, remembered on your device</li>
@@ -82,9 +85,9 @@ import PageOpening from "../system/PageOpening.astro";
           </ul>
         </div>
       </section>
-      <section class="td-split" aria-labelledby="report-heading">
-        <h2 class="td-h2-statement" id="report-heading">Report a problem</h2>
-        <div class="td-prose">
+      <section aria-labelledby="report-heading">
+        <h2 id="report-heading">Report a problem</h2>
+        <div>
           <p>
             If something on this website is difficult to use, or you need
             information from it in a different format, email
@@ -97,6 +100,7 @@ import PageOpening from "../system/PageOpening.astro";
           </p>
         </div>
       </section>
+      </div>
     </div>
   </div>
 </div>

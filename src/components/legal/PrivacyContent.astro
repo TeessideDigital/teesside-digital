@@ -2,22 +2,25 @@
 import { SITE } from "@config/constants";
 
 const mail = `mailto:${SITE.email}`;
-import PageOpening from "../system/PageOpening.astro";
 ---
 
-<div class="privacy-experience">
-  <PageOpening
-    label="Privacy"
-    title="Privacy"
-    lead="This page explains what information Teesside Digital collects through this website, why, who else handles it, and what you can ask Dave to do with it."
-  >
-    <p>Last updated: 13 October 2026</p>
-  </PageOpening>
-  <div class="td-section">
-    <div class="td-wrap">
-      <section class="td-split" aria-labelledby="responsible-heading">
-        <h2 class="td-h2-statement" id="responsible-heading">Who is responsible</h2>
-        <div class="td-prose">
+<div>
+  <section class="phero" data-hero>
+    <div class="wrap">
+      <span class="label" aria-hidden="true"><i></i>Privacy</span>
+      <h1>Privacy</h1>
+      <p class="lede">
+        This page explains what information Teesside Digital collects through this website, why, who else handles it, and what you can ask Dave to do with it.
+      </p>
+      <p class="updated">Last updated: 13 October 2026</p>
+    </div>
+  </section>
+  <div class="legal">
+    <div class="wrap">
+      <div class="prose">
+      <section aria-labelledby="responsible-heading">
+        <h2 id="responsible-heading">Who is responsible</h2>
+        <div>
           <p>
             Teesside Digital is run by David Young as a sole trader. Dave is
             responsible for the personal information described here (the "data
@@ -32,9 +35,9 @@ import PageOpening from "../system/PageOpening.astro";
           <!-- TODO: retake ICO fee self-assessment once trading; add registration number here if one is issued -->
         </div>
       </section>
-      <section class="td-split" aria-labelledby="collected-heading">
-        <h2 class="td-h2-statement" id="collected-heading">What is collected</h2>
-        <div class="td-prose">
+      <section aria-labelledby="collected-heading">
+        <h2 id="collected-heading">What is collected</h2>
+        <div>
           <p>
             <strong>When you send an enquiry</strong>, the form asks for your
             name, email address and a description of what you need, and
@@ -62,9 +65,9 @@ import PageOpening from "../system/PageOpening.astro";
           </p>
         </div>
       </section>
-      <section class="td-split" aria-labelledby="why-heading">
-        <h2 class="td-h2-statement" id="why-heading">Why it is used</h2>
-        <div class="td-prose">
+      <section aria-labelledby="why-heading">
+        <h2 id="why-heading">Why it is used</h2>
+        <div>
           <ul role="list">
             <li>
               <strong>Enquiries:</strong> to reply to you and discuss the work you
@@ -92,9 +95,9 @@ import PageOpening from "../system/PageOpening.astro";
           </p>
         </div>
       </section>
-      <section class="td-split" aria-labelledby="handlers-heading">
-        <h2 class="td-h2-statement" id="handlers-heading">Who else handles it</h2>
-        <div class="td-prose">
+      <section aria-labelledby="handlers-heading">
+        <h2 id="handlers-heading">Who else handles it</h2>
+        <div>
           <p>
             Dave uses two services that process your information on his behalf:
           </p>
@@ -125,9 +128,9 @@ import PageOpening from "../system/PageOpening.astro";
           </p>
         </div>
       </section>
-      <section class="td-split" aria-labelledby="kept-heading">
-        <h2 class="td-h2-statement" id="kept-heading">How long it is kept</h2>
-        <div class="td-prose">
+      <section aria-labelledby="kept-heading">
+        <h2 id="kept-heading">How long it is kept</h2>
+        <div>
           <ul role="list">
             <li>
               <strong>Copies of form submissions held by Netlify:</strong> deleted
@@ -152,9 +155,9 @@ import PageOpening from "../system/PageOpening.astro";
           </ul>
         </div>
       </section>
-      <section class="td-split" aria-labelledby="storage-heading">
-        <h2 class="td-h2-statement" id="storage-heading">Cookies and storage</h2>
-        <div class="td-prose">
+      <section aria-labelledby="storage-heading">
+        <h2 id="storage-heading">Cookies and storage</h2>
+        <div>
           <p>
             This website does not use cookies, analytics or tracking, and does
             not load content from other websites.
@@ -167,9 +170,9 @@ import PageOpening from "../system/PageOpening.astro";
           </p>
         </div>
       </section>
-      <section class="td-split" aria-labelledby="rights-heading">
-        <h2 class="td-h2-statement" id="rights-heading">Your rights</h2>
-        <div class="td-prose">
+      <section aria-labelledby="rights-heading">
+        <h2 id="rights-heading">Your rights</h2>
+        <div>
           <p>You can ask Dave to:</p>
           <ul role="list">
             <li>
@@ -196,15 +199,16 @@ import PageOpening from "../system/PageOpening.astro";
           </p>
         </div>
       </section>
-      <section class="td-split" aria-labelledby="changes-heading">
-        <h2 class="td-h2-statement" id="changes-heading">Changes to this notice</h2>
-        <div class="td-prose">
+      <section aria-labelledby="changes-heading">
+        <h2 id="changes-heading">Changes to this notice</h2>
+        <div>
           <p>
             If the way this website handles information changes, this page will
             be updated and the date at the top will change.
           </p>
         </div>
       </section>
+      </div>
     </div>
   </div>
 </div>

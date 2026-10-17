@@ -376,8 +376,9 @@ html:has(.drawer[open]) {
 }
 
 /* ---------- footer ---------- */
-/* The outlined wordmark uses a static 800 instance, subset to its letters:
-   the variable font's overlapping contours would show through the stroke. */
+/* The outlined wordmark and the 404 figure use a static 800 instance, subset to
+   their characters: the variable font's overlapping contours would show
+   through the stroke. */
 @font-face {
   font-family: "Schibsted Wordmark";
   src: url("/fonts/schibsted-grotesk-800-wordmark.woff2") format("woff2");

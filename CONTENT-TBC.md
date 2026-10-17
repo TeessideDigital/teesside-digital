@@ -51,6 +51,8 @@ Each service has `confirmed: false`. While false, its meta row on /services/ hid
 | --- | --- | --- | --- |
 | [ ] | `scores` | Measured on the V4 production build (see the file for the date and figures). The rings and the caption "Lighthouse, mobile, measured {date}" show these. Set to `null` to hide the rings. | Re-measure on the live site after go-live and update the figures and date, so the claim stays true. |
 
+Run Lighthouse on teessidedigital.uk straight after go-live.
+
 ## 5. Work
 
 | Done | Item | Current state | What Dave needs to supply |

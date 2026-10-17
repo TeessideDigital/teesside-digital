@@ -41,3 +41,6 @@ design/td-v4-handoff.zip
 # Playwright output
 test-results/
 playwright-report/
+
+# Design review screenshots (local only)
+design/v4-review/

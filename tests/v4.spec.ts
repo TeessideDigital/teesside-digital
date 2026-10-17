@@ -13,7 +13,7 @@ const pages = [
   "/accessibility/",
   "/404.html",
 ];
-const widths = [390, 768, 1440];
+const widths = [320, 390, 768, 1440];
 
 /** Fails the test on any console error or uncaught exception. */
 function watchErrors(page: Page) {
@@ -341,6 +341,8 @@ test.describe("reduced motion", () => {
       await page.emulateMedia({ reducedMotion: "reduce" });
       await page.goto(path, { waitUntil: "networkidle" });
       await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+      // Let the 0.01ms reduced-motion transitions (nav, progress bar) finish.
+      await page.waitForTimeout(100);
       expect(await page.locator(".reveal.pending").count()).toBe(0);
       const running = await page.evaluate(() =>
         document.getAnimations().filter((animation) => animation.playState === "running").length,
@@ -423,6 +425,172 @@ test.describe("content security policy", () => {
       await page.waitForTimeout(300);
       expect(violations).toEqual([]);
       expect(await page.evaluate(() => document.documentElement.classList.contains("js-ok"))).toBe(true);
+    });
+  }
+});
+
+test.describe("V4 fix run", () => {
+  test("the demo's first result is the engine's: Sort it changes nothing", async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/");
+    const before = (await page.locator("#demo-rows").innerText()).replace(/\s+/g, " ");
+    await page.locator("#demo-form button[type=submit]").click();
+    await expect(page.locator("#demo-status")).toHaveText("DONE. READY FOR YOU TO SEND");
+    const after = (await page.locator("#demo-rows").innerText()).replace(/\s+/g, " ");
+    expect(after).toBe(before);
+  });
+
+  test("skip link: hidden on load, shown on first Tab, hidden again on blur", async ({ page }) => {
+    await page.goto("/");
+    const bottom = () => page.locator(".skip").evaluate((el) => el.getBoundingClientRect().bottom);
+    expect(await bottom()).toBeLessThanOrEqual(0);
+    await page.keyboard.press("Tab");
+    await expect(page.locator(".skip")).toBeFocused();
+    await expect.poll(bottom).toBeGreaterThan(0);
+    await page.keyboard.press("Tab");
+    await expect.poll(bottom).toBeLessThanOrEqual(0);
+  });
+
+  test("review form: website example is a placeholder, and empty is required", async ({ page }) => {
+    await page.goto("/website-review/");
+    const field = page.locator("#review-website");
+    await expect(field).toHaveValue("");
+    expect(await field.getAttribute("value")).toBeNull();
+    expect(await field.getAttribute("placeholder")).toBe("www.yourbusiness.co.uk");
+    expect(await field.evaluate((el) => getComputedStyle(el, "::placeholder").color)).toBe("rgb(141, 149, 145)");
+    await page.fill("#review-name", "Test");
+    await page.fill("#review-email", "test@example.com");
+    await page.locator("form.review-form .submit").click();
+    await expect(page.locator("#review-website-error")).toHaveText("Please add your website address.");
+  });
+
+  for (const width of [390, 768]) {
+    test(`QuoteFlow preview is not cut off at ${width}`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto("/");
+      const frame = await page.locator(".wcard .wshot").first().boundingBox();
+      const head = await page.locator(".mini .mh").boundingBox();
+      expect(head!.y).toBeGreaterThanOrEqual(frame!.y);
+    });
+  }
+
+  test("the price guide sentence never renders on Contact", async ({ page }) => {
+    await page.goto("/contact/");
+    expect(await page.locator("#faq").innerText()).not.toContain("price guide");
+  });
+
+  test("mobile bar hides while the drawer is open", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/services/");
+    await page.evaluate(() => window.scrollTo(0, 1400));
+    await expect(page.locator("#mbar")).toHaveClass(/show/);
+    await expect(page.locator("#mbar")).toBeInViewport();
+    await page.locator("#menu-button").click();
+    await expect(page.locator("#mbar")).not.toBeInViewport();
+    await page.keyboard.press("Escape");
+    await expect(page.locator("#mbar")).toBeInViewport();
+  });
+});
+
+test.describe("accessibility checks", () => {
+  /** Where focus shows: the chip for a hidden radio or checkbox, the knob for
+   * the slider, otherwise the focused element itself. */
+  const focusRing = () => {
+    const el = document.activeElement as HTMLElement | null;
+    if (!el || el === document.body) return null;
+    let target: Element = el;
+    if (el.matches(".opt input")) target = el.nextElementSibling ?? el;
+    if (el.id === "ba-range") target = document.querySelector(".ba .knob") ?? el;
+    const style = getComputedStyle(target);
+    const box = target.getBoundingClientRect();
+    return {
+      tag: el.tagName + (el.id ? "#" + el.id : "") + (el.className ? "." + String(el.className).split(" ")[0] : ""),
+      outline: style.outlineStyle !== "none" && parseFloat(style.outlineWidth) >= 2,
+      onScreen: box.width > 0 && box.height > 0 && box.bottom > 0 && box.top < window.innerHeight,
+    };
+  };
+
+  for (const path of pages) {
+    test(`keyboard: every stop on ${path} shows a visible focus indicator`, async ({ page }) => {
+      await page.setViewportSize({ width: 1440, height: 900 });
+      await page.emulateMedia({ reducedMotion: "reduce" });
+      await page.goto(path, { waitUntil: "networkidle" });
+      let stops = 0;
+      for (let i = 0; i < 150; i += 1) {
+        await page.keyboard.press("Tab");
+        // One frame for the skip link's slide-in transition to apply.
+        await page.waitForTimeout(60);
+        const state = await page.evaluate(focusRing);
+        if (!state) break;
+        expect(state.outline, `focus outline on ${state.tag}`).toBe(true);
+        expect(state.onScreen, `${state.tag} in view when focused`).toBe(true);
+        stops += 1;
+      }
+      expect(stops).toBeGreaterThan(5);
+    });
+  }
+
+  test("keyboard only: the enquiry form can be completed and sent", async ({ page }) => {
+    const posts = await fakeReceiver(page);
+    await page.goto("/contact/");
+    const form = page.locator("form.qf");
+    await form.locator('input[data-need="website"]').focus();
+    await page.keyboard.press("Space");
+    await page.keyboard.press("Enter");
+    await expect(form.locator(".qf-count")).toHaveText("Step 2 of 4");
+    await form.locator('input[name="budget"]').first().focus();
+    await page.keyboard.press("Space");
+    await page.keyboard.press("Enter");
+    await form.locator('input[name="timing"]').first().focus();
+    await page.keyboard.press("Space");
+    await page.keyboard.press("Enter");
+    await expect(form.locator('input[name="name"]')).toBeFocused();
+    await page.keyboard.type("Keyboard Test");
+    await page.keyboard.press("Tab");
+    await page.keyboard.type("keyboard@example.com");
+    await page.keyboard.press("Enter");
+    await expect(form.locator(".qf-done")).toBeVisible();
+    expect(posts).toHaveLength(1);
+  });
+
+  test("keyboard only: the review form can be completed and sent", async ({ page }) => {
+    const posts = await fakeReceiver(page);
+    await page.goto("/website-review/");
+    await page.locator("#review-name").focus();
+    await page.keyboard.type("Keyboard Test");
+    await page.keyboard.press("Tab");
+    await page.keyboard.type("keyboard@example.com");
+    await page.keyboard.press("Tab");
+    await page.keyboard.type("example.co.uk");
+    await page.keyboard.press("Enter");
+    await expect(page.locator("form.review-form .confirmation")).toBeVisible();
+    expect(posts).toHaveLength(1);
+  });
+
+  for (const path of pages) {
+    test(`forced colours: ${path} renders with no errors or overflow`, async ({ page }) => {
+      const errors = watchErrors(page);
+      await page.emulateMedia({ forcedColors: "active" });
+      await page.setViewportSize({ width: 390, height: 844 });
+      await page.goto(path, { waitUntil: "networkidle" });
+      await expect(page.locator("h1")).toBeVisible();
+      const overflow = await page.evaluate(
+        () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      );
+      expect(overflow).toBeLessThanOrEqual(0);
+      expect(errors).toEqual([]);
+    });
+  }
+
+  for (const path of pages) {
+    test(`colour contrast (axe) on ${path}`, async ({ page }) => {
+      await page.emulateMedia({ reducedMotion: "reduce" });
+      await page.goto(path, { waitUntil: "networkidle" });
+      // The grain overlay stops axe deciding; it shifts colours by a few per
+      // cent at most, so measure the colours underneath it.
+      await page.addStyleTag({ content: ".grain{display:none!important}" });
+      const results = await new AxeBuilder({ page }).withRules(["color-contrast"]).analyze();
+      expect(results.violations.map((v) => v.nodes.map((n) => n.target.join(" ")).join(", "))).toEqual([]);
     });
   }
 });

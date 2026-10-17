@@ -20,11 +20,24 @@ V4 commits:
 
 The build brief is `design/v4-reference/BRIEF-V4-BUILD.md`, approved by Dave on 17 October 2026. The six reference pages and the final logo set are beside it. The original download `design/td-v4-handoff.zip` is ignored by Git.
 
-Netlify draft deploy, not published, behind Netlify team login:
+Netlify draft deploys, not published, behind Netlify team login (the latest is listed under "V4 fix run" below):
 
 - `6ad35fa721d053a32c91ebe1`, of `3e16b8a`, on 17 October 2026, at https://redesign-v4--teesside-digital.netlify.app
 
 Production still serves V1 from `main`.
+
+## V4 fix run (17 October 2026)
+
+| Part | Commit | Content |
+| --- | --- | --- |
+| 1 | `04502f1` | QuoteFlow preview no longer clipped below 1000px; Home map without the HARTLEPOOL label box behind the form; service rows at the reference line height; placeholders in --fg-3; lime square markers in legal lists |
+| 2 | `7349455` | Confirmed content: availability, reply time, care plan, ownership, seven-entry Background (`src/data/background.ts`), tools, FAQ answers, per-service time and price flags |
+| 3 | `41f9ce4` | No browser storage (logo intro now uses a same-origin referrer check); Privacy and Accessibility wording corrected (approved by Dave); forced-colours fixes for the menu bars and the mark; new CSP hash |
+| 4 | this commit | Tests for the fix run and the accessibility checks; docs |
+
+Draft redeployed: `6ad398f71c5f4010faf5fd14`, of `41f9ce4`, at https://redesign-v4--teesside-digital.netlify.app (branch deploy context, not published).
+
+Verification on the local production build: check, type-check, lint and build clean; CSP matches the build (one head-script hash, no unsafe-inline for scripts); 278+ internal links resolve; Playwright 122 passed, 2 skipped (the price guide tests, while `pricing.confirmed` is false), covering 320, 390, 768 and 1440 on every page, keyboard-only use with visible focus on every page and both forms, forced colours, reduced motion, no JavaScript, and axe (no serious or critical issues; colour contrast passes with the grain overlay hidden); Lighthouse mobile on `astro preview`: Home, Services, About, Contact and Website review 99 / 100 / 100 / 100, CLS 0. The built output contains no TBC, XXXXX, Prototype, sessionStorage or localStorage.
 
 ## Status
 

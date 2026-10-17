@@ -14,6 +14,7 @@ To change a value, edit the file named, then rebuild.
 | [ ] | Price guide estimator | `pricing.confirmed` and figures in `src/data/pricing.ts` | `false`: the Home price guide, the "Prices" nav link and the "Price guide" menu link are hidden | Real ranges for every type and size, the extras and the monthly care figure, then set `confirmed: true` |
 | [ ] | Lighthouse on the live site | `src/data/scores.ts` | Local production build figures, 17 October 2026 | Run Lighthouse on teessidedigital.uk straight after go-live, and update the figures and date |
 | [ ] | Client case studies | Work section on Home | None; the section says "Client case studies are on the way." | Real client projects that pass the evidence gate, with permission |
+| [ ] | Privacy: review form question | Privacy page, "What is collected" | Mentions "anything you would like Dave to look at" but not the optional "What is the site meant to achieve?" question | Approve a wording that covers both optional review questions |
 | [ ] | Netlify forms after go-live | Netlify dashboard | Both forms registered with every V4 field | Check one real submission per form after the first production deploy |
 
 ## Confirmed by Dave, 17 October 2026

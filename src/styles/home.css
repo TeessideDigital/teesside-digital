@@ -1199,7 +1199,7 @@ html.js .svc:not(.ready) .svc-panels .panel + .panel {
 .score {
   display: flex;
   gap: 14px;
-  align-items: flex-end;
+  align-items: flex-start;
 }
 .ring {
   position: relative;

@@ -14,6 +14,7 @@ type Field = HTMLInputElement | HTMLTextAreaElement;
 export type Outcome = "accepted" | "rejected" | "uncertain";
 
 const TIMEOUT = 15000;
+const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /** The form's fields, encoded as the receiver expects. Several values under
  * one name (a group of checkboxes) are joined with commas, so each answer
@@ -87,7 +88,9 @@ function check(field: Field) {
   const value = field.value.trim();
   if (!value) return field.required ? (field.dataset.missing ?? "") : "";
   const format = field.dataset.format ?? "";
-  if (field.type === "email" && field.validity.typeMismatch) return format;
+  // The browser accepts name@host; a reply needs a domain with a dot in it.
+  if (field.type === "email" && (field.validity.typeMismatch || !EMAIL.test(value)))
+    return format;
   if (field.dataset.rule === "website" && !isWebAddress(value)) return format;
   return "";
 }

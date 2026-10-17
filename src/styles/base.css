@@ -1,7 +1,9 @@
 /* Base layer: fonts, reset, type, layout container, labels, buttons and the
-   shared motion vocabulary. Everything here is used on every page. */
+   shared motion vocabulary. Everything here is used on every page.
+   Tailwind supplies only its base reset. Its utility classes are left out on
+   purpose: names such as ring, outline and block would collide with the
+   site's own classes. */
 @tailwind base;
-@tailwind utilities;
 
 /* Self-hosted variable fonts, latin subset. One file covers every weight. */
 @font-face {
@@ -362,8 +364,15 @@ a.email:hover {
   html {
     scroll-behavior: auto;
   }
-  .reveal {
-    transition: none;
+  /* Everything is static: any animation or transition jumps to its end. */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
   }
 }
 

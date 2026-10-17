@@ -37,3 +37,7 @@ yarn-error.log*
 
 # V4 design handoff download. The extracted package is in design/v4-reference.
 design/td-v4-handoff.zip
+
+# Playwright output
+test-results/
+playwright-report/

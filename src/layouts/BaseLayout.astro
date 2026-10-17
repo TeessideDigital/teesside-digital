@@ -47,6 +47,9 @@ const canonicalUrl = /noindex/.test(robots)
 const pageTitle = getPageTitle(title);
 const ogImage = getOgImageUrl(image);
 const baseStructuredData = getOrganisationSchema();
+// The CSP allows the head script by the hash of its bytes; a Windows checkout
+// must not change them.
+const headInline = headScript.replace(/\r\n/g, "\n");
 const allStructuredData = structuredData
   ? { "@context": "https://schema.org", "@graph": [baseStructuredData, structuredData] }
   : baseStructuredData;
@@ -59,7 +62,7 @@ const allStructuredData = structuredData
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="color-scheme" content="dark" />
     <meta name="theme-color" content="#0b0d0f" />
-    <script is:inline set:html={headScript} />
+    <script is:inline set:html={headInline} />
 
     <title>{pageTitle}</title>
     <meta name="description" content={description} />

@@ -45,6 +45,11 @@ export default defineConfig({
 
   // Vite configuration (build tool settings)
   vite: {
+    build: {
+      // Never inline page scripts: as external files they are allowed by the
+      // CSP's 'self', so only the one head script needs a hash.
+      assetsInlineLimit: 0,
+    },
     // Explicit aliases matching tsconfig.json's "paths", defined directly
     // here rather than relying on Astro's automatic tsconfig-paths-to-Vite
     // wiring. That implicit mechanism depends on tsconfig.json being

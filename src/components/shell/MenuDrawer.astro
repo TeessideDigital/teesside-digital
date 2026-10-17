@@ -1,0 +1,59 @@
+---
+// The menu drawer: a modal dialog that slides in from the right. As a native
+// dialog it keeps the rest of the page inert, closes on Esc and returns focus
+// to the menu button; the shell script adds the scrim click, closing on a
+// link, the Tab loop and aria-expanded.
+import { SITE } from "@config/constants";
+import { isCurrentPage, menuNavigation, projectEnquiry } from "@config/navigation";
+import Logo from "../brand/Logo.astro";
+import Icon from "../ui/Icon.astro";
+import PhonePill from "./PhonePill.astro";
+
+const path = Astro.url.pathname;
+const links = menuNavigation(path);
+---
+
+<dialog class="drawer" id="menu" aria-label="Menu" aria-modal="true" closedby="any">
+  <div class="d-top">
+    <span class="mark"><Logo id="menu" width={52} /></span>
+    <button
+      class="d-close"
+      type="button"
+      aria-label="Close menu"
+      autofocus
+      commandfor="menu"
+      command="close"><Icon name="close" /></button
+    >
+  </div>
+  <ul class="d-links">
+    {
+      links.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            aria-current={isCurrentPage(path, link.href) ? "page" : undefined}
+          >
+            {link.label}
+            {link.note && <small>{link.note}</small>}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+  <div class="d-foot">
+    <div class="row">
+      <a href={projectEnquiry.href} class="outline">
+        {projectEnquiry.label}
+        <Icon name="arrow" />
+      </a>
+    </div>
+    {
+      SITE.phone && (
+        <div class="row">
+          <PhonePill />
+        </div>
+      )
+    }
+    <a class="email" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+  </div>
+</dialog>

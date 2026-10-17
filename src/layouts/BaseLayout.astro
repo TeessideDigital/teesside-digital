@@ -13,6 +13,11 @@ import {
 import headScript from "../scripts/head.js?raw";
 import "@styles/tokens.css";
 import "@styles/base.css";
+import "@styles/shell.css";
+import SiteNav from "../components/shell/SiteNav.astro";
+import MenuDrawer from "../components/shell/MenuDrawer.astro";
+import SiteFooter from "../components/shell/SiteFooter.astro";
+import MobileBar from "../components/shell/MobileBar.astro";
 
 interface Props {
   title?: string; // Page title (the site name is appended)
@@ -100,8 +105,18 @@ const allStructuredData = structuredData
   <body>
     <a href="#main" class="skip">Skip to main content</a>
     <div class="grain" aria-hidden="true"></div>
+    <div class="progress" id="progress" aria-hidden="true"></div>
+    <SiteNav />
+    <MenuDrawer />
     <main id="main" tabindex="-1">
       <slot />
     </main>
+    <MobileBar />
+    <SiteFooter />
+    <script>
+      import "../scripts/shell";
+      import "../scripts/reveal";
+      import "../scripts/magnetic";
+    </script>
   </body>
 </html>

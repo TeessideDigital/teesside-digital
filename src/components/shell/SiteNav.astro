@@ -1,0 +1,46 @@
+---
+// The floating pill nav. The menu button opens the drawer: natively through
+// an invoker command where the browser supports it, and through the shell
+// script everywhere else.
+import { isCurrentPage, primaryNavigation } from "@config/navigation";
+import Logo from "../brand/Logo.astro";
+import PhonePill from "./PhonePill.astro";
+
+const path = Astro.url.pathname;
+const links = primaryNavigation(path);
+---
+
+<header class="nav" id="nav">
+  <div class="pill">
+    <a href="/" class="logo" aria-label="Teesside Digital, home">
+      <span class="mark"><Logo id="nav" width={44} /></span>
+      <span class="word">Teesside Digital</span>
+    </a>
+    <nav class="links" aria-label="Main">
+      {
+        links.map((link) => (
+          <a
+            href={link.href}
+            aria-current={isCurrentPage(path, link.href) ? "page" : undefined}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+    <div class="nav-right">
+      <PhonePill />
+      <button
+        class="burger"
+        id="menu-button"
+        type="button"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="menu"
+        aria-haspopup="dialog"
+        commandfor="menu"
+        command="show-modal"><span></span></button
+      >
+    </div>
+  </div>
+</header>

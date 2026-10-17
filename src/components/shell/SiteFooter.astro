@@ -1,0 +1,53 @@
+---
+import { SITE } from "@config/constants";
+import { telephoneHref } from "@config/constants";
+import { areas, footerServices, legalNavigation, projectEnquiry } from "@config/navigation";
+import Icon from "../ui/Icon.astro";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="big">
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <p class="lead">Websites, apps and software for businesses across Teesside.</p>
+      </div>
+      <div>
+        <h2 class="fh">Services</h2>
+        <ul>
+          {footerServices.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+        </ul>
+      </div>
+      <div>
+        <h2 class="fh">Areas</h2>
+        <ul>
+          {areas.map((area) => <li>{area}</li>)}
+        </ul>
+      </div>
+      <div>
+        <h2 class="fh">Contact</h2>
+        <ul>
+          <li><a class="email" href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+          {
+            SITE.phone && (
+              <li>
+                <a class="mono" href={telephoneHref(SITE.phone)}>{SITE.phone}</a>
+              </li>
+            )
+          }
+          <li><a href={projectEnquiry.href}>{projectEnquiry.label}</a></li>
+          <li><a href="/about/">About Dave</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="wordmark" aria-hidden="true">Teesside Digital</div>
+    <div class="fbar">
+      <span>&copy; {year} Teesside Digital, Hartlepool</span>
+      <nav aria-label="Legal">
+        {legalNavigation.map((link) => <a href={link.href}>{link.label}</a>)}
+      </nav>
+      <a class="totop" href="#main" id="to-top">Back to top <Icon name="up" /></a>
+    </div>
+  </div>
+</footer>

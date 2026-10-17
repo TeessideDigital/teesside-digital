@@ -1,0 +1,22 @@
+---
+// The phone-width action bar. The shell script shows it once the page hero
+// ([data-hero]) has scrolled away, and hides it while a contact section or
+// form ([data-contact]) is in view or the menu is open.
+import { SITE, telephoneHref } from "@config/constants";
+import { isCurrentPage, projectEnquiry } from "@config/navigation";
+import Icon from "../ui/Icon.astro";
+
+const path = Astro.url.pathname;
+const href = isCurrentPage(path, "/") ? "#contact" : projectEnquiry.href;
+---
+
+<div class="mbar" id="mbar">
+  <a href={href} class="btn">{projectEnquiry.label} <Icon name="arrow" /></a>
+  {
+    SITE.phone && (
+      <a href={telephoneHref(SITE.phone)} class="call" aria-label={`Call Teesside Digital on ${SITE.phone}`}>
+        <Icon name="phone" />
+      </a>
+    )
+  }
+</div>

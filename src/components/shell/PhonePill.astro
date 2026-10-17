@@ -1,0 +1,17 @@
+---
+// The phone pill: the number and a lime round call button. Renders nothing
+// until SITE.phone is set.
+import { SITE, telephoneHref } from "@config/constants";
+import Icon from "../ui/Icon.astro";
+---
+
+{
+  SITE.phone && (
+    <a href={telephoneHref(SITE.phone)} class="phone" aria-label={`Call Teesside Digital on ${SITE.phone}`}>
+      <span class="num">{SITE.phone}</span>
+      <span class="ic">
+        <Icon name="phone" />
+      </span>
+    </a>
+  )
+}

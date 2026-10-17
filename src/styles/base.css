@@ -1,0 +1,391 @@
+/* Base layer: fonts, reset, type, layout container, labels, buttons and the
+   shared motion vocabulary. Everything here is used on every page. */
+@tailwind base;
+@tailwind utilities;
+
+/* Self-hosted variable fonts, latin subset. One file covers every weight. */
+@font-face {
+  font-family: "Schibsted Grotesk";
+  src: url("/fonts/schibsted-grotesk-latin-wght.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/jetbrains-mono-latin-wght.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+}
+/* Fallbacks sized to the web fonts' metrics, so the swap barely moves text. */
+@font-face {
+  font-family: "Schibsted Fallback";
+  src: local("Arial"), local("ArialMT");
+  font-weight: 400 500;
+  size-adjust: 104.49%;
+  ascent-override: 93.46%;
+  descent-override: 24.67%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Schibsted Fallback";
+  src: local("Arial Bold"), local("Arial-BoldMT");
+  font-weight: 600 900;
+  size-adjust: 102.03%;
+  ascent-override: 95.71%;
+  descent-override: 25.27%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "JetBrains Fallback";
+  src: local("Courier New"), local("CourierNewPSMT");
+  size-adjust: 99.98%;
+  ascent-override: 102.02%;
+  descent-override: 30%;
+  line-gap-override: 0%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+[hidden] {
+  display: none !important;
+}
+html {
+  scroll-behavior: smooth;
+  background: var(--ink);
+}
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--ink);
+  color: var(--fg);
+  font-family: var(--display);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+/* Covers the notch area so content never shows above the floating nav. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  z-index: 60;
+  background: var(--ink);
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+svg {
+  display: inline-block;
+}
+:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+h1,
+h2,
+h3,
+h4 {
+  text-wrap: balance;
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+h2 {
+  font-size: clamp(36px, 4.6vw, 64px);
+  line-height: 1;
+}
+p {
+  margin: 0;
+}
+em.hl {
+  font-style: normal;
+  color: var(--lime);
+}
+
+.wrap {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
+}
+.mono {
+  font-family: var(--mono);
+}
+.label {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.label i {
+  width: 8px;
+  height: 8px;
+  background: var(--lime);
+  display: inline-block;
+  flex: none;
+}
+.k {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+  font-weight: 500;
+}
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Skip link: off screen until focused. */
+.skip {
+  position: fixed;
+  left: 16px;
+  top: 12px;
+  z-index: 100;
+  padding: 12px 18px;
+  background: var(--lime);
+  color: var(--lime-ink);
+  font-weight: 700;
+  border-radius: 3px;
+  transform: translateY(-160%);
+  transition: transform 0.2s var(--ease);
+}
+.skip:focus-visible {
+  transform: none;
+}
+main:focus {
+  outline: none;
+}
+
+/* Buttons */
+.btn {
+  height: 58px;
+  padding: 0 28px;
+  background: var(--lime);
+  color: var(--lime-ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 700;
+  border: 0;
+  border-radius: 3px;
+  cursor: pointer;
+  transition:
+    transform 0.3s var(--ease),
+    box-shadow 0.3s;
+}
+.btn svg {
+  transition: transform 0.3s var(--ease);
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px -10px rgba(212, 255, 63, 0.45);
+}
+.btn:hover svg {
+  transform: translateX(4px);
+}
+.btn2 {
+  height: 58px;
+  padding: 0 26px;
+  border: 1px solid var(--line-2);
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 17px;
+  font-weight: 600;
+  border-radius: 3px;
+  transition:
+    border-color 0.25s,
+    background 0.25s;
+}
+.btn2:hover {
+  border-color: var(--fg-2);
+  background: rgba(255, 255, 255, 0.03);
+}
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 40px;
+}
+.textlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 28px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--lime);
+  padding-bottom: 4px;
+}
+.textlink svg {
+  transition: transform 0.3s var(--ease);
+}
+.textlink:hover svg {
+  transform: translateX(4px);
+}
+.email {
+  font-family: var(--mono);
+  font-size: 15px;
+  color: var(--fg);
+}
+a.email:hover {
+  color: var(--lime);
+}
+
+/* Atmosphere: fine noise over everything. Decorative only. */
+.grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0.18;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* Scroll progress */
+.progress {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  z-index: 90;
+  background: var(--lime);
+  transform-origin: left;
+  transform: scaleX(0);
+  pointer-events: none;
+}
+
+/* Reveal on scroll. Visible by default: the script hides only what starts
+   below the first screen, and only once it is running. */
+.reveal.pending {
+  opacity: 0;
+  transform: translateY(28px);
+}
+.reveal {
+  transition:
+    opacity 0.9s var(--ease),
+    transform 0.9s var(--ease);
+}
+
+/* Shared keyframes */
+@keyframes up {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Page transitions: the CSS cross-document View Transitions API. Pages stay
+   fully static; browsers without support simply navigate. */
+@view-transition {
+  navigation: auto;
+}
+@keyframes vtOut {
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+@keyframes vtIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) {
+    animation: vtOut 0.3s var(--ease) both;
+  }
+  ::view-transition-new(root) {
+    animation: vtIn 0.55s var(--ease) both;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    transition: none;
+  }
+}
+
+@media (max-width: 760px) {
+  body {
+    font-size: 16px;
+  }
+  .ctas {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .ctas .btn,
+  .ctas .btn2 {
+    justify-content: center;
+  }
+}
+
+@media (forced-colors: active) {
+  .label i,
+  .grain,
+  .progress {
+    forced-color-adjust: none;
+  }
+  .btn {
+    border: 1px solid ButtonText;
+  }
+}

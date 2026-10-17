@@ -9,8 +9,8 @@ import SectionLabel from "../system/SectionLabel.astro";
 
 // Both photographs appear only once real ones are configured. There is no
 // placeholder for either.
-const portrait = SITE.portrait;
-const localPhoto = SITE.localPhoto;
+const portrait = SITE.portrait.src;
+const localPhoto = { src: "", alt: "" }; // Interim until the V4 About page.
 const facts = [
   {
     term: "Based in",

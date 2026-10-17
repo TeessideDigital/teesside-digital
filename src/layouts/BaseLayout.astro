@@ -1,26 +1,8 @@
 ---
 /**
- * BaseLayout.astro
- *
- * Main page wrapper for all pages.
- * Handles:
- * - SiteIndex shell and Footer
- * - Meta tags (title, description, Open Graph)
- * - Structured data (schema.org)
- * - Accessibility (skip to main, lang attribute)
- * - Security headers (via netlify.toml, but verified here)
- *
- * All pages inherit from this layout.
- *
- * Usage:
- * ---
- * import BaseLayout from '@layouts/BaseLayout.astro';
- * ---
- * <BaseLayout title="Page Title" description="Page description">
- *   <YourContent />
- * </BaseLayout>
+ * The page wrapper every route uses: metadata, fonts, the head script and the
+ * V4 shell (progress bar, floating nav, menu, footer, mobile action bar).
  */
-
 import { SITE } from "@config/constants";
 import {
   getCanonicalUrl,
@@ -28,99 +10,59 @@ import {
   getOgImageUrl,
   getOrganisationSchema,
 } from "@lib/seo";
-import SiteIndex from "../components/astro/SiteIndex.astro";
-import Footer from "../components/astro/Footer.astro";
-import ActionBar from "../components/astro/ActionBar.astro";
-import CallPill from "../components/astro/CallPill.astro";
-import { isCurrentPage, projectEnquiry, websiteReview } from "@config/navigation";
-import themeScript from "../scripts/theme.js?raw";
+import headScript from "../scripts/head.js?raw";
 import "@styles/tokens.css";
-import "@styles/globals.css";
-import "@styles/system.css";
+import "@styles/base.css";
 
 interface Props {
-  editorialFooter?: boolean;
-  title?: string; // Page title (will be appended with site name)
-  description?: string; // Meta description
-  image?: string; // Open Graph image
-  imageAlt?: string; // Image alt text
-  canonical?: string; // Canonical URL (optional, auto-generated if not provided)
-  robots?: string; // robots meta tag (default: index, follow)
-  article?: {
-    // For article/case study pages
-    publishedTime?: string;
-    modifiedTime?: string;
-    author?: string;
-  };
-  structuredData?: Record<string, unknown>; // Additional JSON-LD schema
+  title?: string; // Page title (the site name is appended)
+  description?: string;
+  image?: string; // Social image, if not the default
+  imageAlt?: string;
+  canonical?: string;
+  robots?: string;
+  structuredData?: Record<string, unknown>; // Extra JSON-LD for this page
 }
 
 const {
-  editorialFooter = false,
   title = SITE.title,
   description = SITE.description,
   image,
-  imageAlt = "Teesside Digital: websites, business tools and practical automation.",
+  imageAlt = "The Teesside Digital mark: a white T and a lime D on a dark background.",
   canonical,
   robots = "index, follow",
-  article,
   structuredData,
 } = Astro.props as Props;
-
-// The phone-width action bar is left off the two pages whose form is the action.
-const showActionBar = ![projectEnquiry.href, websiteReview.href].some((href) =>
-  isCurrentPage(Astro.url.pathname, href),
-);
 
 // A page that is not to be indexed has no canonical. Every other page's
 // canonical is its own address, which always ends in a slash.
 const canonicalUrl = /noindex/.test(robots)
   ? undefined
   : canonical || getCanonicalUrl(Astro.url.pathname);
-
-// Format page title (append site name unless it's the homepage)
 const pageTitle = getPageTitle(title);
-
-// Generate Open Graph image URL (must be absolute)
 const ogImage = getOgImageUrl(image);
-
-// Base structured data (organisation schema)
 const baseStructuredData = getOrganisationSchema();
-
-// Combine with page-specific structured data if provided
 const allStructuredData = structuredData
-  ? [baseStructuredData, structuredData]
+  ? { "@context": "https://schema.org", "@graph": [baseStructuredData, structuredData] }
   : baseStructuredData;
 ---
 
 <!doctype html>
-<html lang={SITE.language} data-theme="dark">
+<html lang={SITE.language}>
   <head>
-    {
-      /* ============================================================
-        Core Meta Tags
-        ============================================================ */
-    }
     <meta charset="UTF-8" />
-    <meta name="color-scheme" content="dark light" />
-    <script is:inline set:html={themeScript} />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0b0d0f" />
+    <script is:inline set:html={headScript} />
 
-    {/* Page Title and Description */}
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <meta name="robots" content={robots} />
-
-    {/* Canonical URL (prevents duplicate content issues) */}
     {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
 
-    {
-      /* ============================================================
-        Open Graph (Social Media)
-        ============================================================ */
-    }
     <meta property="og:site_name" content={SITE.title} />
+    <meta property="og:locale" content="en_GB" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
@@ -128,190 +70,38 @@ const allStructuredData = structuredData
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content={imageAlt} />
     {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
-    <meta property="og:type" content={article ? "article" : "website"} />
-
-    {/* Article-specific meta tags */}
-    {
-      article && article.publishedTime && (
-        <meta
-          property="article:published_time"
-          content={article.publishedTime}
-        />
-      )
-    }
-    {
-      article && article.modifiedTime && (
-        <meta property="article:modified_time" content={article.modifiedTime} />
-      )
-    }
-    {
-      article && article.author && (
-        <meta property="article:author" content={article.author} />
-      )
-    }
-
-    {
-      /* ============================================================
-        Twitter Card
-        ============================================================ */
-    }
+    <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={imageAlt} />
 
-    {
-      /* ============================================================
-        Favicons & App Icons
-        ============================================================ */
-    }
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
-    {
-      /* ============================================================
-        Fonts
-        ============================================================ */
-    }
-    {
-      /* Body and interface text, then the serif used by every page heading. */
-    }
+    {/* One variable file holds every weight of the display face, 700 included. */}
     <link
       rel="preload"
-      href="/fonts/instrument-sans/instrument-sans-variable.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      href="/fonts/instrument-serif/instrument-serif-regular.woff2"
+      href="/fonts/schibsted-grotesk-latin-wght.woff2"
       as="font"
       type="font/woff2"
       crossorigin
     />
 
-    {
-      /* ============================================================
-        Structured Data (JSON-LD)
-        ============================================================ */
-    }
-    {
-      allStructuredData && (
-        <script
-          type="application/ld+json"
-          set:html={JSON.stringify(
-            Array.isArray(allStructuredData)
-              ? {
-                  "@context": "https://schema.org",
-                  "@graph": allStructuredData,
-                }
-              : allStructuredData,
-          )}
-        />
-      )
-    }
-
-    {
-      /* ============================================================
-        Analytics (Phase 2: add Fathom when needed)
-        ============================================================ */
-    }
-    {
-      /*
-      Fathom Analytics placeholder for Phase 2. Do not write this as a
-      literal inline script tag inside this comment -- see the note on
-      the Sentry placeholder below for why. When Phase 2 needs this, add
-      the Fathom snippet via its own small component instead of inline
-      here, with a real site ID (not a placeholder) before it ships.
-    */
-    }
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(allStructuredData)}
+    />
   </head>
 
-  <body class:list={{ "has-action-bar": showActionBar }}>
-    {
-      /* ============================================================
-        Skip to Main Content (Accessibility)
-        ============================================================ */
-    }
-    <a href="#main" class="td-skip">Skip to main content</a>
-
-    {
-      /* ============================================================
-        SiteIndex and main document shell
-        ============================================================ */
-    }
-    <div class="site-shell">
-      <SiteIndex />
-
-      {
-        /* ============================================================
-        Main Content
-        ============================================================ */
-      }
-      <div class="site-field">
-        <main id="main" tabindex="-1">
-          <slot />
-        </main>
-        <Footer editorial={editorialFooter} />
-      </div>
-    </div>
-    {showActionBar && <ActionBar />}
-    <CallPill />
-
-    {
-      /* ============================================================
-        Error Tracking (Phase 2: add Sentry when needed)
-        ============================================================ */
-    }
-    {
-      /*
-      Sentry placeholder for Phase 2. Do not write this as a literal
-      inline script tag inside this comment: Astro's HTML tokenizer
-      treats a literal script-tag name as a real raw-text element
-      boundary regardless of surrounding comment syntax, which breaks
-      the build (this exact bug caused a "Failed to scan for
-      dependencies" error -- see the note in PLAN.md/troubleshooting
-      if it recurs). When Phase 2 needs this, add the Sentry
-      initialisation via its own small component or inside
-      BaseLayout.astro's head content instead of inline here.
-    */
-    }
+  <body>
+    <a href="#main" class="skip">Skip to main content</a>
+    <div class="grain" aria-hidden="true"></div>
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
   </body>
 </html>
-
-<style is:global>
-  body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-
-  .site-shell {
-    flex: 1;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-  }
-  /* The page and its footer share the column beside the rail. */
-  .site-field {
-    display: flex;
-    flex-direction: column;
-    min-inline-size: 0;
-  }
-  .site-field > main {
-    flex: 1;
-    min-inline-size: 0;
-  }
-  /* Keep anything scrolled or focused clear of the fixed action bar. */
-  @media (max-width: 47.999rem) {
-    :root:has(body.has-action-bar) {
-      scroll-padding-block-end: 88px;
-    }
-  }
-  @media (min-width: 75rem) {
-    .site-shell {
-      grid-template-columns: 15rem minmax(0, 1fr);
-    }
-  }
-</style>

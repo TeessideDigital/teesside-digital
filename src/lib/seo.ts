@@ -18,7 +18,7 @@ export function getCanonicalUrl(path: string): string {
 
 /** Absolute URL of the social image. Every page shares the one image. */
 export function getOgImageUrl(image?: string): string {
-  if (!image) return `${SITE.url}/images/og-default.jpg`;
+  if (!image) return `${SITE.url}/images/og-image.png`;
   return image.startsWith("http") ? image : `${SITE.url}${image}`;
 }
 
@@ -32,7 +32,7 @@ export function getOrganisationSchema() {
     "@type": "Organization",
     name: SITE.title,
     url: `${SITE.url}/`,
-    logo: `${SITE.url}/images/logo/teesside-digital-logo.svg`,
+    logo: `${SITE.url}/icon-512.png`,
     description: SITE.description,
     founder: {
       "@type": "Person",

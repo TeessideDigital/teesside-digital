@@ -1,0 +1,60 @@
+---
+// The Teesside Digital mark (logo R1, td-mark-dark.svg): white T, lime D and
+// the pixel trail. The D's knockout is an SVG mask, so every instance on a
+// page needs its own mask id. Colours are the brand asset's own values.
+interface Props {
+  id: string;
+  width?: number;
+  class?: string;
+}
+const { id, width = 44, class: className } = Astro.props;
+const height = Math.round((width * 52) / 76);
+const mask = `td-mask-${id}`;
+---
+
+<svg
+  class:list={["logo-svg", className]}
+  viewBox="-10 4 76 52"
+  width={width}
+  height={height}
+  aria-hidden="true"
+  focusable="false"
+  ><defs
+    ><mask
+      id={mask}
+      maskUnits="userSpaceOnUse"
+      x="-20"
+      y="-10"
+      width="100"
+      height="80"
+      ><rect x="-20" y="-10" width="100" height="80" fill="#fff"></rect><path
+        d="M12 12H40V20H30V52H22V20H12Z"
+        fill="#000"
+        stroke="#000"
+        stroke-width="4.8"
+        stroke-linejoin="miter"></path></mask
+    ></defs
+  ><path
+    fill-rule="evenodd"
+    fill="#d4ff3f"
+    d="M30 12H44C56.5 12 63 20.5 63 32S56.5 52 44 52H30ZM38 20H44C51 20 55 24.5 55 32S51 44 44 44H38Z"
+    mask={`url(#${mask})`}></path><g fill="#f2f4f1"
+    ><path d="M12 12H40V20H30V52H22V20H12Z"></path><rect
+      x="6"
+      y="12"
+      width="5"
+      height="5"></rect><rect x="0" y="12" width="4" height="4"></rect><rect
+      x="-5"
+      y="13"
+      width="3"
+      height="3"></rect><rect x="1" y="18" width="3" height="3"></rect><rect
+      x="-3"
+      y="19"
+      width="2"
+      height="2"></rect><rect x="-8" y="15" width="2" height="2"></rect><rect
+      x="3"
+      y="7"
+      width="2"
+      height="2"></rect><rect x="-2" y="8" width="2" height="2"></rect></g
+  ></svg
+>

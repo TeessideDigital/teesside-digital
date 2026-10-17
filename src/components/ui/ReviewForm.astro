@@ -1,0 +1,122 @@
+---
+// Review request form, posted to the Netlify form "website-review" with its
+// existing field names (name, email, website, message) plus "goal". Without
+// JavaScript the browser validates and posts it natively; the shared engine
+// replaces that with accessible, truthful states. Its copy lives here.
+import { SITE } from "@config/constants";
+import Icon from "./Icon.astro";
+---
+
+<form
+  class="rform review-form"
+  aria-labelledby="request"
+  name="website-review"
+  method="POST"
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+  data-contact
+  data-sending="Sending your review request..."
+  data-rejected={`Your review request was not sent. Please try again, or email Dave at ${SITE.email}.`}
+  data-uncertain={`The website could not confirm whether your review request was received. To check, email Dave at ${SITE.email}. Sending again may create a duplicate.`}
+>
+  <input type="hidden" name="form-name" value="website-review" />
+  <p hidden>
+    <label>Leave this field empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+  </p>
+  <div class="fields">
+    <div
+      class="error-summary"
+      role="group"
+      aria-labelledby="review-summary-heading"
+      tabindex="-1"
+      hidden
+    >
+      <h3 id="review-summary-heading">Some details need attention</h3>
+      <ul></ul>
+    </div>
+    <p class="note">
+      Please request a review only for a website you own or are responsible for. The review looks
+      at the public site only, so never send passwords or login details. All fields are required
+      unless marked optional.
+    </p>
+    <div class="pair">
+      <div class="field">
+        <label for="review-name">Name</label>
+        <input
+          id="review-name"
+          name="name"
+          type="text"
+          autocomplete="name"
+          maxlength="100"
+          required
+          data-missing="Please add your name."
+        />
+        <p class="field-message" id="review-name-error" hidden></p>
+      </div>
+      <div class="field">
+        <label for="review-email">Email address</label>
+        <input
+          id="review-email"
+          name="email"
+          type="email"
+          autocomplete="email"
+          maxlength="254"
+          required
+          data-missing="Please check your email address."
+          data-format="Please check your email address."
+        />
+        <p class="field-message" id="review-email-error" hidden></p>
+      </div>
+    </div>
+    <div class="field">
+      <label for="review-website">Website address</label>
+      <input
+        id="review-website"
+        name="website"
+        type="text"
+        inputmode="url"
+        autocomplete="url"
+        maxlength="300"
+        placeholder="www.yourbusiness.co.uk"
+        required
+        data-rule="website"
+        data-missing="Please add your website address."
+        data-format="Please add your website address."
+      />
+      <p class="field-message" id="review-website-error" hidden></p>
+    </div>
+    <div class="field">
+      <label for="review-message">What concerns you about the site? (optional)</label>
+      <textarea id="review-message" name="message" maxlength="3000"></textarea>
+    </div>
+    <div class="field">
+      <label for="review-goal">What is the site meant to achieve? (optional)</label>
+      <textarea id="review-goal" name="goal" maxlength="3000"></textarea>
+    </div>
+    <p class="privacy">
+      Dave will use these details to carry out the review and email you the report.
+      <a href="/privacy/">Read the privacy notice</a>
+    </p>
+    <div>
+      <button class="submit btn" type="submit"><span>Send review request</span> <Icon name="arrow" /></button>
+      <div class="status-region" role="status" aria-live="polite"></div>
+    </div>
+  </div>
+  <div class="confirmation" hidden>
+    <h3 tabindex="-1">Review request received</h3>
+    <p>Your review request has been received. Dave will review the website and email you the report.</p>
+    <p>If you need to add anything, email <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
+  </div>
+</form>
+
+<script>
+  import { initForm } from "../../scripts/form-submission";
+  initForm(document.querySelector<HTMLFormElement>("form.review-form"));
+
+  // "Request a website review" moves focus to the form's heading.
+  for (const link of document.querySelectorAll<HTMLAnchorElement>('a[href="#request"]')) {
+    link.addEventListener("click", () => {
+      window.setTimeout(() => document.getElementById("request")?.focus({ preventScroll: true }), 0);
+    });
+  }
+</script>

@@ -1,0 +1,210 @@
+---
+import { SITE } from "@config/constants";
+
+const mail = `mailto:${SITE.email}`;
+---
+
+<div>
+  <section class="phero" data-hero>
+    <div class="wrap">
+      <span class="label" aria-hidden="true"><i></i>Privacy</span>
+      <h1>Privacy</h1>
+      <p class="lede">
+        This page explains what information Teesside Digital collects through this website, why, who else handles it, and what you can ask Dave to do with it.
+      </p>
+      <p class="updated">Last updated: 17 October 2026</p>
+    </div>
+  </section>
+  <div class="legal">
+    <div class="wrap">
+      <div class="prose">
+      <section aria-labelledby="responsible-heading">
+        <h2 id="responsible-heading">Who is responsible</h2>
+        <div>
+          <p>
+            Teesside Digital is run by David Young as a sole trader. Dave is
+            responsible for the personal information described here (the "data
+            controller", in data-protection terms).
+          </p>
+          <p>
+            For anything about your information, email
+            <a href={mail}>{SITE.email}</a>.
+          </p>
+          <!-- TODO: add full postal address when a business address service is set up -->
+          <p>Based in Hartlepool, Teesside.</p>
+          <!-- TODO: retake ICO fee self-assessment once trading; add registration number here if one is issued -->
+        </div>
+      </section>
+      <section aria-labelledby="collected-heading">
+        <h2 id="collected-heading">What is collected</h2>
+        <div>
+          <p>
+            <strong>When you send an enquiry</strong>, the form asks what you
+            need help with, a rough budget, when you would like to start, your
+            name and email address, and optionally your business name and a
+            message.
+          </p>
+          <p>
+            <strong>When you request a website review</strong>, the form asks for
+            your name, email address and the website you want reviewed, and
+            optionally what concerns you about it and what the site is meant to
+            achieve.
+          </p>
+          <p>
+            <strong>When you email Dave directly</strong>, he receives whatever
+            you include in your message.
+          </p>
+          <p>
+            <strong>When you visit any page</strong>, the website's host
+            automatically processes technical information needed to deliver the
+            page and keep the site secure, such as your IP address, browser type
+            and the pages requested.
+          </p>
+          <p>
+            Please do not send passwords, payment details or sensitive personal
+            information through the forms or by email.
+          </p>
+        </div>
+      </section>
+      <section aria-labelledby="why-heading">
+        <h2 id="why-heading">Why it is used</h2>
+        <div>
+          <ul role="list">
+            <li>
+              <strong>Enquiries:</strong> to reply to you and discuss the work you
+              have described. This is done because you asked for it, and so Dave
+              can take the steps needed before any agreement.
+            </li>
+            <li>
+              <strong>Website reviews:</strong> to carry out the review you
+              requested and email you the report. This is done because you asked
+              for it.
+            </li>
+            <li>
+              <strong>Client records:</strong> if you go on to work with Teesside
+              Digital, your details are kept to deliver the work, invoice for it
+              and meet tax and accounting obligations.
+            </li>
+            <li>
+              <strong>Technical information:</strong> to deliver the website and
+              protect it from misuse.
+            </li>
+          </ul>
+          <p>
+            Your details are not used for marketing, not added to a mailing list,
+            and not sold.
+          </p>
+        </div>
+      </section>
+      <section aria-labelledby="handlers-heading">
+        <h2 id="handlers-heading">Who else handles it</h2>
+        <div>
+          <p>
+            Dave uses two services that process your information on his behalf:
+          </p>
+          <ul role="list">
+            <li>
+              <strong>Netlify</strong>, which hosts this website and receives form
+              submissions. Netlify is based in the United States, so form
+              submissions and technical information are processed there.
+              <a href="https://www.netlify.com/privacy/"
+                >Read Netlify's privacy policy</a
+              >
+            </li>
+            <li>
+              <strong>Zoho Mail</strong>, which provides Dave's email. Messages
+              are held in Zoho's EU data centre.
+              <a href="https://www.zoho.com/privacy.html"
+                >Read Zoho's privacy policy</a
+              >
+            </li>
+          </ul>
+          <p>
+            Netlify protects information transferred outside the UK using the UK
+            Extension to the EU-U.S. Data Privacy Framework.
+          </p>
+          <p>
+            Nobody else has access to your information unless the law requires
+            it.
+          </p>
+        </div>
+      </section>
+      <section aria-labelledby="kept-heading">
+        <h2 id="kept-heading">How long it is kept</h2>
+        <div>
+          <ul role="list">
+            <li>
+              <strong>Copies of form submissions held by Netlify:</strong> deleted
+              within 30 days. Dave keeps the email copy.
+            </li>
+            <li>
+              <strong>Enquiries that do not lead to work:</strong> deleted 12
+              months after the last contact.
+            </li>
+            <li>
+              <strong>Website review requests and reports:</strong> deleted 12
+              months after the report is sent.
+            </li>
+            <li>
+              <strong>Client records:</strong> kept for as long as tax law
+              requires, which for a sole trader is usually around six years.
+            </li>
+            <li>
+              <strong>Technical information processed by the host:</strong> kept
+              according to Netlify's own retention, outside Dave's control.
+            </li>
+          </ul>
+        </div>
+      </section>
+      <section aria-labelledby="storage-heading">
+        <h2 id="storage-heading">Cookies and storage</h2>
+        <div>
+          <p>
+            This website does not use cookies, analytics or tracking, does not
+            store anything on your device, and does not load content from other
+            websites.
+          </p>
+        </div>
+      </section>
+      <section aria-labelledby="rights-heading">
+        <h2 id="rights-heading">Your rights</h2>
+        <div>
+          <p>You can ask Dave to:</p>
+          <ul role="list">
+            <li>
+              tell you what information he holds about you, and give you a copy;
+            </li>
+            <li>correct information that is wrong;</li>
+            <li>delete your information;</li>
+            <li>stop or limit how it is used;</li>
+            <li>
+              give you your information in a format you can take elsewhere.
+            </li>
+          </ul>
+          <p>
+            To ask, email <a href={mail}>{SITE.email}</a>. Dave will reply within
+            one month, as the law requires. You will not be charged.
+          </p>
+          <p>
+            If you are unhappy with how your information has been handled, you
+            can complain to the Information Commissioner's Office, the UK
+            data-protection regulator.
+            <a href="https://ico.org.uk/make-a-complaint/"
+              >Visit the ICO website</a
+            >
+          </p>
+        </div>
+      </section>
+      <section aria-labelledby="changes-heading">
+        <h2 id="changes-heading">Changes to this notice</h2>
+        <div>
+          <p>
+            If the way this website handles information changes, this page will
+            be updated and the date at the top will change.
+          </p>
+        </div>
+      </section>
+      </div>
+    </div>
+  </div>
+</div>

@@ -31,35 +31,34 @@
   status = 301
   force = true
 
-# Retired V1 URLs. Each old address goes permanently to its closest V2 page,
+# Retired V1 URLs. Each old address goes permanently to its closest V4 page,
 # so no existing link or search result breaks. These must stay above the
 # catch-all 404 rule: Netlify applies the first match. Netlify matches a path
 # with or without its trailing slash, so one rule covers both forms.
 [[redirects]]
   from = "/services/web-development"
-  to = "/services/#websites-web-development"
+  to = "/services/#websites"
   status = 301
 
 [[redirects]]
   from = "/services/ai-automation"
-  to = "/services/#automation-ai"
+  to = "/services/#automation"
   status = 301
 
-# No matching V2 section: security is an engineering discipline, not a service.
 [[redirects]]
   from = "/services/cybersecurity"
-  to = "/services/"
+  to = "/services/#security"
   status = 301
 
-# Work stays withheld until real evidence passes the evidence gate.
+# Work is a section of the homepage.
 [[redirects]]
   from = "/work"
-  to = "/services/"
+  to = "/#work"
   status = 301
 
 [[redirects]]
   from = "/work/*"
-  to = "/services/"
+  to = "/#work"
   status = 301
 
 [[redirects]]
@@ -84,12 +83,14 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     # Disable access to browser APIs the site never uses
     Permissions-Policy = "geolocation=(), microphone=(), camera=(), payment=()"
-    # Everything loads from this site only. Inline scripts are allowed one by
-    # one, by hash: if a script in the shell or a route changes, its hash here
-    # must change too. Run "npm run check:csp" after a build to compare this
-    # line with the built pages. Inline styles are allowed because Astro inlines
-    # small stylesheets and the product drawings use style attributes.
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'sha256-+0brCx8++xz3SqsF7nn8s8LOHkjHRZI1WYDnZwvDLRg=' 'sha256-7OHYQNKYXUVQBE/H41vCPt+WZZHuRB8KmfNc8JOsTTI=' 'sha256-P2jcKdKc8w0P5iHtuaGEijdDjmt533wuepHFB5bns+Y=' 'sha256-eB4Vr3m4fdNpi3qpA0oCNqYbTrOSSKVlAD8XItjjD14=' 'sha256-cm8QUzWybQm9WidN7M7zgeBTH2ocMCtQ8wiCjl/KrsI='; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'"
+    # Everything loads from this site only. Page scripts are external files
+    # (astro.config.mjs turns off inlining), so the only inline script is the
+    # head script, allowed by its hash: if src/scripts/head.js changes, this hash
+    # must change too. Run "npm run check:csp" after a build to compare this line
+    # with the built pages. Inline styles are allowed because Astro inlines small
+    # stylesheets and a few elements set custom properties in style attributes.
+    # data: images are allowed for the grain overlay, an inline SVG noise tile.
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'sha256-vw8TdwU/Ou5tjf4nQX5ciaksgukUAtXChz9gbKzGtoM='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'"
 
 # Cache policy for hashed assets (safe to cache forever)
 [[headers]]
@@ -106,6 +107,14 @@
   for = "/*.css"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+# Cache policy for self-hosted fonts. File names are not hashed, so use
+# 30 days rather than a year with "immutable": a changed font file still
+# reaches visitors within a month without needing a rename.
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
 
 # Cache policy for images (can update, so shorter TTL)
 [[headers]]

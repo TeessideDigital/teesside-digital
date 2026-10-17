@@ -1,0 +1,146 @@
+---
+// The four-step project enquiry, posted to the Netlify form "enquiry".
+// Without JavaScript all four groups show as one ordinary form that submits
+// natively; enquiry-form.ts adds the stepping and the honest send states from
+// the shared form engine. Netlify registers the fields from this markup, so
+// every field the script sends is here.
+import { SITE } from "@config/constants";
+import { budgetBands } from "../../data/pricing";
+import Icon from "./Icon.astro";
+
+interface Props {
+  /** Prefix for ids, unique per page. */
+  id: string;
+  /** Level of the step headings, to follow the page's own headings. */
+  level?: 2 | 3;
+}
+const { id, level = 3 } = Astro.props;
+const H = `h${level}` as "h2" | "h3";
+
+const needs = [
+  { key: "website", label: "A website" },
+  { key: "app", label: "An app" },
+  { key: "software", label: "Bespoke software" },
+  { key: "automation", label: "Automation" },
+  { key: "ai", label: "AI tools" },
+  { key: "integration", label: "Connecting systems" },
+  { key: "security", label: "Security review" },
+  { key: "unsure", label: "Not sure yet" },
+];
+const timings = [
+  "As soon as possible",
+  "In 1–3 months",
+  "Later this year",
+  "Just exploring",
+];
+---
+
+<form
+  class="qf"
+  id={`${id}-form`}
+  name="enquiry"
+  method="POST"
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+  aria-labelledby={`${id}-title`}
+  data-contact
+  data-email={SITE.email}
+  data-sending="Sending your enquiry..."
+  data-rejected={`Your enquiry was not sent. Please try again, or email Dave at ${SITE.email}.`}
+  data-uncertain={`The website could not confirm whether your enquiry was received. To check, email Dave at ${SITE.email}. Sending again may create a duplicate.`}
+>
+  <input type="hidden" name="form-name" value="enquiry" />
+  <p hidden>
+    <label>Leave this field empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+  </p>
+  <div class="qf-top" aria-hidden="true">
+    <span class="qf-count">Step 1 of 4</span><span class="qf-label">What you need</span>
+  </div>
+  <div class="qf-bar" aria-hidden="true"><span></span></div>
+
+  <fieldset class="qf-step" data-step="1" data-label="What you need">
+    <legend><H class="qf-h" id={`${id}-title`} tabindex="-1">What do you need help with?</H></legend>
+    <div class="opts">
+      {
+        needs.map((need) => (
+          <label class="opt">
+            <input type="checkbox" name="needs" value={need.label} data-need={need.key} />
+            <span>{need.label}</span>
+          </label>
+        ))
+      }
+    </div>
+  </fieldset>
+
+  <fieldset class="qf-step" data-step="2" data-label="Budget">
+    <legend><H class="qf-h" tabindex="-1">Roughly what budget?</H></legend>
+    <div class="opts">
+      {
+        budgetBands.map((band) => (
+          <label class="opt">
+            <input type="radio" name="budget" value={band} />
+            <span>{band}</span>
+          </label>
+        ))
+      }
+    </div>
+  </fieldset>
+
+  <fieldset class="qf-step" data-step="3" data-label="Timing">
+    <legend><H class="qf-h" tabindex="-1">When would you like to start?</H></legend>
+    <div class="opts">
+      {
+        timings.map((timing) => (
+          <label class="opt">
+            <input type="radio" name="timing" value={timing} />
+            <span>{timing}</span>
+          </label>
+        ))
+      }
+    </div>
+  </fieldset>
+
+  <fieldset class="qf-step" data-step="4" data-label="Your details">
+    <legend><H class="qf-h" tabindex="-1">How do I reach you?</H></legend>
+    <label class="field" for={`${id}-name`}>
+      Your name
+      <input type="text" id={`${id}-name`} name="name" autocomplete="name" maxlength="100" required />
+    </label>
+    <label class="field" for={`${id}-email`}>
+      Email
+      <input type="email" id={`${id}-email`} name="email" autocomplete="email" maxlength="254" required />
+    </label>
+    <label class="field" for={`${id}-business`}>
+      Business (optional)
+      <input type="text" id={`${id}-business`} name="business" autocomplete="organization" maxlength="150" />
+    </label>
+    <label class="field" for={`${id}-message`}>
+      Anything else? (optional)
+      <textarea id={`${id}-message`} name="message" maxlength="5000"></textarea>
+    </label>
+    <p class="err" id={`${id}-error`} role="alert"></p>
+    <p class="qf-privacy">
+      I'll use these details to reply to your enquiry. Please don't include passwords or payment
+      details. <a href="/privacy/">Privacy notice</a>
+    </p>
+  </fieldset>
+
+  <div class="qf-nav">
+    <button type="button" class="qf-back" hidden>&larr; Back</button>
+    <button type="submit" class="btn qf-next"><span>Send</span> <Icon name="arrow" /></button>
+  </div>
+  <div class="qf-status" role="status" aria-live="polite"></div>
+
+  <div class="qf-done" hidden>
+    <span class="tick"><Icon name="tick" /></span>
+    <H class="qf-h qf-thanks" tabindex="-1">Thanks.</H>
+    <p>Your enquiry has been received. Dave will review the details and reply by email.</p>
+    <ul class="qf-sum"></ul>
+    <p>If you need to add anything, email <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
+  </div>
+</form>
+
+<script>
+  import { initEnquiryForms } from "../../scripts/enquiry-form";
+  initEnquiryForms();
+</script>

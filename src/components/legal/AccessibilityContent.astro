@@ -1,0 +1,105 @@
+---
+import { SITE } from "@config/constants";
+---
+
+<div>
+  <section class="phero" data-hero>
+    <div class="wrap">
+      <span class="label" aria-hidden="true"><i></i>Accessibility</span>
+      <h1>Accessibility</h1>
+      <p class="lede">
+        Teesside Digital wants this website to be usable by as many people as possible, including people who use a keyboard, screen magnification, high-contrast settings or assistive technology.
+      </p>
+      <p class="updated">Last reviewed: 17 October 2026</p>
+    </div>
+  </section>
+  <div class="legal">
+    <div class="wrap">
+      <div class="prose">
+      <section aria-labelledby="standard-heading">
+        <h2 id="standard-heading">The standard</h2>
+        <div>
+          <p>
+            The target is WCAG 2.2 level AA, the widely used international
+            standard for web accessibility.
+          </p>
+          <p>
+            It is a target, not a certificate. The website has not been
+            independently audited.
+          </p>
+        </div>
+      </section>
+      <section aria-labelledby="checked-heading">
+        <h2 id="checked-heading">What has been checked</h2>
+        <div>
+          <p>
+            These checks were carried out on the current design in October 2026,
+            using automated browser testing and the axe accessibility checker:
+          </p>
+          <ul role="list">
+            <li>
+              using every page and both forms with a keyboard only, with a
+              visible focus indicator throughout
+            </li>
+            <li>narrow screens down to 320 pixels wide</li>
+            <li>high-contrast (forced colours) mode</li>
+            <li>reduced-motion settings, which turn off the page animations</li>
+            <li>with JavaScript turned off, including submitting both forms</li>
+            <li>automated colour-contrast checks of text, links and form controls</li>
+          </ul>
+          <!-- UPDATE-AFTER-TEST: screen reader -->
+        </div>
+      </section>
+      <section aria-labelledby="unchecked-heading">
+        <h2 id="unchecked-heading">Not yet checked</h2>
+        <div>
+          <ul role="list">
+            <li>other browsers, including Safari and Firefox</li>
+            <li>real phones and tablets</li>
+            <li>screen readers</li>
+            <li>a full independent audit</li>
+            <li>text enlarged to twice its normal size</li>
+          </ul>
+          <p>
+            These will be checked as the website develops, and this page will be
+            updated.
+          </p>
+        </div>
+      </section>
+      <section aria-labelledby="issues-heading">
+        <h2 id="issues-heading">Known issues</h2>
+        <div>
+          <p>No known issues at the moment.</p>
+        </div>
+      </section>
+      <section aria-labelledby="features-heading">
+        <h2 id="features-heading">Features that help</h2>
+        <div>
+          <ul role="list">
+            <li>a "Skip to main content" link at the start of every page</li>
+            <li>
+              animations are switched off if your device is set to reduce motion
+            </li>
+            <li>the website works without JavaScript, including both forms</li>
+          </ul>
+        </div>
+      </section>
+      <section aria-labelledby="report-heading">
+        <h2 id="report-heading">Report a problem</h2>
+        <div>
+          <p>
+            If something on this website is difficult to use, or you need
+            information from it in a different format, email
+            <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+          </p>
+          <p>
+            It helps to say which page you were on and what happened. Dave will
+            reply by email and, where he can, provide the information another
+            way.
+          </p>
+        </div>
+      </section>
+      </div>
+    </div>
+  </div>
+</div>

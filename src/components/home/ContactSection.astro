@@ -1,0 +1,23 @@
+---
+// Home contact: heading, copy and email beside the four-step form, over the
+// Hartlepool contour map drifting slowly.
+import { SITE, replySentence } from "@config/constants";
+import ContourMap from "../ui/ContourMap.astro";
+import EnquiryForm from "../ui/EnquiryForm.astro";
+---
+
+<section class="cta" id="contact" data-contact>
+  <ContourMap class="map" labelled={false} />
+  <div class="wrap grid2">
+    <div>
+      <span class="label"><i></i>Get in touch</span>
+      <h2 style="margin-top:24px">Tell me what you need.</h2>
+      <p>
+        Four quick steps. I'll come back to you with honest advice, even if that's "you don't need
+        me".{replySentence && ` ${replySentence}`}
+      </p>
+      <div class="ctas"><a class="email" href={`mailto:${SITE.email}`}>{SITE.email}</a></div>
+    </div>
+    <EnquiryForm id="home-enquiry" level={3} />
+  </div>
+</section>

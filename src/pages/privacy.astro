@@ -1,12 +1,13 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
-import PrivacyExperience from "@components/astro/PrivacyExperience.astro";
+import PrivacyContent from "@components/legal/PrivacyContent.astro";
+import "@styles/sections.css";
+import "@styles/pages.css";
 ---
 
 <BaseLayout
   title="Privacy"
   description="How Teesside Digital handles the information you send through this website, who else processes it, how long it is kept and what you can ask for."
-  editorialFooter
 >
-  <PrivacyExperience />
+  <PrivacyContent />
 </BaseLayout>

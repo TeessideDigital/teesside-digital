@@ -1,14 +1,126 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
-import AboutExperience from "@components/astro/AboutExperience.astro";
-import AboutMotion from "@components/astro/AboutMotion.astro";
+import { SITE } from "@config/constants";
+import Band from "@components/ui/Band.astro";
+import ContourMap from "@components/ui/ContourMap.astro";
+import Icon from "@components/ui/Icon.astro";
+import PhotoSlot from "@components/ui/PhotoSlot.astro";
+import "@styles/sections.css";
+import "@styles/pages.css";
+import { background } from "../data/background";
+
+const values = [
+  ["One person, start to finish", "The person you talk to is the person who builds it. Nothing gets lost in a handover."],
+  ["Plain English, always", "No jargon and no blinding you with tech. You'll always know what's happening and why."],
+  ["Honest advice", "If you don't need something, I'll tell you, even if that means less work for me."],
+  ["Here after launch", "I don't build it and disappear. I'm around for updates, fixes and the next idea."],
+];
+const towns = ["Hartlepool", "Stockton-on-Tees", "Middlesbrough", "Darlington", "Redcar", "Billingham", "Guisborough", "Yarm"];
 ---
 
 <BaseLayout
-  title="About"
-  description="Teesside Digital is a solo technical consultancy in Hartlepool. Learn about Dave's background in web development, professional craft and Computer Science study."
-  editorialFooter
+  title="About Dave"
+  description="Dave runs Teesside Digital from Hartlepool, designing, building and looking after websites, apps and software for businesses across Teesside."
 >
-  <AboutExperience />
-  <AboutMotion />
+  <section class="phero" data-hero>
+    <div class="wrap ahero">
+      <div>
+        <span class="label"><i></i>About</span>
+        <h1>Hi, I'm Dave. I build <em>the tech</em> behind local businesses.</h1>
+        <p class="lede">{SITE.introAbout}</p>
+        <div class="ctas">
+          <a href="/contact/" class="btn">Get in touch <Icon name="arrow" /></a>
+          <a href="/services/" class="btn2">What I do</a>
+        </div>
+      </div>
+      <PhotoSlot id="about" class="lg pside" eager />
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:0">
+    <div class="wrap">
+      <div class="head reveal">
+        <div>
+          <span class="label"><i></i>How I work</span>
+          <h2>What you can expect.</h2>
+        </div>
+        <p>The reasons people pick a one-person studio over a big agency.</p>
+      </div>
+      <div class="values reveal">
+        {
+          values.map(([title, text]) => (
+            <div>
+              <h3>{title}</h3>
+              <p>{text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {
+    SITE.aboutBackgroundConfirmed && (
+      <section class="block" style="padding-top:0">
+        <div class="wrap twocol">
+          <div class="reveal">
+            <span class="label"><i></i>Background</span>
+            <h2 style="margin-top:22px">How I got here.</h2>
+            <p class="side">Years of building things with code, now put to work for local businesses.</p>
+          </div>
+          <ol class="tl reveal">
+            {background.map(({ when, title, text }) => (
+              <li>
+                <span class="k">{when}</span>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    SITE.tools.length > 0 && (
+      <section class="block" style="padding-top:0">
+        <div class="wrap twocol">
+          <div class="reveal">
+            <span class="label"><i></i>Toolkit</span>
+            <h2 style="margin-top:22px">Tools I use.</h2>
+            <p class="side">The right tool for the job, not the trendiest one.</p>
+          </div>
+          <ul class="tags toolset reveal">
+            {SITE.tools.map((tool) => (
+              <li>{tool}</li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="block" style="padding-top:0">
+    <div class="wrap">
+      <div class="where reveal">
+        <div class="copy">
+          <span class="label"><i></i>Where I work</span>
+          <h2>Based in Hartlepool. Working across Teesside.</h2>
+          <p>Happy to meet in person around Teesside, or over a video call anywhere in the UK.</p>
+          <ul class="towns">
+            {towns.map((town) => <li>{town}</li>)}
+          </ul>
+        </div>
+        <ContourMap class="mapbox" />
+      </div>
+    </div>
+  </section>
+
+  <Band
+    title="Got something in mind?"
+    text="A quick message is enough. I'll come back with honest advice."
+    href="/contact/"
+    action="Start a conversation"
+  />
 </BaseLayout>

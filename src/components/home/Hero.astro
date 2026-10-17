@@ -1,0 +1,81 @@
+---
+// Home hero. The H1 comes from SITE.headline, with its last word in lime and
+// every word fading up in turn. The six questions are disclosure buttons;
+// their answers are in the document, and closed only once scripts run.
+import { SITE } from "@config/constants";
+import Icon from "../ui/Icon.astro";
+
+const words = SITE.headline.trim().split(/\s+/);
+const last = words.length - 1;
+const questions = [
+  ["Our website looks like it's from 2010.", "I'll build you a fresh, fast site that you can update yourself."],
+  ["We type the same details into three different systems.", "I'll connect them, so you type it once and it shows up everywhere."],
+  ["Can customers book online instead of ringing?", "Yes. Online booking that works day and night and fills in your diary for you."],
+  ["We need an app for our customers.", "I build apps that work on iPhone, Android and the web."],
+  ["Could AI actually save us any time?", "Often, yes. I'll tell you straight where it helps and where it doesn't."],
+  ["Is our customer data safe?", "I'll check, explain the risks in plain English and fix what matters first."],
+];
+---
+
+<section class="hero" id="hero" data-hero>
+  <div class="glow" aria-hidden="true"></div>
+  <div class="wrap">
+    <div>
+      {
+        SITE.availability && (
+          <div class="hero-top">
+            <span class="avail">
+              <span class="dot" aria-hidden="true" />
+              {SITE.availability}
+            </span>
+          </div>
+        )
+      }
+      <span class="label"><i></i>Hartlepool, Teesside</span>
+      <h1>
+        {
+          words.map((word, index) => (
+            <>
+              <span class="w">{index === last ? <em>{word}</em> : word}</span>{index < last ? " " : ""}
+            </>
+          ))
+        }
+      </h1>
+      <p class="lede">
+        I design and build websites, apps and tools for businesses across Teesside. One person,
+        start to finish.
+      </p>
+      <div class="ctas">
+        <a href="#contact" class="btn">Tell me what you need <Icon name="arrow" /></a>
+        <a href="#build" class="btn2">See what I build</a>
+      </div>
+      <div class="sig">
+        <span class="rule"></span><span><b>Dave</b>, founder. You deal with me, not a sales team.</span>
+      </div>
+    </div>
+    <div class="chat" role="group" aria-labelledby="chat-label">
+      <span class="label" id="chat-label">Sound familiar? <span class="hint">Tap one</span></span>
+      {
+        questions.map(([question, answer], index) => (
+          <>
+            <button class="q" type="button" aria-controls={`ans${index}`}>
+              <span class="plus" aria-hidden="true">
+                <Icon name="plus" />
+              </span>
+              <span>{question}</span>
+            </button>
+            <p class="ans" id={`ans${index}`}>
+              {answer}
+            </p>
+          </>
+        ))
+      }
+      <div class="typing" aria-hidden="true"><span></span><span></span><span></span></div>
+      <a href="#build" class="reply">I can help with all of these. <Icon name="arrow" /></a>
+    </div>
+  </div>
+</section>
+
+<script>
+  import "../../scripts/hero";
+</script>

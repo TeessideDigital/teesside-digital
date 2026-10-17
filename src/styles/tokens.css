@@ -1,163 +1,45 @@
-/* V2.2 design tokens (decision record: docs/v2/decisions/2026-10-13-visual-direction.md).
- * Dark is the default; Light hangs off the same data-theme attribute as before.
- * The inverse band redefines the same names, so components inside it need no
- * rules of their own.
- */
+/* V4 design tokens. One dark theme by design: there is no light theme and no
+   theme switch. Components use these variables (or the Tailwind theme, which
+   points at them), never raw colour values. */
 :root {
+  --ink: #0b0d0f;
+  --ink-2: #111417;
+  --panel: #14181b;
+  --line: rgba(255, 255, 255, 0.09);
+  --line-2: rgba(255, 255, 255, 0.16);
+  --fg: #eef0ee;
+  --fg-2: #b9bfbc;
+  --fg-3: #8d9591;
+  --fg-4: #6c7370;
+  --lime: #d4ff3f;
+  --lime-ink: #0b0d0f;
+  /* Form errors and "urgent" chips only. */
+  --warn: #ffab94;
+  --warn-line: rgba(255, 140, 110, 0.4);
+  --warn-bg: rgba(255, 120, 90, 0.12);
+
+  /* Lime at low strengths, for tints, glows and borders around lime. */
+  --lime-06: rgba(212, 255, 63, 0.06);
+  --lime-10: rgba(212, 255, 63, 0.1);
+  --lime-25: rgba(212, 255, 63, 0.25);
+  --lime-35: rgba(212, 255, 63, 0.35);
+  --lime-50: rgba(212, 255, 63, 0.5);
+
+  /* Surfaces used by a few panels. */
+  --nav-bg: rgba(20, 24, 27, 0.72);
+  --nav-bg-scrolled: rgba(17, 20, 23, 0.9);
+  --scrim: rgba(5, 6, 7, 0.55);
+  --raised: #171c19;
+  --shadow: rgba(0, 0, 0, 0.6);
+
+  --display: "Schibsted Grotesk", "Schibsted Fallback", "Helvetica Neue", Arial,
+    sans-serif;
+  --mono: "JetBrains Mono", "JetBrains Fallback", ui-monospace, "SFMono-Regular",
+    Menlo, monospace;
+  --ease: cubic-bezier(0.2, 0.7, 0.1, 1);
+
+  --gutter: clamp(16px, 5vw, 72px);
+  --container: 1440px;
+
   color-scheme: dark;
-  --bg: #15191f;
-  --bg-deep: #12161b;
-  --surface: #1a1f26;
-  --surface-2: #20262f;
-  --border: #2f3a46;
-  --border-strong: #3a4756;
-  --text-strong: #f6f7f8;
-  --text: #f1f3f5;
-  --text-2: #b4c3cf;
-  --text-3: #8798a6;
-  --steel: #8fb0cc;
-  --accent: #f0a04b;
-  --on-accent: #1a1208;
-  /* Amber as text, arrows and focus. Light needs a darker value than its fill. */
-  --accent-text: #f0a04b;
-  --accent-hover: #e39037;
-  --accent-text-hover: #f6b877;
-  /* border-strong is under 3:1 as a control boundary, so inputs get their own. */
-  --control-border: #617385;
-  --error: #ffa8a0;
-  --success: #9fcdaf;
-  --warning: #e5c287;
-
-  --font-body: "Instrument Sans", system-ui, sans-serif;
-  --font-serif: "Instrument Serif", Georgia, "Times New Roman", serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
-  /* Home, Services and About keep sans headings until they are rebuilt. */
-  --font-display: var(--font-body);
-  --text-body: 1rem;
-  --text-small: 0.875rem;
-  --leading-body: 1.5;
-  --leading-display: 1.2;
-  --space-inline: 1rem;
-  --space-section: 3rem;
-  --measure-reading: 65ch;
-  --layout-max: 72rem;
-  --rule-width: 1px;
-  --motion-instant: 0ms;
-  --motion-fast: 120ms;
-  --motion-standard: 200ms;
-  --motion-deliberate: 360ms;
-  --motion-image: 480ms;
-  --ease-responsive: cubic-bezier(0.2, 0, 0.2, 1);
-  --ease-settle: cubic-bezier(0.22, 1, 0.36, 1);
-
-  /* V2.1 names, kept as aliases for Home, Services, About and the legacy routes.
-   * RGB channels, because that source and Tailwind's opacity modifiers need them.
-   * They go when those pages move onto the names above.
-   */
-  --color-canvas: 21 25 31; /* bg */
-  --color-surface: 26 31 38; /* surface */
-  --color-surface-subtle: 32 38 47; /* surface-2 */
-  --color-text: 241 243 245; /* text */
-  --color-text-muted: 180 195 207; /* text-2 */
-  --color-identity: 143 176 204; /* steel */
-  --color-action: 240 160 75; /* accent-text */
-  --color-action-hover: 246 184 119; /* accent-text-hover */
-  --color-on-action: 26 18 8; /* on-accent */
-  --color-rule: 97 115 133; /* control-border: those pages' rules carry meaning */
-  --color-focus: 240 160 75; /* accent-text */
-  --color-error: 255 168 160;
-  --color-success: 159 205 175;
-  --color-warning: 229 194 135;
-  --color-control: 26 31 38; /* surface */
-  --color-control-border: 97 115 133; /* control-border */
-}
-
-:root[data-theme="light"] {
-  color-scheme: light;
-  --bg: #f6f5f2;
-  --bg-deep: #eeece8;
-  --surface: #ffffff;
-  --surface-2: #f1f2f4;
-  --border: #d9dde2;
-  --border-strong: #c4cad1;
-  --text-strong: #12161b;
-  --text: #1b2027;
-  --text-2: #3e4a56;
-  --text-3: #5a6875;
-  --steel: #3f6584;
-  --accent: #f0a04b;
-  --on-accent: #1a1208;
-  --accent-text: #8f520f;
-  --accent-hover: #e39037;
-  --accent-text-hover: #6f3f0b;
-  --control-border: #7a8590;
-  --error: #a12e2b;
-  --success: #286541;
-  --warning: #794f16;
-
-  --color-canvas: 246 245 242;
-  --color-surface: 255 255 255;
-  --color-surface-subtle: 241 242 244;
-  --color-text: 27 32 39;
-  --color-text-muted: 62 74 86;
-  --color-identity: 63 101 132;
-  --color-action: 143 82 15;
-  --color-action-hover: 111 63 11;
-  --color-on-action: 255 255 255;
-  --color-rule: 122 133 144;
-  --color-focus: 143 82 15;
-  --color-error: 161 46 43;
-  --color-success: 40 101 65;
-  --color-warning: 121 79 22;
-  --color-control: 255 255 255;
-  --color-control-border: 122 133 144;
-}
-
-/* Inverse band: a light section in Dark, a dark section in Light. */
-.td-band--inverse {
-  color-scheme: light;
-  --bg: #eef0f2;
-  --bg-deep: #eef0f2;
-  --surface: #ffffff;
-  --surface-2: #e3e7eb;
-  --border: #d5dbe1;
-  --border-strong: #c4cad1;
-  --text-strong: #15191f;
-  --text: #15191f;
-  --text-2: #3e4a56;
-  --text-3: #5a6875;
-  --steel: #4a5b6b;
-  /* Amber fills are kept for the page's own bands; here the fill is ink. */
-  --accent: #15191f;
-  --on-accent: #f6f7f8;
-  --accent-text: #8f520f;
-  --accent-hover: #2a323c;
-  --accent-text-hover: #6f3f0b;
-  --control-border: #7a8590;
-  --error: #a12e2b;
-  --success: #286541;
-  --warning: #794f16;
-}
-:root[data-theme="light"] .td-band--inverse {
-  color-scheme: dark;
-  --bg: #1a1f26;
-  --bg-deep: #1a1f26;
-  --surface: #20262f;
-  --surface-2: #262d36;
-  --border: #2f3a46;
-  --border-strong: #3a4756;
-  --text-strong: #f6f7f8;
-  --text: #f1f3f5;
-  --text-2: #b4c3cf;
-  --text-3: #8798a6;
-  --steel: #8fb0cc;
-  --accent: #f0a04b;
-  --on-accent: #1a1208;
-  --accent-text: #f0a04b;
-  --accent-hover: #e39037;
-  --accent-text-hover: #f6b877;
-  --control-border: #617385;
-  --error: #ffa8a0;
-  --success: #9fcdaf;
-  --warning: #e5c287;
 }

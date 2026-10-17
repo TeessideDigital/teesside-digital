@@ -1,14 +1,95 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
-import ServicesExperience from "@components/astro/ServicesExperience.astro";
-import ServicesMotion from "@components/astro/ServicesMotion.astro";
+import { SITE } from "@config/constants";
+import { services } from "../../data/services";
+import Band from "@components/ui/Band.astro";
+import Icon from "@components/ui/Icon.astro";
+import ServiceIllustration from "@components/ui/ServiceIllustration.astro";
+import "@styles/sections.css";
+import "@styles/pages.css";
+
+// Unconfirmed figures stay off the page: no time, and "Price on request".
+const meta = (service: (typeof services)[number]) => [
+  ...(service.timeConfirmed ? [{ key: "Typical time", value: service.time }] : []),
+  { key: "Price guide", value: service.priceConfirmed ? service.price : "Price on request" },
+  { key: "Under the bonnet", value: service.tools },
+];
 ---
 
 <BaseLayout
   title="Services"
-  description="Websites, business tools and practical automation for small and owner-led businesses. Work directly with Dave at Teesside Digital."
-  editorialFooter
+  description="Websites, apps, bespoke software, automation, AI tools, integrations, security reviews and ongoing care, explained in plain English."
 >
-  <ServicesExperience />
-  <ServicesMotion />
+  <section class="phero" data-hero>
+    <div class="wrap">
+      <span class="label"><i></i>Services</span>
+      <h1>Everything your business needs. <em>One person</em> to build it.</h1>
+      <p class="lede">
+        Websites, apps, bespoke software, automation, AI and security, explained in plain English.
+        Pick one to jump to it.
+      </p>
+      <nav class="jump" aria-label="Services on this page">
+        {services.map((service) => <a href={`#${service.id}`}>{service.name}</a>)}
+      </nav>
+    </div>
+  </section>
+
+  {
+    services.map((service) => {
+      const cells = meta(service);
+      return (
+        <section class="svcd" id={service.id} aria-labelledby={`${service.id}-title`}>
+          <div class="wrap svcd-grid">
+            <div>
+              <div class="svcd-ill reveal">
+                <ServiceIllustration name={service.key} />
+              </div>
+            </div>
+            <div class="reveal">
+              <h2 id={`${service.id}-title`}>{service.name}</h2>
+              <p class="pitch">{service.pitch}</p>
+              <div class="cols">
+                <div>
+                  <h3>What you get</h3>
+                  <ul class="dl">
+                    {service.whatYouGet
+                      .filter((item) => !item.ownership || SITE.ownershipConfirmed)
+                      .map((item) => (
+                        <li>{item.text}</li>
+                      ))}
+                  </ul>
+                </div>
+                <div>
+                  <h3>Good for</h3>
+                  <ul class="dl">
+                    {service.goodFor.map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              <dl class="meta3" style={`--cells:${cells.length}`}>
+                {cells.map((cell) => (
+                  <div>
+                    <dt class="k">{cell.key}</dt>
+                    <dd>{cell.value}</dd>
+                  </div>
+                ))}
+              </dl>
+              <a href="/contact/" class="textlink">
+                Talk to me about {service.linkName} <Icon name="arrow" />
+              </a>
+            </div>
+          </div>
+        </section>
+      );
+    })
+  }
+
+  <Band
+    title="Not sure which one you need?"
+    text="Tell me the problem and I'll suggest the simplest fix. Sometimes that's nothing you have to pay for."
+    href="/contact/"
+    action="Tell me what you need"
+  />
 </BaseLayout>

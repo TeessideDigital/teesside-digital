@@ -1,14 +1,35 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
-import HomeExperience from "../components/astro/HomeExperience.astro";
-import HomeMotion from "../components/astro/HomeMotion.astro";
+import Hero from "@components/home/Hero.astro";
+import Marquee from "@components/home/Marquee.astro";
+import BeforeAfter from "@components/home/BeforeAfter.astro";
+import ServiceExplorer from "@components/home/ServiceExplorer.astro";
+import EnquiryDemo from "@components/home/EnquiryDemo.astro";
+import Work from "@components/home/Work.astro";
+import HowIWork from "@components/home/HowIWork.astro";
+import PriceGuide from "@components/home/PriceGuide.astro";
+import Bonnet from "@components/home/Bonnet.astro";
+import MeetDave from "@components/home/MeetDave.astro";
+import Faq from "@components/ui/Faq.astro";
+import ContactSection from "@components/home/ContactSection.astro";
+import "@styles/sections.css";
+import "@styles/home.css";
 ---
 
 <BaseLayout
-  title="Teesside Digital - Websites, business tools and practical automation"
-  description="For small and owner-led businesses that need a clearer website, a better way to handle everyday tasks, or less repetitive work. Work directly with Dave in Hartlepool."
-  editorialFooter
+  title="Teesside Digital - Websites, apps and software in Teesside"
+  description="Websites, apps, bespoke software and automation for businesses across Teesside, designed and built by Dave in Hartlepool. One person, start to finish."
 >
-  <HomeExperience />
-  <HomeMotion />
+  <Hero />
+  <Marquee />
+  <BeforeAfter />
+  <ServiceExplorer />
+  <EnquiryDemo />
+  <Work />
+  <HowIWork />
+  <PriceGuide />
+  <Bonnet />
+  <MeetDave />
+  <Faq />
+  <ContactSection />
 </BaseLayout>

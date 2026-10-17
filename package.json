@@ -12,7 +12,9 @@
     "check": "astro check",
     "check:csp": "node tools/csp-hashes.mjs",
     "type-check": "astro sync && tsc --noEmit",
-    "lint": "node -e \"console.log('Compatibility alias: Astro diagnostics, not ESLint. Run npm run check directly.')\" && npm run check"
+    "lint": "node -e \"console.log('Compatibility alias: Astro diagnostics, not ESLint. Run npm run check directly.')\" && npm run check",
+    "test:e2e": "playwright test",
+    "check:links": "node tools/check-links.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
@@ -20,6 +22,8 @@
   },
   "devDependencies": {
     "@astrojs/check": "0.9.9",
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.64.1",
     "@types/node": "^20.10.0",
     "autoprefixer": "10.5.4",
     "postcss": "8.5.26",

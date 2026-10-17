@@ -87,11 +87,13 @@ All unconfirmed content sits behind config with a safe default, listed in full i
 - No horizontal overflow at 320, 390, 768, 1024, 1440, 1920, 2560, 3440 and 844 x 390.
 - Netlify registered both forms from the draft deploy with every V4 field.
 
-Not yet verified (needs the draft to be opened while signed in to Netlify):
+Checked on the draft deploy (17 October 2026, in Dave's signed-in Brave):
 
-- one test submission each to `enquiry` and `website-review` on the deploy, then deleting them;
-- the security headers and redirects as served by Netlify;
-- Lighthouse on the deployed draft.
+- Every page 200; an unknown URL 404 with the V4 page and noindex; `/services` redirects to `/services/`; each V1 URL redirects once to its V4 target.
+- Headers: the Content-Security-Policy matches `netlify.toml` exactly and blocks nothing (head script runs, grain overlay shows); X-Content-Type-Options, X-Frame-Options, X-XSS-Protection, Referrer-Policy and Permissions-Policy present; hashed `/_astro/` files are cached for a year and HTML revalidates. On `*.netlify.app` Netlify adds its own HSTS with includeSubDomains and preload; on the real domain the site's own one-year HSTS applies.
+- One test submission each, sent through the real forms, arrived with every field: `enquiry` `6ad363190b126c7db42d6b4a` (needs, budget, timing, name, email, business, message) and `website-review` `6ad36325f9b039098cd38c52` (name, email, website, message, goal). Both are marked TEST and left for Dave to delete, with the older TEST entries `6acf699192556cbe62b1830a` and `6acf69a002c561c85e53597f` from 14 October.
+
+Not verified: Lighthouse on the draft itself (it needs a signed-in browser; run it from Brave's DevTools). The figures above are from the local production build.
 
 Testing not done at all: real iOS and Android devices, Safari and Firefox, a screen reader, genuine browser text zoom.
 

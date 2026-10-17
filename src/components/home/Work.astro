@@ -1,0 +1,86 @@
+---
+// "Work": Dave's own work until client case studies pass the evidence gate.
+// The QuoteFlow figures are sample data. The score rings show real Lighthouse
+// measurements from src/data/scores.ts, and are left out if there are none.
+import { scores } from "../../data/scores";
+
+const rings = scores
+  ? [
+      { label: "Performance", value: scores.performance },
+      { label: "Accessibility", value: scores.accessibility },
+      { label: "Best practices", value: scores.bestPractices },
+    ]
+  : [];
+const measured = scores
+  ? new Date(`${scores.measured}T12:00:00Z`).toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    })
+  : "";
+---
+
+<section class="block" id="work" style="padding-top:0">
+  <div class="wrap">
+    <div class="head reveal">
+      <div>
+        <span class="label"><i></i>Work</span>
+        <h2>Things I've built.</h2>
+      </div>
+      <p>Client case studies are on the way. In the meantime, here's my own work.</p>
+    </div>
+    <div class="work">
+      <article class="wcard reveal">
+        <div class="wshot" aria-hidden="true">
+          <div class="mini">
+            <div class="mh">QuoteFlow &middot; Quote #0142<span>SAMPLE DATA</span></div>
+            <div class="r"><span>Bathroom refit, labour</span><b>1,450.00</b></div>
+            <div class="r"><span>Tiles and adhesive</span><b>612.00</b></div>
+            <div class="r"><span>Waste removal</span><b>180.00</b></div>
+            <div class="r"><span>Net</span><b>2,242.00</b></div>
+            <div class="r"><span>VAT at 20%</span><b>448.40</b></div>
+            <div class="tot"><span>Total inc. VAT</span><b>&pound;2,690.40</b></div>
+          </div>
+        </div>
+        <div class="wbody">
+          <div class="tags"><span class="tag">My own product</span><span class="tag">In development</span></div>
+          <h3>QuoteFlow</h3>
+          <p>A quoting tool for trades. Build a price from your own price list, send a tidy quote and see when it's opened.</p>
+        </div>
+      </article>
+      <article class="wcard reveal">
+        {
+          rings.length > 0 && (
+            <div class="wshot wshot-scores">
+              <div class="score" role="list" aria-label={`Lighthouse scores for this website, mobile, measured ${measured}`}>
+                {rings.map((ring) => (
+                  <div class="ring" role="listitem" style={`--v:${ring.value}`}>
+                    <svg viewBox="0 0 84 84" aria-hidden="true" focusable="false">
+                      <circle cx="42" cy="42" r="36" class="track-c" />
+                      <circle cx="42" cy="42" r="36" class="arc" />
+                    </svg>
+                    <b>
+                      {ring.value}
+                      <span class="visually-hidden"> out of 100 for {ring.label.toLowerCase()}</span>
+                    </b>
+                    <small aria-hidden="true">{ring.label}</small>
+                  </div>
+                ))}
+              </div>
+              <p class="score-cap">Lighthouse, mobile, measured {measured}</p>
+            </div>
+          )
+        }
+        <div class="wbody">
+          <div class="tags"><span class="tag live">Live</span><span class="tag">Design and build</span></div>
+          <h3>This website</h3>
+          <p>Designed, written and built by me. Fast, accessible and easy to look after.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<script>
+  import "../../scripts/score-rings";
+</script>

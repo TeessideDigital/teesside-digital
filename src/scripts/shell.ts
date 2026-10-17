@@ -138,3 +138,5 @@ if (mbar && "IntersectionObserver" in window) {
   for (const target of contacts) observer.observe(target);
   update();
 }
+
+export {};

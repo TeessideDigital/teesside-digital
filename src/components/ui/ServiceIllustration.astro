@@ -1,0 +1,103 @@
+---
+// The eight service line illustrations, ported from the V4 reference. Lime
+// comes from currentColor. Animation classes (spin, pulse, twinkle, draw,
+// nudge, blink, hand, rise1) run only where a stylesheet turns them on, and
+// never under reduced motion.
+import type { Illustration } from "../../data/services";
+interface Props {
+  name: Illustration;
+  class?: string;
+}
+const { name, class: className } = Astro.props;
+const common = {
+  fill: "none",
+  stroke: "currentColor",
+  "stroke-width": "1.6",
+  "stroke-linecap": "round",
+  "stroke-linejoin": "round",
+} as const;
+---
+
+<svg class:list={["ill", className]} viewBox="0 0 96 96" aria-hidden="true" focusable="false">
+  {
+    name === "web" && (
+      <>
+        <rect x="10" y="18" width="76" height="58" rx="4" {...common} />
+        <path d="M10 30h76" {...common} />
+        <circle cx="18" cy="24" r="1.5" fill="currentColor" />
+        <circle cx="24" cy="24" r="1.5" fill="currentColor" />
+        <path d="M20 42h34M20 50h24" {...common} />
+        <rect class="blink" x="20" y="58" width="18" height="8" fill="currentColor" />
+        <rect x="60" y="40" width="18" height="26" {...common} stroke-opacity=".5" />
+      </>
+    )
+  }
+  {
+    name === "app" && (
+      <>
+        <rect x="30" y="8" width="36" height="80" rx="7" {...common} />
+        <path d="M42 15h12" {...common} />
+        <rect class="rise1" x="37" y="26" width="22" height="6" fill="currentColor" />
+        <path d="M37 40h22M37 47h16" {...common} />
+        <rect x="37" y="56" width="22" height="22" {...common} stroke-opacity=".5" />
+      </>
+    )
+  }
+  {
+    name === "soft" && (
+      <>
+        <rect x="10" y="16" width="76" height="64" rx="3" {...common} />
+        <path d="M10 32h76M10 48h76M10 64h76M36 16v64M62 16v64" {...common} stroke-opacity=".5" />
+        <rect class="blink" x="38" y="34" width="22" height="12" fill="currentColor" />
+      </>
+    )
+  }
+  {
+    name === "auto" && (
+      <>
+        <g class="spin">
+        <path d="M24 48a24 24 0 0 1 41-17" {...common} />
+        <path d="M66 22v10h-10" {...common} />
+        <path d="M72 48a24 24 0 0 1-41 17" {...common} />
+        <path d="M30 74V64h10" {...common} />
+        </g>
+        <circle cx="48" cy="48" r="5" fill="currentColor" />
+      </>
+    )
+  }
+  {
+    name === "ai" && (
+      <>
+        <path class="pulse" d="M48 14l6 22 22 6-22 6-6 22-6-22-22-6 22-6z" {...common} />
+        <path class="twinkle" d="M76 66l2.5 7.5L86 76l-7.5 2.5L76 86l-2.5-7.5L66 76l7.5-2.5z" fill="currentColor" />
+      </>
+    )
+  }
+  {
+    name === "int" && (
+      <>
+        <rect x="8" y="34" width="28" height="28" rx="3" {...common} />
+        <rect x="60" y="34" width="28" height="28" rx="3" {...common} />
+        <path d="M36 42h24M36 54h24" {...common} />
+        <path class="nudge" d="M54 37l6 5-6 5M42 49l-6 5 6 5" {...common} />
+      </>
+    )
+  }
+  {
+    name === "sec" && (
+      <>
+        <path d="M48 10l30 11v22c0 20-13 34-30 42-17-8-30-22-30-42V21z" {...common} />
+        <path class="draw" d="M36 48l8 8 16-16" {...common} />
+      </>
+    )
+  }
+  {
+    name === "care" && (
+      <>
+        <circle cx="48" cy="48" r="30" {...common} />
+        <path class="hand" d="M48 30v18l12 8" {...common} />
+        <path d="M48 12v6M48 78v6M12 48h6M78 48h6" {...common} stroke-opacity=".5" />
+      </>
+    )
+  }
+</svg>

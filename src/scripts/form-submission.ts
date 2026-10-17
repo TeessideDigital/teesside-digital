@@ -11,9 +11,62 @@
  * - the confirmation block's mailto link names the address linked in messages.
  */
 type Field = HTMLInputElement | HTMLTextAreaElement;
-type Outcome = "accepted" | "rejected" | "uncertain";
+export type Outcome = "accepted" | "rejected" | "uncertain";
 
 const TIMEOUT = 15000;
+
+/** The form's fields, encoded as the receiver expects. Several values under
+ * one name (a group of checkboxes) are joined with commas, so each answer
+ * arrives as one field. */
+export function encodeForm(form: HTMLFormElement): string {
+  const joined = new Map<string, string[]>();
+  for (const [name, value] of new FormData(form)) {
+    // These forms have no file inputs.
+    if (typeof value !== "string") continue;
+    joined.set(name, [...(joined.get(name) ?? []), value]);
+  }
+  const body = new URLSearchParams();
+  for (const [name, values] of joined) body.set(name, values.join(", "));
+  return body.toString();
+}
+
+/** Posts a form to the receiver and maps the response honestly: 2xx is
+ * accepted, 4xx a definite refusal, anything else (5xx, network failure,
+ * timeout) uncertain, because it may have been stored. */
+export async function submitForm(form: HTMLFormElement): Promise<Outcome> {
+  const abort = new AbortController();
+  const timer = setTimeout(() => abort.abort(), TIMEOUT);
+  try {
+    const response = await fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: encodeForm(form),
+      signal: abort.signal,
+    });
+    if (response.ok) return "accepted";
+    return response.status >= 400 && response.status < 500
+      ? "rejected"
+      : "uncertain";
+  } catch {
+    return "uncertain";
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+/** A message as a paragraph, with the email address in it made a link. */
+export function messageWithEmail(text: string, email: string): HTMLParagraphElement {
+  const [before, after] = text.split(email);
+  const line = document.createElement("p");
+  line.append(before ?? "");
+  if (after !== undefined) {
+    const link = document.createElement("a");
+    link.href = `mailto:${email}`;
+    link.textContent = email;
+    line.append(link, after);
+  }
+  return line;
+}
 
 /** A bare domain is welcome; anything that is not a web address is not. */
 function isWebAddress(value: string) {
@@ -113,16 +166,7 @@ function enhance(form: HTMLFormElement) {
     return items.length;
   };
   const say = (text = "", state = "") => {
-    const [before, after] = text.split(email);
-    const line = document.createElement("p");
-    line.append(before ?? "");
-    if (after !== undefined) {
-      const link = document.createElement("a");
-      link.href = `mailto:${email}`;
-      link.textContent = email;
-      line.append(link, after);
-    }
-    status.replaceChildren(...(text ? [line] : []));
+    status.replaceChildren(...(text ? [messageWithEmail(text, email)] : []));
     if (state) status.dataset.state = state;
     else delete status.dataset.state;
   };
@@ -131,31 +175,6 @@ function enhance(form: HTMLFormElement) {
     label.textContent = on ? sendingText : idle;
     if (on) button.setAttribute("aria-disabled", "true");
     else button.removeAttribute("aria-disabled");
-  };
-
-  const send = async (): Promise<Outcome> => {
-    const abort = new AbortController();
-    const timer = setTimeout(() => abort.abort(), TIMEOUT);
-    try {
-      const response = await fetch("/", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        // Values go exactly as entered. These forms have no file inputs.
-        body: new URLSearchParams(
-          new FormData(form) as unknown as Record<string, string>,
-        ).toString(),
-        signal: abort.signal,
-      });
-      if (response.ok) return "accepted";
-      // A client error is a definite refusal. Anything else may have been stored.
-      return response.status >= 400 && response.status < 500
-        ? "rejected"
-        : "uncertain";
-    } catch {
-      return "uncertain";
-    } finally {
-      clearTimeout(timer);
-    }
   };
 
   const submit = async (event: SubmitEvent) => {
@@ -169,7 +188,7 @@ function enhance(form: HTMLFormElement) {
     }
     busy(true);
     say(sendingText);
-    const outcome = await send();
+    const outcome = await submitForm(form);
     if (outcome === "accepted") {
       // The guard stays set: there is nothing left to send from this page.
       say();

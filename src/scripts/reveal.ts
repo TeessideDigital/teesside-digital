@@ -28,3 +28,5 @@ if (!reduce && items.length && "IntersectionObserver" in window) {
     observer.disconnect();
   }, 12000);
 }
+
+export {};

@@ -1,0 +1,73 @@
+---
+// "See the difference": a made-up business before and after. Both mock sites
+// are HTML and CSS sized in container query units, hidden from assistive
+// technology; the range input on top is the control and carries the label.
+import Icon from "../ui/Icon.astro";
+---
+
+<section class="block" id="difference">
+  <div class="wrap">
+    <div class="head reveal">
+      <div>
+        <span class="label"><i></i>See the difference</span>
+        <h2>Same business. Two very different first impressions.</h2>
+      </div>
+      <p>Drag the handle. Most customers decide in a few seconds whether to stay or go back to Google.</p>
+    </div>
+    <div class="ba-wrap reveal">
+      <div class="ba" id="ba">
+        <div class="site new" aria-hidden="true">
+          <div class="nn">
+            <span class="nl"><i></i>Example Plumbing</span>
+            <span class="nlinks"><span>Services</span><span>Prices</span><span>Reviews</span><span>Contact</span></span>
+            <span class="ncta">Book online</span>
+          </div>
+          <div class="nh">
+            <div>
+              <span class="h4">Boiler trouble? <em>Booked in today.</em></span>
+              <span class="np">Local, fixed-price plumbing and heating. Pick a time that suits you and get a text when we're on the way.</span>
+              <span class="nbtns"><span class="nb1">Book a visit</span><span class="nb2">See prices</span></span>
+            </div>
+            <div class="ncard">
+              <b>Choose a time</b>
+              <span class="slots">
+                <span class="slot">Today 2pm</span><span class="slot on">Today 4pm</span><span class="slot">Tue 9am</span><span class="slot">Tue 1pm</span><span class="slot">Wed 10am</span><span class="slot">Wed 3pm</span>
+              </span>
+              <span class="ticks"><span>Fixed prices</span><span>Text updates</span><span>Pay online</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="site old" aria-hidden="true">
+          <div class="ob">~*~ Welcome to Example Plumbing!! ~*~</div>
+          <div class="om"><span>*** NEW!!! We now do BOILERS *** Call us on our NEW number *** Site best viewed in Internet Explorer 6 at 800x600 ***</span></div>
+          <div class="obody">
+            <div class="onav"><span>Home</span><span>About Us</span><span>Our Services</span><span>Price List (PDF)</span><span>Guestbook</span><span>Links</span><span>Contact Us</span></div>
+            <div class="omain">
+              <span class="oimg">[image]</span>
+              <span class="h4">Welcome!!!</span>
+              <span class="op">Welcome to our website. We are a family run business established many years ago. We offer a wide range of services for all your plumbing needs please see our services page for more information or phone us for a quote.</span>
+              <span class="op">This site is UNDER CONSTRUCTION please check back soon!!</span>
+              <span class="op">You are visitor number <span class="ocount">000417</span></span>
+            </div>
+          </div>
+          <div class="ofoot">Last updated: 14/03/2011 &middot; Webmaster</div>
+        </div>
+        <input
+          type="range"
+          id="ba-range"
+          min="0"
+          max="100"
+          value="50"
+          aria-label="Compare the old and new website. Left shows the old site, right shows the new one."
+        />
+        <div class="handle" aria-hidden="true"><span class="knob"><Icon name="slider" /></span></div>
+        <span class="tagl" aria-hidden="true">BEFORE</span><span class="tagr" aria-hidden="true">AFTER</span>
+      </div>
+      <p class="ba-note">Example business made up for illustration. Not a real company or client.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  import "../../scripts/before-after";
+</script>

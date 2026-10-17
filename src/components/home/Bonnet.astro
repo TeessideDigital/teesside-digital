@@ -1,0 +1,41 @@
+---
+// "Under the bonnet": the facts and the isometric layered stack. "Yours" shows
+// only once ownership is confirmed. At phone widths the drawing's labels give
+// way to the HTML legend.
+import { SITE } from "@config/constants";
+import layers from "../../assets/layers.svg?raw";
+
+const facts = [
+  { key: "Fast", text: "Pages and apps that load quickly, even on a weak phone signal." },
+  { key: "Secure", text: "Sensible security from the start, not bolted on afterwards." },
+  { key: "Joined up", text: "Works with the tools you already use." },
+  ...(SITE.ownershipConfirmed ? [{ key: "Yours", text: "You own what I build for you." }] : []),
+];
+const legend = [
+  ["INTERFACE", "Websites, web and mobile apps"],
+  ["LOGIC", "Bespoke software, automation"],
+  ["INTELLIGENCE", "AI tools that do real work"],
+  ["DATA", "Integrations, databases, APIs"],
+];
+---
+
+<section class="block bonnet">
+  <div class="wrap">
+    <div class="copy reveal">
+      <span class="label"><i></i>Under the bonnet</span>
+      <h2>Built properly, underneath.</h2>
+      <p class="intro">
+        You won't see most of it, but it's the part that keeps things fast, safe and easy to change later.
+      </p>
+      <ul class="facts">
+        {facts.map((fact) => <li><b>{fact.key}</b><span>{fact.text}</span></li>)}
+      </ul>
+    </div>
+    <div class="layers reveal">
+      <div class="layers-art" aria-hidden="true" set:html={layers} />
+      <ul class="legend" aria-label="The layers">
+        {legend.map(([key, text]) => <li><b>{key}</b><span>{text}</span></li>)}
+      </ul>
+    </div>
+  </div>
+</section>

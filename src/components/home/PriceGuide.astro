@@ -1,0 +1,86 @@
+---
+// "Price guide": a ballpark from src/data/pricing.ts. Renders only when
+// pricing.confirmed is true, so placeholder figures never go live.
+import { formatPounds, pricing } from "../../data/pricing";
+import Icon from "../ui/Icon.astro";
+
+const [low, high] = pricing.ranges.web[0]!;
+---
+
+{
+  pricing.confirmed && (
+    <section class="block" id="prices" style="padding-top:0">
+      <div class="wrap">
+        <div class="head reveal">
+          <div>
+            <span class="label"><i></i>Price guide</span>
+            <h2>Rough cost, in under a minute.</h2>
+          </div>
+          <p>Pick what you need and get a ballpark. Every job is quoted properly after a chat.</p>
+        </div>
+        <div class="pg reveal" data-pricing={JSON.stringify(pricing)}>
+          <form class="pg-form" id="pg-form" novalidate>
+            <fieldset>
+              <legend>What do you need?</legend>
+              <div class="opts">
+                {pricing.types.map((type, index) => (
+                  <label class="opt">
+                    <input type="radio" name="type" value={type.value} checked={index === 0} />
+                    <span>{type.label}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>How big?</legend>
+              <div class="opts">
+                {pricing.sizes.map((size, index) => (
+                  <label class="opt">
+                    <input type="radio" name="size" value={index} checked={index === 0} />
+                    <span>{size}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>Extras</legend>
+              <div class="opts">
+                {pricing.extras.map((extra) => (
+                  <label class="opt">
+                    <input type="checkbox" name="extra" value={extra.value} />
+                    <span>{extra.label}</span>
+                  </label>
+                ))}
+                <label class="opt">
+                  <input type="checkbox" name="extra" value="care" />
+                  <span>Ongoing care</span>
+                </label>
+              </div>
+            </fieldset>
+          </form>
+          <div class="pg-out" aria-live="polite">
+            <span class="label"><i></i>Typical range</span>
+            <p class="visually-hidden" id="pg-said">
+              Typical range {formatPounds(low)} to {formatPounds(high)}
+            </p>
+            <div class="big" id="pg-range" aria-hidden="true">
+              {formatPounds(low)} <span>&ndash;</span> {formatPounds(high)}
+            </div>
+            <div class="care" id="pg-care" hidden />
+            <ul id="pg-list">
+              <li>Small website</li>
+            </ul>
+            <p class="note">A ballpark, not a quote.</p>
+            <a href="#contact" class="btn" id="pg-quote" style="align-self:flex-start;margin-top:8px">
+              Get a proper quote <Icon name="arrow" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<script>
+  import "../../scripts/price-guide";
+</script>

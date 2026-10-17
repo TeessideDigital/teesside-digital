@@ -1,0 +1,12 @@
+---
+// The Hartlepool contour map: one shared static SVG file, cached once and
+// used on Home and About. Decorative.
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<div class:list={["contour", className]} aria-hidden="true">
+  <img src="/images/contour-hartlepool.svg" alt="" width="560" height="610" loading="lazy" decoding="async" />
+</div>

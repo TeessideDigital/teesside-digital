@@ -1,0 +1,49 @@
+---
+// "Questions": native details and summary, no script. The cost and ownership
+// answers follow the config, so nothing unconfirmed is promised.
+import { SITE } from "@config/constants";
+import { pricing } from "../../data/pricing";
+import Icon from "./Icon.astro";
+
+const path = Astro.url.pathname.replace(/\/+$/, "") || "/";
+const priceGuide = path === "/" ? "The price guide above" : "The price guide on the homepage";
+const cost = pricing.confirmed
+  ? `It depends on what you need. Small websites start from a few hundred pounds and bigger systems cost more. ${priceGuide} gives a rough idea, and you get a fixed written quote before any work starts.`
+  : "It depends on what you need. You get a fixed written quote before any work starts.";
+const ownership = SITE.ownershipConfirmed
+  ? "Yes. Once it's paid for, it's yours."
+  : "We'll agree who owns what in writing before any work starts.";
+
+const items = [
+  ["How much does it cost?", cost],
+  ["How long does it take?", "A small website usually takes a few weeks. Apps and bespoke systems take longer. You'll get a timeline in the proposal, and I'll keep you updated as I go."],
+  ["I'm not technical. Is that a problem?", "Not at all. That's my job. I'll explain things in plain English and you'll never be left guessing what's happening."],
+  ["Do I own what you build?", ownership],
+  ["Do you only work in Teesside?", "I'm based in Hartlepool and love working with local businesses, but I can work with anyone in the UK over video calls."],
+  ["What happens after it goes live?", "I don't disappear. I can look after updates, security, hosting and changes on a monthly care plan, or you can call on me when you need me."],
+];
+---
+
+<section class="block" id="faq" style="padding-top:0">
+  <div class="wrap faq">
+    <div class="reveal">
+      <span class="label"><i></i>Questions</span>
+      <h2 style="margin-top:22px">Straight answers.</h2>
+    </div>
+    <div class="faq-list reveal">
+      {
+        items.map(([question, answer]) => (
+          <details>
+            <summary>
+              {question}
+              <span class="pm" aria-hidden="true">
+                <Icon name="plus" />
+              </span>
+            </summary>
+            <p>{answer}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

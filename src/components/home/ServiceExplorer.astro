@@ -1,0 +1,71 @@
+---
+// "What I build": a vertical tablist with a sticky detail panel. Without
+// JavaScript every panel shows. service-tabs.ts selects one at a time, and at
+// phone widths turns the list into an accordion, each panel after its button.
+import { services } from "../../data/services";
+import Icon from "../ui/Icon.astro";
+import ServiceIllustration from "../ui/ServiceIllustration.astro";
+---
+
+<section class="block" id="build">
+  <div class="wrap">
+    <div class="head reveal">
+      <div>
+        <span class="label"><i></i>What I build</span>
+        <h2>Pick what you need. I'll build it properly.</h2>
+      </div>
+      <div>
+        <p>Most jobs are one of these, or a mix. If yours isn't on the list, ask anyway.</p>
+        <a href="/services/" class="textlink">All services in detail <Icon name="arrow" /></a>
+      </div>
+    </div>
+    <div class="svc">
+      <div class="svc-list" role="tablist" aria-label="Services" aria-orientation="vertical">
+        {
+          services.map((service, index) => (
+            <button
+              class="svc-btn"
+              type="button"
+              role="tab"
+              id={`tab-${service.key}`}
+              aria-controls={`panel-${service.key}`}
+              aria-selected={index === 0 ? "true" : "false"}
+              tabindex={index === 0 ? 0 : -1}
+            >
+              <span>{service.name}</span>
+              <Icon name="arrow" class="arr" />
+            </button>
+          ))
+        }
+      </div>
+      <div class="svc-panels">
+        {
+          services.map((service, index) => (
+            <div
+              class:list={["panel", { on: index === 0 }]}
+              role="tabpanel"
+              id={`panel-${service.key}`}
+              aria-labelledby={`tab-${service.key}`}
+            >
+              <ServiceIllustration name={service.key} />
+              <h3>{service.name}</h3>
+              <p>{service.summary}</p>
+              <div class="good">
+                <span class="label">Good for</span>
+                <ul>
+                  {service.goodForShort.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import "../../scripts/service-tabs";
+</script>

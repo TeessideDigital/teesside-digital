@@ -1,0 +1,32 @@
+---
+// A photograph of Dave once SITE.portrait has one; until then a designed panel
+// with the mark large on the panel colour. Never a placeholder label.
+import { SITE } from "@config/constants";
+import Logo from "../brand/Logo.astro";
+
+interface Props {
+  id: string;
+  class?: string;
+  /** Load eagerly when the slot is in the first view. */
+  eager?: boolean;
+}
+const { id, class: className, eager = false } = Astro.props;
+---
+
+{
+  SITE.portrait.src ? (
+    <img
+      class:list={["photo", "has-photo", className]}
+      src={SITE.portrait.src}
+      alt={SITE.portrait.alt}
+      width="800"
+      height="1000"
+      loading={eager ? "eager" : "lazy"}
+      decoding="async"
+    />
+  ) : (
+    <div class:list={["photo", className]} aria-hidden="true">
+      <Logo id={`photo-${id}`} width={120} />
+    </div>
+  )
+}

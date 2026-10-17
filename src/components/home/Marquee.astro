@@ -1,0 +1,18 @@
+---
+// The services strip. The list is in the document once for assistive
+// technology; the moving copy is decorative. Under reduced motion it is a
+// static wrapped list.
+import { services } from "../../data/services";
+const names = services.map((service) => service.name);
+---
+
+<div class="strip">
+  <div class="track">
+    <ul class="track-set" aria-label="Services">
+      {names.map((name) => <li>{name}</li>)}
+    </ul>
+    <ul class="track-set track-copy" aria-hidden="true">
+      {names.map((name) => <li>{name}</li>)}
+    </ul>
+  </div>
+</div>

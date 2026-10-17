@@ -1,0 +1,40 @@
+---
+// "How I work": four steps, with a lime line that grows across as the section
+// scrolls into view where scroll-driven animation is supported (full width
+// otherwise). A vertical timeline at phone widths.
+import { SITE } from "@config/constants";
+
+const care = "Once it's live, I keep it updated, secure and working.";
+const steps = [
+  { title: "Talk", text: "A chat about your business and what's getting in the way. No jargon, no hard sell." },
+  { title: "Plan", text: "A clear proposal: what I'll build, how long it takes and what it costs." },
+  { title: "Build", text: "I build it and show you progress as I go, so there are no surprises at the end." },
+  { title: "Look after", text: SITE.carePlan ? `${care} ${SITE.carePlan}` : care },
+];
+---
+
+<section class="block" id="how" style="padding-top:0">
+  <div class="wrap">
+    <div class="head reveal">
+      <div>
+        <span class="label"><i></i>How I work</span>
+        <h2>Four steps. No surprises.</h2>
+      </div>
+      <p>You always know what's happening, what it costs and what comes next.</p>
+    </div>
+    <div class="steps">
+      <span class="bar" aria-hidden="true"></span>
+      <ol class="steps-grid">
+      {
+        steps.map((step, index) => (
+          <li class="step reveal">
+            <span class="n">STEP {index + 1}</span>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </li>
+        ))
+      }
+      </ol>
+    </div>
+  </div>
+</section>

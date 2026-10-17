@@ -376,6 +376,14 @@ html:has(.drawer[open]) {
 }
 
 /* ---------- footer ---------- */
+/* The outlined wordmark uses a static 800 instance, subset to its letters:
+   the variable font's overlapping contours would show through the stroke. */
+@font-face {
+  font-family: "Schibsted Wordmark";
+  src: url("/fonts/schibsted-grotesk-800-wordmark.woff2") format("woff2");
+  font-weight: 800;
+  font-display: swap;
+}
 footer.big {
   border-top: 1px solid var(--line);
   overflow: clip;
@@ -424,6 +432,7 @@ footer.big {
   color: var(--fg);
 }
 .wordmark {
+  font-family: "Schibsted Wordmark", var(--display);
   font-weight: 800;
   letter-spacing: -0.06em;
   line-height: 0.8;

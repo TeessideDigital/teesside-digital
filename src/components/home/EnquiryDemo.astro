@@ -1,0 +1,71 @@
+---
+// "Try it": a rules-only demo that reads a customer message in the browser.
+// The Sarah example is already sorted in the document, so the section is
+// complete before anyone touches it. Nothing is sent anywhere.
+import { analyse, SAMPLE_MESSAGE } from "@lib/enquiry-rules";
+import Icon from "../ui/Icon.astro";
+
+const first = analyse(SAMPLE_MESSAGE);
+
+const presets = [
+  {
+    label: "Price question",
+    message:
+      "Hi there, how much would it cost to have a new bathroom fitted? It's a small room, nothing fancy. Cheers, Mark (mark.t@example.com)",
+  },
+  {
+    label: "Booking",
+    message:
+      "Hello, could I book a boiler service for next week? Any day after Tuesday works. Kind regards, Joan",
+  },
+  {
+    label: "Complaint",
+    message:
+      "Not happy at all. The leak you fixed on Monday has started again and the kitchen floor is wet. Please call me ASAP on 07700 900456. Dan",
+  },
+];
+---
+
+<section class="block" id="demo" style="padding-top:0">
+  <div class="wrap">
+    <div class="head reveal">
+      <div>
+        <span class="label"><i></i>Try it</span>
+        <h2>Watch an enquiry sort itself.</h2>
+      </div>
+      <p>Type a message like a customer would, or pick an example. See it read, labelled and answered in seconds.</p>
+    </div>
+    <div class="demo reveal">
+      <form class="dbox" id="demo-form" novalidate>
+        <label for="demo-msg" class="label"><i></i>Customer message</label>
+        <textarea id="demo-msg" name="demo-msg">{SAMPLE_MESSAGE}</textarea>
+        <div class="presets" role="group" aria-label="Example messages">
+          {
+            presets.map((preset) => (
+              <button type="button" class="chip" data-msg={preset.message}>
+                {preset.label}
+              </button>
+            ))
+          }
+        </div>
+        <button type="submit" class="btn" style="align-self:flex-start">Sort it <Icon name="arrow" /></button>
+      </form>
+      <div class="dout">
+        <div class="dstatus" id="demo-status"><i></i>READY</div>
+        <div id="demo-rows" aria-live="polite">
+          <div class="drow"><b>Type</b><span><span class:list={["pillv", { hot: first.type === "Complaint" }]}>{first.type}</span></span></div>
+          <div class="drow"><b>Urgency</b><span><span class:list={["pillv", { hot: first.hot }]}>{first.urg}</span></span></div>
+          <div class="drow">
+            <b>Picked out</b><span class="facts2">{first.facts.map((fact) => <em>{fact}</em>)}</span>
+          </div>
+          <div class="drow"><b>Draft reply</b><span class="reply-draft">{first.reply}</span></div>
+        </div>
+        <p class="dnote">Demo: runs in your browser with simple rules and sends nothing anywhere. The real version uses AI and plugs into your inbox.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import "../../scripts/enquiry-demo";
+</script>

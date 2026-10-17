@@ -1,0 +1,568 @@
+/* Section patterns shared by several pages: section rhythm and heads, page
+   heroes, bands, chips, the photo slot, the FAQ, the four-step enquiry form
+   and the service illustration motion. */
+
+h1 em,
+h2 em {
+  font-style: normal;
+  color: var(--lime);
+}
+
+section.block {
+  padding-block: clamp(80px, 10vw, 140px);
+}
+.head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+  gap: 48px;
+  align-items: end;
+  margin-bottom: 56px;
+}
+.head p {
+  color: var(--fg-2);
+  font-size: 18px;
+}
+.head .label {
+  margin-bottom: 22px;
+}
+.head .textlink {
+  margin-top: 18px;
+}
+.lede {
+  margin-top: 30px;
+  font-size: 21px;
+  line-height: 1.5;
+  color: var(--fg-2);
+  max-width: 34ch;
+}
+
+/* ---------- page hero (inner pages) ---------- */
+.phero {
+  position: relative;
+  overflow: clip;
+  padding-block: clamp(48px, 7vw, 104px) clamp(40px, 6vw, 80px);
+}
+.phero::before {
+  content: "";
+  position: absolute;
+  right: -10%;
+  top: -30%;
+  width: 800px;
+  height: 640px;
+  background: radial-gradient(closest-side, var(--lime-06), transparent);
+  pointer-events: none;
+}
+.phero h1 {
+  font-size: clamp(44px, 6.2vw, 92px);
+  line-height: 0.96;
+  letter-spacing: -0.045em;
+  max-width: 16ch;
+  margin-top: 26px;
+}
+.phero .lede {
+  max-width: 50ch;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .phero .label,
+  .phero h1,
+  .phero .lede,
+  .phero .jump,
+  .phero .pside,
+  .phero .ctas,
+  .phero .facts-2 {
+    animation: up 0.8s var(--ease) both;
+  }
+  .phero h1 {
+    animation-delay: 0.08s;
+  }
+  .phero .lede {
+    animation-delay: 0.18s;
+  }
+  .phero .jump,
+  .phero .pside,
+  .phero .ctas,
+  .phero .facts-2 {
+    animation-delay: 0.28s;
+  }
+}
+
+/* ---------- bands ---------- */
+.band {
+  border-block: 1px solid var(--line);
+  background: var(--ink-2);
+}
+.band .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 28px;
+  padding-block: clamp(56px, 7vw, 96px);
+}
+.band h2 {
+  max-width: 18ch;
+}
+.band p {
+  color: var(--fg-2);
+  font-size: 18px;
+  max-width: 44ch;
+  margin-top: 14px;
+}
+
+/* ---------- chips (radio and checkbox options) ---------- */
+.opts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.opt {
+  position: relative;
+}
+.opt input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  pointer-events: none;
+}
+.opt span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  font-size: 15px;
+  color: var(--fg-2);
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    color 0.2s,
+    background 0.2s;
+}
+.opt span:hover {
+  border-color: var(--fg-3);
+  color: var(--fg);
+}
+.opt input:checked + span {
+  border-color: var(--lime);
+  color: var(--lime-ink);
+  background: var(--lime);
+  font-weight: 600;
+}
+.opt input:focus-visible + span {
+  outline: 2px solid var(--lime);
+  outline-offset: 3px;
+}
+@media (forced-colors: active) {
+  .opt input:checked + span {
+    forced-color-adjust: none;
+    background: Highlight;
+    color: HighlightText;
+    border-color: Highlight;
+  }
+}
+
+/* ---------- photo slot ---------- */
+.photo {
+  aspect-ratio: 4 / 5;
+  max-width: 100%;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(70% 60% at 50% 40%, var(--lime-06), transparent),
+    var(--panel);
+  display: grid;
+  place-items: center;
+}
+.photo .logo-svg {
+  width: 38%;
+  height: auto;
+  opacity: 0.9;
+}
+img.photo {
+  object-fit: cover;
+  width: 100%;
+  height: auto;
+}
+
+/* ---------- tags and lists ---------- */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ---------- FAQ ---------- */
+.faq {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+  gap: 64px;
+  align-items: start;
+}
+.faq-list {
+  border-top: 1px solid var(--line);
+}
+.faq details {
+  border-bottom: 1px solid var(--line);
+}
+.faq summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 24px 0;
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  transition: color 0.2s;
+}
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+.faq summary:hover {
+  color: var(--lime);
+}
+.faq summary .pm {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--line-2);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  transition:
+    transform 0.35s var(--ease),
+    border-color 0.2s;
+}
+.faq details[open] summary .pm {
+  transform: rotate(45deg);
+  border-color: var(--lime);
+  color: var(--lime);
+}
+.faq details p {
+  color: var(--fg-2);
+  font-size: 17px;
+  max-width: 60ch;
+  padding: 0 0 26px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .faq details[open] p {
+    animation: up 0.45s var(--ease) both;
+  }
+}
+
+/* ---------- four-step enquiry form ---------- */
+.qf {
+  position: relative;
+  background: rgba(17, 20, 23, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--line-2);
+  border-radius: 10px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.8);
+  min-width: 0;
+}
+.qf-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--fg-3);
+  text-transform: uppercase;
+}
+.qf-bar {
+  height: 3px;
+  background: var(--line);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.qf-bar span {
+  display: block;
+  height: 100%;
+  width: 25%;
+  background: var(--lime);
+  transition: width 0.5s var(--ease);
+}
+/* Without scripts the four groups are one ordinary form: no step header. */
+html:not(.js) .qf-top,
+html:not(.js) .qf-bar {
+  display: none;
+}
+/* With scripts, later steps stay closed until the stepper takes over. */
+html.js .qf:not(.stepped) .qf-step:not([data-step="1"]) {
+  display: none;
+}
+.qf-step {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.qf-step legend {
+  padding: 0;
+  margin-bottom: 16px;
+  float: left;
+  width: 100%;
+}
+.qf-step legend + * {
+  clear: both;
+}
+.qf .qf-h {
+  font-size: 26px;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+.qf .qf-h:focus {
+  outline: none;
+}
+.qf .qf-h:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 4px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .qf-step.in {
+    animation: up 0.45s var(--ease) both;
+  }
+}
+.qf .opts {
+  gap: 8px;
+}
+.qf label.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--fg-2);
+}
+.qf input[type="text"],
+.qf input[type="email"],
+.qf textarea {
+  background: var(--ink);
+  color: var(--fg);
+  border: 1px solid var(--line-2);
+  border-radius: 6px;
+  padding: 12px 14px;
+  font: inherit;
+  font-size: 16px;
+  min-height: 48px;
+}
+.qf textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+.qf input:focus-visible,
+.qf textarea:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 1px;
+  border-color: transparent;
+}
+.qf input[aria-invalid="true"] {
+  border-color: var(--warn);
+}
+.qf .err {
+  font-size: 14px;
+  color: var(--warn);
+}
+.qf .err:empty {
+  display: none;
+}
+.qf-privacy {
+  font-size: 13.5px;
+  color: var(--fg-3);
+}
+.qf-privacy a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: var(--fg-2);
+}
+.qf-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.qf-nav .qf-next {
+  margin-left: auto;
+}
+.qf-back {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  font-size: 15px;
+  color: var(--fg-3);
+  padding: 10px 4px;
+  min-height: 44px;
+}
+.qf-back:hover {
+  color: var(--fg);
+}
+.qf-next[disabled] {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+.qf-next[aria-disabled="true"] {
+  cursor: progress;
+}
+.qf-status:empty {
+  display: none;
+}
+.qf-status {
+  font-size: 15px;
+  color: var(--fg-2);
+}
+.qf-status[data-state="error"],
+.qf-status[data-state="warning"] {
+  color: var(--warn);
+}
+.qf-status a,
+.qf-done a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.qf-done {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: flex-start;
+}
+.qf-done .tick {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--lime);
+  color: var(--lime-ink);
+  display: grid;
+  place-items: center;
+}
+.qf-done .tick path {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+  animation: draw 0.6s 0.2s var(--ease) forwards;
+}
+.qf-done p {
+  color: var(--fg-2);
+}
+.qf-sum {
+  list-style: none;
+  margin: 0;
+  padding: 12px 0 0;
+  border-top: 1px solid var(--line);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--fg-2);
+}
+.qf-sum b {
+  color: var(--fg);
+  font-weight: 600;
+}
+@media (prefers-reduced-motion: reduce) {
+  .qf-done .tick path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ---------- service illustrations ---------- */
+.ill {
+  color: var(--lime);
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.12);
+  }
+}
+@keyframes nudge {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(3px);
+  }
+}
+@keyframes barup {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-6px);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  :is(.panel.on, .svcd-ill) .ill .spin {
+    transform-origin: 48px 48px;
+    animation: spin 9s linear infinite;
+  }
+  :is(.panel.on, .svcd-ill) .ill .pulse {
+    transform-origin: 48px 42px;
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  :is(.panel.on, .svcd-ill) .ill .twinkle {
+    transform-origin: 76px 76px;
+    animation: pulse 1.6s ease-in-out infinite 0.4s;
+  }
+  :is(.panel.on, .svcd-ill) .ill .draw {
+    stroke-dasharray: 40;
+    stroke-dashoffset: 40;
+    animation: draw 1.1s 0.2s var(--ease) forwards;
+  }
+  :is(.panel.on, .svcd-ill) .ill .nudge {
+    animation: nudge 1.8s ease-in-out infinite;
+  }
+  :is(.panel.on, .svcd-ill) .ill .blink {
+    animation: blink 2s steps(1) infinite;
+  }
+  :is(.panel.on, .svcd-ill) .ill .hand {
+    transform-origin: 48px 48px;
+    animation: spin 12s linear infinite;
+  }
+  :is(.panel.on, .svcd-ill) .ill .rise1 {
+    animation: barup 1.8s ease-in-out infinite alternate;
+  }
+}
+
+@media (max-width: 1000px) {
+  .head,
+  .faq {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 760px) {
+  .lede {
+    font-size: 18px;
+  }
+  .faq summary {
+    font-size: 18px;
+  }
+  .qf {
+    padding: 20px;
+  }
+}

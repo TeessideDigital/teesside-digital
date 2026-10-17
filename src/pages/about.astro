@@ -7,19 +7,13 @@ import Icon from "@components/ui/Icon.astro";
 import PhotoSlot from "@components/ui/PhotoSlot.astro";
 import "@styles/sections.css";
 import "@styles/pages.css";
+import { background } from "../data/background";
 
 const values = [
   ["One person, start to finish", "The person you talk to is the person who builds it. Nothing gets lost in a handover."],
   ["Plain English, always", "No jargon and no blinding you with tech. You'll always know what's happening and why."],
   ["Honest advice", "If you don't need something, I'll tell you, even if that means less work for me."],
   ["Here after launch", "I don't build it and disappear. I'm around for updates, fixes and the next idea."],
-];
-// Shown only once Dave has approved what to share (SITE.aboutBackgroundConfirmed).
-const background = [
-  ["Years ago", "Building and taking software apart", "Started by writing mods, plugins and tools, and working out how other people's software worked under the bonnet."],
-  ["Ongoing", "Studying computing", "Computing degree with The Open University, alongside real projects."],
-  ["2026", "Founded Teesside Digital", "Set up in Hartlepool to give local businesses a straight-talking developer on their doorstep."],
-  ["Now", "Building QuoteFlow", "My own quoting tool for trades, built alongside client work."],
 ];
 const towns = ["Hartlepool", "Stockton-on-Tees", "Middlesbrough", "Darlington", "Redcar", "Billingham", "Guisborough", "Yarm"];
 ---
@@ -75,7 +69,7 @@ const towns = ["Hartlepool", "Stockton-on-Tees", "Middlesbrough", "Darlington", 
             <p class="side">Years of building things with code, now put to work for local businesses.</p>
           </div>
           <ol class="tl reveal">
-            {background.map(([when, title, text]) => (
+            {background.map(({ when, title, text }) => (
               <li>
                 <span class="k">{when}</span>
                 <h3>{title}</h3>

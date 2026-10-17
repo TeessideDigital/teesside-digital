@@ -10,8 +10,8 @@ import "@styles/pages.css";
 
 // Unconfirmed figures stay off the page: no time, and "Price on request".
 const meta = (service: (typeof services)[number]) => [
-  ...(service.confirmed ? [{ key: "Typical time", value: service.time }] : []),
-  { key: "Price guide", value: service.confirmed ? service.price : "Price on request" },
+  ...(service.timeConfirmed ? [{ key: "Typical time", value: service.time }] : []),
+  { key: "Price guide", value: service.priceConfirmed ? service.price : "Price on request" },
   { key: "Under the bonnet", value: service.tools },
 ];
 ---

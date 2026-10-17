@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { SITE, telephoneHref } from "@config/constants";
+import { SITE, replySentence, telephoneHref } from "@config/constants";
 import Band from "@components/ui/Band.astro";
 import EnquiryForm from "@components/ui/EnquiryForm.astro";
 import Faq from "@components/ui/Faq.astro";
@@ -18,7 +18,7 @@ import "@styles/pages.css";
       <h1>Let's talk about <em>what you need.</em></h1>
       <p class="lede">
         Four quick steps, or just email me. Either way, you'll hear back from me personally with
-        honest advice.{SITE.replyTime && ` ${SITE.replyTime}`}
+        honest advice.{replySentence && ` ${replySentence}`}
       </p>
     </div>
   </section>

@@ -1,10 +1,10 @@
 /**
  * The eight services, as shown on Home ("What I build") and on /services/.
  *
- * Typical time and price guide are the reference design's placeholder values.
- * While a service's `confirmed` is false, its meta row hides the time, shows
- * "Price on request" and keeps the tools. Set `confirmed` to true only once
- * Dave has approved that service's figures.
+ * Typical time and price guide each have their own confirmation flag. While
+ * timeConfirmed is false the meta row leaves the time out; while
+ * priceConfirmed is false it shows "Price on request". Times and prices below
+ * were confirmed by Dave on 17 October 2026.
  */
 
 export type Illustration =
@@ -35,9 +35,10 @@ export interface Service {
   whatYouGet: { text: string; ownership?: boolean }[];
   goodFor: string[];
   time: string;
+  timeConfirmed: boolean;
   price: string;
+  priceConfirmed: boolean;
   tools: string;
-  confirmed: boolean;
 }
 
 export const services: Service[] = [
@@ -66,9 +67,10 @@ export const services: Service[] = [
       "Sites that don't bring in enquiries",
     ],
     time: "2 to 6 weeks",
+    timeConfirmed: true,
     price: "From £800",
+    priceConfirmed: true,
     tools: "Astro, modern HTML and CSS, Netlify hosting",
-    confirmed: false,
   },
   {
     id: "apps",
@@ -92,9 +94,10 @@ export const services: Service[] = [
       "Businesses with repeat customers",
     ],
     time: "6 to 16 weeks",
-    price: "From £4,000",
+    timeConfirmed: true,
+    price: "Price on request",
+    priceConfirmed: true,
     tools: "Progressive web apps, TypeScript, cloud databases",
-    confirmed: false,
   },
   {
     id: "software",
@@ -119,9 +122,10 @@ export const services: Service[] = [
       "Paying for software you only half use",
     ],
     time: "4 to 12 weeks",
+    timeConfirmed: true,
     price: "From £2,500",
+    priceConfirmed: true,
     tools: "Python, TypeScript, SQL databases",
-    confirmed: false,
   },
   {
     id: "automation",
@@ -145,9 +149,10 @@ export const services: Service[] = [
       "Small teams short on time",
     ],
     time: "1 to 4 weeks",
+    timeConfirmed: true,
     price: "From £400",
+    priceConfirmed: true,
     tools: "Python, APIs, scheduled jobs",
-    confirmed: false,
   },
   {
     id: "ai",
@@ -168,9 +173,10 @@ export const services: Service[] = [
     ],
     goodFor: ["Busy inboxes", "Repetitive questions", "Lots of documents"],
     time: "2 to 6 weeks",
+    timeConfirmed: true,
     price: "Price on request",
+    priceConfirmed: true,
     tools: "Leading AI models, connected to your tools",
-    confirmed: false,
   },
   {
     id: "integrations",
@@ -192,9 +198,10 @@ export const services: Service[] = [
       "Things falling through the cracks",
     ],
     time: "1 to 4 weeks",
+    timeConfirmed: true,
     price: "Price on request",
+    priceConfirmed: true,
     tools: "APIs, webhooks, secure connections",
-    confirmed: false,
   },
   {
     id: "security",
@@ -212,9 +219,10 @@ export const services: Service[] = [
     ],
     goodFor: ["Before a launch", "After a scare", "Peace of mind"],
     time: "1 to 2 weeks",
+    timeConfirmed: true,
     price: "Price on request",
+    priceConfirmed: true,
     tools: "Industry checklists, careful manual review",
-    confirmed: false,
   },
   {
     id: "care",
@@ -236,8 +244,9 @@ export const services: Service[] = [
       "Peace of mind",
     ],
     time: "Ongoing",
+    timeConfirmed: true,
     price: "From £30 a month",
+    priceConfirmed: true,
     tools: "Monitoring, backups, updates",
-    confirmed: false,
   },
 ];

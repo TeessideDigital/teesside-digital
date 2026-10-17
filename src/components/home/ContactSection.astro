@@ -1,7 +1,7 @@
 ---
 // Home contact: heading, copy and email beside the four-step form, over the
 // Hartlepool contour map drifting slowly.
-import { SITE } from "@config/constants";
+import { SITE, replySentence } from "@config/constants";
 import ContourMap from "../ui/ContourMap.astro";
 import EnquiryForm from "../ui/EnquiryForm.astro";
 ---
@@ -14,7 +14,7 @@ import EnquiryForm from "../ui/EnquiryForm.astro";
       <h2 style="margin-top:24px">Tell me what you need.</h2>
       <p>
         Four quick steps. I'll come back to you with honest advice, even if that's "you don't need
-        me".{SITE.replyTime && ` ${SITE.replyTime}`}
+        me".{replySentence && ` ${replySentence}`}
       </p>
       <div class="ctas"><a class="email" href={`mailto:${SITE.email}`}>{SITE.email}</a></div>
     </div>

@@ -21,7 +21,7 @@ export const SITE = {
   phone: "",
   // The hero availability badge, for example "Taking on new projects for
   // November". Empty hides the badge.
-  availability: "",
+  availability: "Taking on new projects",
   // The Home H1. The last word is shown in lime.
   headline: "Software that fits how your business works.",
   // A real photograph of Dave, as a path under public/, for example
@@ -34,33 +34,37 @@ export const SITE = {
   // Working hours shown on Contact, for example "Monday to Friday, 9am to
   // 5pm". Empty hides the row.
   hours: "",
-  // A reply-time promise, as a full sentence, for example "I reply within
-  // one working day." Empty leaves it out.
-  replyTime: "",
+  // The reply-time promise, completing "I'll reply ...". Rendered as a
+  // sentence on the Contact lede and the Home contact section. Empty leaves
+  // it out.
+  replyTime: "within two working days",
   // Care plan detail added to step 4 of "How I work", as a full sentence.
   // Empty uses the base sentence only.
-  carePlan: "",
+  carePlan:
+    "Care plans start from £30 a month and cover hosting, security updates, backups, uptime checks and small changes when you need them.",
   // True once Dave has confirmed that clients own what he builds. While false,
   // the "Yours" fact is hidden and the FAQ answer is softened.
-  ownershipConfirmed: false,
-  // True once Dave has approved the Background timeline on About.
-  aboutBackgroundConfirmed: false,
+  ownershipConfirmed: true,
+  // True once Dave has approved the Background timeline on About
+  // (entries in src/data/background.ts).
+  aboutBackgroundConfirmed: true,
   // "Tools I use" on About. An empty list hides the section.
   tools: [
     "Python",
     "TypeScript",
     "JavaScript",
-    "C++",
-    "Java",
-    "Lua",
+    "Node.js",
     "HTML and CSS",
+    "Tailwind CSS",
     "Astro",
     "SQL",
     "APIs",
-    "Netlify",
     "Git",
-    "AI models",
-    "Automation",
+    "Netlify",
+    "Playwright",
+    "Claude",
+    "ChatGPT",
+    "Other AI models",
   ] as string[],
 };
 
@@ -68,3 +72,6 @@ export const SITE = {
 export function telephoneHref(phone: string): string {
   return `tel:${phone.replace(/[^\d+]/g, "")}`;
 }
+
+/** The reply-time sentence, or nothing while SITE.replyTime is empty. */
+export const replySentence = SITE.replyTime ? `I'll reply ${SITE.replyTime}.` : "";

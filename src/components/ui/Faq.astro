@@ -6,12 +6,14 @@ import { pricing } from "../../data/pricing";
 import Icon from "./Icon.astro";
 
 const path = Astro.url.pathname.replace(/\/+$/, "") || "/";
-const priceGuide = path === "/" ? "The price guide above" : "The price guide on the homepage";
-const cost = pricing.confirmed
-  ? `It depends on what you need. Small websites start from a few hundred pounds and bigger systems cost more. ${priceGuide} gives a rough idea, and you get a fixed written quote before any work starts.`
-  : "It depends on what you need. You get a fixed written quote before any work starts.";
+// The price guide sentence belongs only on Home, where the guide is, and only
+// once its figures are confirmed. It never renders on /contact/.
+const cost =
+  "It depends on what you need. Small websites start from £800, and bigger systems cost more." +
+  (pricing.confirmed && path === "/" ? " The price guide above gives a rough idea." : "") +
+  " You get a fixed written quote before any work starts.";
 const ownership = SITE.ownershipConfirmed
-  ? "Yes. Once it's paid for, it's yours."
+  ? "Yes. Once it's paid for in full, what I built for you is yours. I keep the right to reuse my general tools and know-how, and you get a permanent licence to any of those built into your project. Hosting, domains and paid services are set up in your name where possible, so you're never locked in."
   : "We'll agree who owns what in writing before any work starts.";
 
 const items = [
@@ -20,7 +22,7 @@ const items = [
   ["I'm not technical. Is that a problem?", "Not at all. That's my job. I'll explain things in plain English and you'll never be left guessing what's happening."],
   ["Do I own what you build?", ownership],
   ["Do you only work in Teesside?", "I'm based in Hartlepool and love working with local businesses, but I can work with anyone in the UK over video calls."],
-  ["What happens after it goes live?", "I don't disappear. I can look after updates, security, hosting and changes on a monthly care plan, or you can call on me when you need me."],
+  ["What happens after it goes live?", "I don't disappear. I can look after updates, security, hosting and changes on a monthly care plan from £30 a month, or you can call on me when you need me."],
 ];
 ---
 

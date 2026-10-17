@@ -1,12 +1,16 @@
 ---
-// The Hartlepool contour map: one shared static SVG file, cached once and
-// used on Home and About. Decorative.
+// The Hartlepool contour map: a static SVG file, cached once. Decorative.
+// Home uses the version without the place label, which would otherwise poke
+// out from behind the enquiry form as a small dark box.
 interface Props {
   class?: string;
+  /** Show the HARTLEPOOL label box. */
+  labelled?: boolean;
 }
-const { class: className } = Astro.props;
+const { class: className, labelled = true } = Astro.props;
+const src = labelled ? "/images/contour-hartlepool.svg" : "/images/contour-hartlepool-plain.svg";
 ---
 
 <div class:list={["contour", className]} aria-hidden="true">
-  <img src="/images/contour-hartlepool.svg" alt="" width="560" height="610" loading="lazy" decoding="async" />
+  <img src={src} alt="" width="560" height="610" loading="lazy" decoding="async" />
 </div>

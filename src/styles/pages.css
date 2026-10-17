@@ -565,7 +565,27 @@
   margin: 0 0 14px;
 }
 .prose ul {
+  list-style: none;
+  padding-left: 0;
+}
+.prose ul > li {
+  position: relative;
   padding-left: 22px;
+}
+/* The same small lime square as the Services lists. */
+.prose ul > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 7px;
+  height: 7px;
+  background: var(--lime);
+}
+.prose ol {
+  list-style: decimal;
+  padding-left: 22px;
+  margin: 0 0 14px;
 }
 .prose li + li {
   margin-top: 8px;

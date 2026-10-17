@@ -121,6 +121,12 @@ em.hl {
   padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
   padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
 }
+/* Example text in fields is a placeholder, clearly not a filled-in value. */
+input::placeholder,
+textarea::placeholder {
+  color: var(--fg-3);
+  opacity: 1;
+}
 .mono {
   font-family: var(--mono);
 }

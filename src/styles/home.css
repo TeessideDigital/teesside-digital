@@ -784,7 +784,6 @@ html.js .chat:not(.ready) .ans {
   font-size: clamp(22px, 2.4vw, 32px);
   font-weight: 650;
   letter-spacing: -0.025em;
-  line-height: 1.2;
   transition:
     color 0.3s,
     padding 0.4s var(--ease);
@@ -1102,6 +1101,14 @@ html.js .svc:not(.ready) .svc-panels .panel + .panel {
   align-items: flex-end;
   justify-content: center;
   padding: 28px 28px 0;
+}
+/* Below 1000px the frame grows with the sample quote, so its top (title and
+   SAMPLE DATA tag) is never cut off. */
+@media (max-width: 1000px) {
+  .wshot {
+    aspect-ratio: auto;
+    min-height: 260px;
+  }
 }
 .wshot-scores {
   flex-direction: column;

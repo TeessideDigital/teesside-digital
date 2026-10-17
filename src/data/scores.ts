@@ -10,12 +10,11 @@ export interface Scores {
   bestPractices: number;
 }
 
-// Lighthouse 12.8.2, mobile (default throttling), Home with these rings in
-// place, production build served locally, two runs, 17 October 2026.
-// Re-measure on the live site after go-live.
+// Lighthouse 12.8.2, mobile (default throttling), the live home page on
+// https://teessidedigital.uk, median of five runs, 17 October 2026.
 export const scores: Scores | null = {
   measured: "2026-10-17",
-  performance: 99,
+  performance: 95,
   accessibility: 100,
-  bestPractices: 100,
+  bestPractices: 93,
 };

@@ -1,0 +1,38 @@
+---
+/**
+ * Clearly-marked stand-in for photography that has not been sourced yet
+ * (PROJECT_BRIEF.md Section 6). Swap each instance for a real <img> or
+ * <Image> once licence-checked photos exist; the label says what belongs
+ * in the slot.
+ *
+ * Aspect ratio is controlled by the caller through the class prop (for
+ * example "aspect-[4/5] md:aspect-[3/2]") rather than an inline style, so
+ * ratios can differ per breakpoint. Arbitrary values like aspect-[4/5] are
+ * written literally at call sites, which Tailwind's scanner requires --
+ * dynamically composed class strings would silently generate no CSS.
+ */
+interface Props {
+  label: string;
+  class?: string;
+}
+
+const { label, class: className = '' } = Astro.props;
+---
+<div
+  class={`relative flex items-center justify-center overflow-hidden border border-border bg-surface ${className}`}
+>
+  <svg
+    class="absolute inset-0 h-full w-full text-border"
+    aria-hidden="true"
+    preserveAspectRatio="none"
+    viewBox="0 0 100 100"
+  >
+    <line x1="0" y1="0" x2="100" y2="100" stroke="currentColor" vector-effect="non-scaling-stroke"></line>
+    <line x1="100" y1="0" x2="0" y2="100" stroke="currentColor" vector-effect="non-scaling-stroke"></line>
+  </svg>
+  <span
+    class="relative border border-border bg-linen px-3 py-1.5 text-center font-mono text-xs text-text-secondary"
+  >
+    Placeholder: {label}
+  </span>
+</div>

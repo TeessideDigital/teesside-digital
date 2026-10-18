@@ -1,0 +1,5 @@
+# Deliberate: this demo must not be indexed until there is a real domain and
+# a conscious decision to make it discoverable (PROJECT_BRIEF.md, Section 5).
+# Do not remove this rule as a side effect of another change.
+User-agent: *
+Disallow: /

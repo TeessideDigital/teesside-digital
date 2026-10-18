@@ -1,0 +1,61 @@
+---
+/**
+ * Base layout for every page.
+ *
+ * Non-negotiable (PROJECT_BRIEF.md Section 4): DemoBanner renders above the
+ * header and Footer restates the demo status. Do not build a page that
+ * bypasses this layout.
+ */
+import '../styles/globals.css';
+import DemoBanner from '../components/DemoBanner.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+
+// Derived from the placeholder `site` value in astro.config.mjs; becomes
+// correct automatically once that value is updated to the real domain.
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical.href} />
+    <meta name="generator" content={Astro.generator} />
+    {/*
+      Fonts via Google's CDN for now. Self-hosting with @font-face is a
+      planned performance improvement (one fewer third-party connection,
+      no render-blocking cross-origin CSS) -- the sandbox this project was
+      planned in could not reach the CDN to download the font files.
+    */}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-ebonised focus:px-4 focus:py-2 focus:font-display focus:text-linen"
+    >
+      Skip to content
+    </a>
+    <DemoBanner />
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

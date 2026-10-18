@@ -1,0 +1,212 @@
+---
+/**
+ * Homepage: hero, services, gallery preview, closing call to action.
+ *
+ * Layout follows PROJECT_BRIEF.md Section 7: asymmetric editorial hero, one
+ * deep-contrast section (the kitchens band), distinct treatment per service
+ * rather than a repeated card grid, and a single orchestrated motion moment
+ * on the hero (the .hero-rise stagger defined in globals.css).
+ *
+ * All photography is a marked placeholder until licence-checked images are
+ * sourced (PROJECT_BRIEF.md Section 6).
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import ImagePlaceholder from '../components/ImagePlaceholder.astro';
+---
+<BaseLayout
+  title="North East Joinery | Bespoke Fitted Furniture, Hartlepool and Teesside"
+  description="Bespoke fitted wardrobes, kitchens and staircases, made to measure in Hartlepool, Teesside and across the North East. Demonstration site by Teesside Digital."
+>
+  {/* ==================== HERO ====================
+      Asymmetric split: headline on the content grid, image bleeding to the
+      viewport's right edge. overflow-x-clip contains the negative margin so
+      the bleed cannot introduce a horizontal scrollbar. */}
+  <section class="overflow-x-clip">
+    <div
+      class="mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 px-6 pb-16 pt-12 lg:grid-cols-12 lg:gap-12 lg:pb-24 lg:pt-20"
+    >
+      <div class="lg:col-span-6">
+        <h1
+          class="hero-rise font-display text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl"
+        >
+          Made to measure. Made properly.
+        </h1>
+        <p
+          class="hero-rise mt-6 max-w-[46ch] text-lg leading-relaxed text-text-secondary"
+          style="--rise-delay: 0.12s"
+        >
+          Bespoke fitted wardrobes, kitchens and staircases for homes in
+          Hartlepool, Teesside and across the North East.
+        </p>
+        <div
+          class="hero-rise mt-8 flex flex-wrap items-center gap-x-8 gap-y-4"
+          style="--rise-delay: 0.24s"
+        >
+          <Button href="/quote" label="Request a quote" />
+          <a
+            href="/gallery"
+            class="font-display text-sm font-semibold underline decoration-brass decoration-2 underline-offset-4 hover:decoration-brass-hover"
+          >
+            View the gallery
+          </a>
+        </div>
+      </div>
+      <div
+        class="hero-rise lg:col-span-6 lg:mr-[calc(50%-50vw)]"
+        style="--rise-delay: 0.18s"
+      >
+        <ImagePlaceholder
+          label="hero photo, finished fitted wardrobe or workshop, landscape"
+          class="aspect-[4/3] lg:aspect-[5/4]"
+        />
+      </div>
+    </div>
+  </section>
+
+  {/* ==================== SERVICES ====================
+      Three capabilities, three different layout treatments (Section 7 bans
+      the repeated identical card grid). No 01/02/03 numbering: these are not
+      a sequence. */}
+  <section class="border-t border-border">
+    <div class="mx-auto max-w-6xl px-6 py-16 lg:py-24">
+      <h2 class="font-display text-3xl font-semibold tracking-tight md:text-4xl">
+        What we make
+      </h2>
+      <p class="mt-4 max-w-[55ch] text-lg leading-relaxed text-text-secondary">
+        Three things, done well: fitted wardrobes, bespoke kitchens and
+        staircases. No general building work, no subcontracting.
+      </p>
+
+      {/* Fitted wardrobes: asymmetric 7/5 split, image leading. */}
+      <div
+        class="mt-14 grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-12"
+      >
+        <ImagePlaceholder
+          label="fitted wardrobe in an alcove, landscape"
+          class="aspect-[3/2] lg:col-span-7"
+        />
+        <div class="lg:col-span-5">
+          <h3 class="font-display text-2xl font-semibold tracking-tight">
+            Fitted wardrobes
+          </h3>
+          <p class="mt-4 leading-relaxed text-text-secondary">
+            Floor-to-ceiling storage built to the exact shape of the room,
+            including the sloped ceilings, alcoves and awkward corners that no
+            flat-pack unit will ever fit.
+          </p>
+          <p class="mt-6 font-mono text-sm text-text-secondary">
+            Oak / birch ply / sprayed MDF
+          </p>
+        </div>
+      </div>
+    </div>
+
+    {/* Bespoke kitchens: the page's one deep-contrast section. Stacked text
+        over a full-width image, deliberately a different layout family from
+        the split above and the split below. */}
+    <div class="bg-ebonised">
+      <div class="mx-auto max-w-6xl px-6 py-16 lg:py-24">
+        <h3
+          class="font-display text-2xl font-semibold tracking-tight text-linen md:text-3xl"
+        >
+          Bespoke kitchens
+        </h3>
+        <p class="mt-4 max-w-[55ch] leading-relaxed text-linen/80">
+          Cabinetry designed around how you actually cook, built from solid
+          timber and finished by hand. Not a showroom range with your name on
+          the order.
+        </p>
+        <ImagePlaceholder
+          label="finished bespoke kitchen, wide crop"
+          class="mt-10 aspect-[16/9] lg:aspect-[21/9]"
+        />
+      </div>
+    </div>
+
+    {/* Staircases: offset split, text pushed right by an empty leading
+        column, portrait image. */}
+    <div
+      class="mx-auto grid max-w-6xl grid-cols-1 items-center gap-8 px-6 py-16 lg:grid-cols-12 lg:gap-12 lg:py-24"
+    >
+      <div class="lg:col-span-5 lg:col-start-2">
+        <h3 class="font-display text-2xl font-semibold tracking-tight">
+          Staircases
+        </h3>
+        <p class="mt-4 leading-relaxed text-text-secondary">
+          Replacement staircases, new balustrades and full refurbishments,
+          measured, made and fitted by the same pair of hands.
+        </p>
+        <a
+          href="/services"
+          class="mt-6 inline-block font-display text-sm font-semibold underline decoration-brass decoration-2 underline-offset-4 hover:decoration-brass-hover"
+        >
+          See all services
+        </a>
+      </div>
+      <ImagePlaceholder
+        label="oak staircase with turned balustrade, portrait"
+        class="aspect-[3/4] w-full max-w-md lg:col-span-5 lg:col-start-8 lg:max-w-none"
+      />
+    </div>
+  </section>
+
+  {/* ==================== GALLERY PREVIEW ====================
+      Mixed spans, mixed aspect ratios, staggered vertical alignment: an
+      editorial composition rather than a uniform thumbnail grid. Honesty
+      rules (Section 3): imagery is labelled illustrative, never presented
+      as real completed jobs. */}
+  <section class="border-t border-border">
+    <div class="mx-auto max-w-6xl px-6 py-16 lg:py-24">
+      <h2 class="font-display text-3xl font-semibold tracking-tight md:text-4xl">
+        Gallery
+      </h2>
+      <p class="mt-4 max-w-[55ch] text-lg leading-relaxed text-text-secondary">
+        A preview of the kind of work this site is built to show. Every image
+        on this demonstration site is illustrative, not a real completed job.
+      </p>
+
+      <div class="mt-12 grid grid-cols-2 gap-4 md:grid-cols-12 md:gap-6">
+        <ImagePlaceholder
+          label="gallery 1, wardrobe detail"
+          class="aspect-square md:col-span-5 md:aspect-[4/5]"
+        />
+        <ImagePlaceholder
+          label="gallery 2, kitchen island"
+          class="aspect-square md:col-span-7 md:aspect-[3/2] md:self-end"
+        />
+        <ImagePlaceholder
+          label="gallery 3, staircase from above"
+          class="aspect-square md:col-span-7 md:aspect-[16/10] md:self-start"
+        />
+        <ImagePlaceholder
+          label="gallery 4, joinery close-up"
+          class="aspect-square md:col-span-5 md:aspect-[4/5]"
+        />
+      </div>
+
+      <a
+        href="/gallery"
+        class="mt-10 inline-block font-display text-sm font-semibold underline decoration-brass decoration-2 underline-offset-4 hover:decoration-brass-hover"
+      >
+        View the gallery
+      </a>
+    </div>
+  </section>
+
+  {/* ==================== CLOSING CTA ==================== */}
+  <section class="border-t border-border bg-surface">
+    <div class="mx-auto max-w-6xl px-6 py-16 lg:py-20">
+      <h2 class="font-display text-3xl font-semibold tracking-tight md:text-4xl">
+        Start with a free on-site consultation
+      </h2>
+      <p class="mt-4 max-w-[50ch] text-lg leading-relaxed text-text-secondary">
+        A proper measure-up, honest advice and a written quote, from the person
+        who does the work. No sales visit, no obligation.
+      </p>
+      <div class="mt-8">
+        <Button href="/quote" label="Request a quote" />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
